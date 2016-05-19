@@ -2,11 +2,12 @@
 
 'use strict';
 
-var check, safeName, syntaxDefinitions;
+var check, safeName, syntaxDefinitions, syntaxDefinitionsES6;
 
 check = require('check-types');
 safeName = require('./safeName');
 syntaxDefinitions = require('./syntax');
+syntaxDefinitionsES6 = require('./syntax-es6');
 
 exports.walk = walk;
 
@@ -28,6 +29,8 @@ function walk (tree, settings, callbacks) {
     check.assert.function(callbacks.popScope, 'Invalid popScope callback');
 
     syntaxes = syntaxDefinitions.get(settings);
+
+    syntaxDefinitionsES6.get(syntaxes, settings);
 
     visitNodes(tree.body);
 
