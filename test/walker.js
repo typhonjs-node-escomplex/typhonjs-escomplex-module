@@ -82,7 +82,6 @@ suite('AST Walker', function () {
         test('do-while statement');
         test('for statement');
         test('for-in statement');
-        test('for-of statement');
         test('debugger statement');
     });
 
@@ -100,19 +99,6 @@ suite('AST Walker', function () {
             assert.strictEqual(declaration.body.body.length, 0);
         });
 
-        test('generator function declaration', function () {
-            this.walk('function* foo() {}');
-
-            var declaration = this.callbacks.processNode.firstCall.args[0];
-            assert.strictEqual(declaration.type, 'FunctionDeclaration');
-            assert.strictEqual(declaration.id.name, 'foo');
-            assert.strictEqual(declaration.id.type, 'Identifier');
-            assert.strictEqual(declaration.generator, true);
-            assert.strictEqual(declaration.params.length, 0);
-            assert.strictEqual(declaration.body.type, 'BlockStatement');
-            assert.strictEqual(declaration.body.body.length, 0);
-        });
-
         test('var declaration', function () {
             this.walk('var a = 1');
 
@@ -122,46 +108,8 @@ suite('AST Walker', function () {
             assert.strictEqual(statement.declarations.length, 1);
         });
 
-        test('let declaration', function () {
-            this.walk('let a = 1');
-
-            var statement = this.callbacks.processNode.firstCall.args[0];
-            assert.strictEqual(statement.type, 'VariableDeclaration');
-            assert.strictEqual(statement.kind, 'let');
-            assert.strictEqual(statement.declarations.length, 1);
-        });
-
-        test('const declaration', function () {
-            this.walk('const a = 1');
-
-            var statement = this.callbacks.processNode.firstCall.args[0];
-            assert.strictEqual(statement.type, 'VariableDeclaration');
-            assert.strictEqual(statement.kind, 'const');
-            assert.strictEqual(statement.declarations.length, 1);
-        });
-
         test('var declarator', function () {
             this.walk('var a = 1');
-
-            var statement = this.callbacks.processNode.firstCall.args[0];
-            var declarator = this.callbacks.processNode.secondCall.args[0];
-            assert.strictEqual(statement.declarations[0], declarator);
-            assert.strictEqual(declarator.id.type, 'Identifier');
-            assert.strictEqual(declarator.id.name, 'a');
-        });
-
-        test('let declarator', function () {
-            this.walk('let a = 1');
-
-            var statement = this.callbacks.processNode.firstCall.args[0];
-            var declarator = this.callbacks.processNode.secondCall.args[0];
-            assert.strictEqual(statement.declarations[0], declarator);
-            assert.strictEqual(declarator.id.type, 'Identifier');
-            assert.strictEqual(declarator.id.name, 'a');
-        });
-
-        test('const declarator', function () {
-            this.walk('const a = 1');
 
             var statement = this.callbacks.processNode.firstCall.args[0];
             var declarator = this.callbacks.processNode.secondCall.args[0];
@@ -207,14 +155,6 @@ suite('AST Walker', function () {
             assert.strictEqual(expression.generator, false);
         });
 
-        test('generator function expression', function () {
-            this.walk('(function* foo() {})');
-            var expression = this.callbacks.processNode.firstCall.args[0].expression;
-            assert.strictEqual(expression.type, 'FunctionExpression');
-            assert.strictEqual(expression.id.name, 'foo');
-            assert.strictEqual(expression.generator, true);
-        });
-
         test('sequence expression');
         test('unary expression');
         test('binary expression');
@@ -236,34 +176,7 @@ suite('AST Walker', function () {
         });
 
         test('conditional expression');
-        test('call expression');
         test('new expression');
-        test('member expression');
-        test('super expression');
-        test('arrow function expression');
-        test('yield expression');
-        test('tagged template expression');
-    });
-
-    suite('Classes', function () {
-        test('class');
-        test('class body');
-        test('method definition');
-        test('class declaration');
-        test('meta property');
-    });
-
-    suite('Modules', function () {
-        test('module declaration');
-        test('module specifier');
-        test('import declaration');
-        test('import specifier');
-        test('import default specifier');
-        test('import namespace specifier');
-        test('export named declaration');
-        test('export specifier');
-        test('export default declaration');
-        test('export all declaration');
     });
 
     suite('Clauses', function () {
@@ -280,14 +193,6 @@ suite('AST Walker', function () {
         test('logical operator');
         test('assignment operator');
         test('update operator');
-        test('spread element');
-        test('template literal');
-        test('template element');
-        test('object pattern');
         test('assignment property');
-        test('assignment pattern');
-        test('array pattern');
-        test('rest element');
     });
-
 });
