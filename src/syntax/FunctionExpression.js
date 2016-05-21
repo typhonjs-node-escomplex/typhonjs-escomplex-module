@@ -9,11 +9,15 @@ exports.get = get;
 
 function get () {
     return traits.actualise(
-        0, 0, 'function',
-        function (node) {
-            return safeName(node.id);
-        },
-        [ 'params', 'body' ], undefined, true
+     0,
+     0,
+     'function',
+     function (node, assignedName) {
+         return typeof assignedName === 'string' ? assignedName : safeName(node.id);
+     },
+     [ 'params', 'body' ],
+     undefined,
+     true
     );
 }
 

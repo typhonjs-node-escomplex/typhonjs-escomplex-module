@@ -2,34 +2,25 @@
 
 'use strict';
 
-var traits = require('../traits'),
- safeName = require('../safeName');
+var traits = require('../traits');
 
 exports.get = get;
 
-/*
-function actualise (lloc, cyclomatic, operators, operands, children, assignableName, newScope, dependencies) {
-   return {
-      lloc: lloc,
-      cyclomatic: cyclomatic,
-      operators: operatorTraits.actualise(safeArray(operators)),
-      operands: operandTraits.actualise(safeArray(operands)),
-      children: safeArray(children),
-      assignableName: assignableName,
-      newScope: newScope,
-      dependencies: dependencies
-   };
-}
-*/
-
 function get () {
-   return traits.actualise(0, 0, 'import declaration', undefined, [ 'specifiers' ]);
-
-   //return traits.actualise(
-   // 1, 0, 'function',
-   // function (node) {
-   //    return safeName(node.id);
-   // },
-   // [ 'params', 'body' ], undefined, true
-   //);
+   return traits.actualise(
+       0,
+       0,
+       ['import', 'from'],
+       undefined,
+       'specifiers',
+       undefined,       // assignableName
+       undefined,       // new scope
+       function (node) {
+           return {
+               line: node.source.loc.start.line,
+               path: node.source.value,
+               type: 'esm'
+           };
+       }
+   );
 }

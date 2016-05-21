@@ -7,5 +7,6 @@ var traits = require('../traits');
 exports.get = get;
 
 function get () {
-   return traits.actualise(0, 0, ['export', '*'], undefined, 'source');
+    return traits.actualise(0, 0, '{}', undefined, 'properties');
 }
+

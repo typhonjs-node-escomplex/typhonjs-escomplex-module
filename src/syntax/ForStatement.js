@@ -12,7 +12,9 @@ function get () {
         function (node) {
             return node.test ? 1 : 0;
         },
-        'for', undefined, [ 'init', 'test', 'update', 'body' ]
+        'for',
+        undefined,
+        [ 'init', 'test', 'update', 'body' ]
     );
 }
 

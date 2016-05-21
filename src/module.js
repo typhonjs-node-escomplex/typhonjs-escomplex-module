@@ -34,11 +34,11 @@ function analyse (ast, walker, options) {
 
     return report;
 
-    function processNode (node, syntax) {
+    function processNode (node, syntax, assignedName) {
         processLloc(node, syntax, currentReport);
         processCyclomatic(node, syntax, currentReport);
-        processOperators(node, syntax, currentReport);
-        processOperands(node, syntax, currentReport);
+        processOperators(node, syntax, currentReport, assignedName);
+        processOperands(node, syntax, currentReport, assignedName);
 
         if (processDependencies(node, syntax, clearDependencies)) {
             // HACK: This will fail with async or if other syntax than CallExpression introduces dependencies.
@@ -153,27 +153,37 @@ function incrementCyclomatic (currentReport, amount) {
     }
 }
 
-function processOperators (node, syntax, currentReport) {
-    processHalsteadMetric(node, syntax, 'operators', currentReport);
+function processOperators (node, syntax, currentReport, assignedName) {
+    processHalsteadMetric(node, syntax, 'operators', currentReport, assignedName);
 }
 
-function processOperands (node, syntax, currentReport) {
-    processHalsteadMetric(node, syntax, 'operands', currentReport);
+function processOperands (node, syntax, currentReport, assignedName) {
+    processHalsteadMetric(node, syntax, 'operands', currentReport, assignedName);
 }
 
-function processHalsteadMetric (node, syntax, metric, currentReport) {
+function processHalsteadMetric (node, syntax, metric, currentReport, assignedName) {
     if (check.array(syntax[metric])) {
         syntax[metric].forEach(function (s) {
             var identifier;
 
             if (check.function(s.identifier)) {
-                identifier = s.identifier(node);
+                identifier = s.identifier(node, assignedName);
+//console.log('!! walker - processHalsteadMetric - 0 - node.type: ' + node.type +'; identifier: ' + identifier);
             } else {
                 identifier = s.identifier;
+//console.log('!! walker - processHalsteadMetric - 1 - node.type: ' + node.type +'; identifier: ' + identifier);
             }
 
-            if (check.function(s.filter) === false || s.filter(node) === true) {
-                halsteadItemEncountered(currentReport, metric, identifier);
+            if (typeof identifier !== 'undefined' && (check.function(s.filter) === false || s.filter(node) === true)) {
+                // Handle the case when a node / syntax returns an array of identifiers.
+                if (Array.isArray(identifier)) {
+                    identifier.forEach(function (element) {
+                        halsteadItemEncountered(currentReport, metric, element);
+                    });
+                }
+                else {
+                    halsteadItemEncountered(currentReport, metric, identifier);
+                }
             }
         });
     }

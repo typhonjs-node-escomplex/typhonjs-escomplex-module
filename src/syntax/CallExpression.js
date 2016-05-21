@@ -8,10 +8,15 @@ exports.get = get;
 
 function get () {
     return traits.actualise(
-        function (node) {
+        function (node) {                                               // lloc
             return node.callee.type === 'FunctionExpression' ? 1 : 0;
         },
-        0, '()', undefined, [ 'arguments', 'callee' ], undefined, undefined,
+        0,                                                              // cyclomatic
+       '()',                                                            // operators
+        undefined,                                                      // operands
+        [ 'arguments', 'callee' ],                                      // children
+        undefined,                                                      // assignableName
+        undefined,                                                      // newScope
         function (node, clearAliases) {
             if (clearAliases) {
                 // TODO: This prohibits async running. Refine by passing in module id as key for amdPathAliases.

@@ -10,11 +10,10 @@ function get () {
     return traits.actualise(
         0,
         0,
-        function (node) {
-            return node.kind;
-        },
         undefined,
-        ['declarations']
+        function (node) {
+           return node.value.cooked !== '' ? node.value.cooked : undefined;
+        }
     );
 }
 

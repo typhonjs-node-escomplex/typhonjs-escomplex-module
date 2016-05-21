@@ -15,7 +15,10 @@ function get () {
                 'FunctionExpression'
             ].indexOf(node.object.type) === -1 ? 0 : 1;
         },
-        0, '.', undefined, [ 'object', 'property' ]
+        0,
+        '.',
+        undefined,
+        [ 'object', 'property' ]
     );
 }
 

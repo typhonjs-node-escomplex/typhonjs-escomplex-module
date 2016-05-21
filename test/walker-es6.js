@@ -26,7 +26,7 @@ suite('AST Walker (ES6)', function () {
             var options = esmRegex.test(code) ? esmOptions : es5Options;
 
             var tree = esprima.parse(code, options);
-console.log('!! walked-esm - walk - tree: ' + JSON.stringify(tree));
+//console.log('!! walked-esm - walk - tree: ' + JSON.stringify(tree));
 
             walker.walk(tree, {}, this.callbacks);
         };
@@ -262,14 +262,14 @@ console.log('!! walked-esm - walk - tree: ' + JSON.stringify(tree));
         });
 
         test('export all declaration', function () {
-            this.walk('export * from "./TestExportNamed.js"');
+            this.walk('export * from "mod"');
 
             var declaration = this.callbacks.processNode.firstCall.args[0];
 
             assert.strictEqual(declaration.type, 'ExportAllDeclaration');
             assert.isObject(declaration.source);
             assert.strictEqual(declaration.source.type, 'Literal');
-            assert.strictEqual(declaration.source.value, './TestExportNamed.js');
+            assert.strictEqual(declaration.source.value, 'mod');
         });
 
         test('export default declaration (class)', function () {

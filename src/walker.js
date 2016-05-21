@@ -43,11 +43,15 @@ function walk (tree, settings, callbacks) {
     function visitNode (node, assignedName) {
         var syntax;
 
+//console.log('!! walker - visitNode - 0 - assignedName: ' + assignedName + '; node.type: ' + (node != null ? node.type : 'NULL'));
+//if (assignedName === '<anonymous>') { console.trace(); assignedName = undefined; }
+
         if (check.object(node)) {
             syntax = syntaxes[node.type];
 
+//console.log('!! walker - visitNode - 1 - syntax: ' + JSON.stringify(syntax));
             if (check.object(syntax)) {
-                callbacks.processNode(node, syntax);
+                callbacks.processNode(node, syntax, assignedName);
 
                 if (syntax.newScope) {
                     callbacks.createScope(safeName(node.id, assignedName), node.loc, node.params.length);
@@ -69,7 +73,7 @@ function walk (tree, settings, callbacks) {
             syntax.children.forEach(function (child) {
                 visitChild(
                     node[child],
-                    check.function(syntax.assignableName) ? syntax.assignableName(node) : ''
+                    check.function(syntax.assignableName) ? syntax.assignableName(node) : undefined
                 );
             });
         }

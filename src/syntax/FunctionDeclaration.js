@@ -9,11 +9,16 @@ exports.get = get;
 
 function get () {
     return traits.actualise(
-        1, 0, 'function',
+        1,
+        0,
+        'function',
         function (node) {
             return safeName(node.id);
         },
-        [ 'params', 'body' ], undefined, true
+        // Note: For ES6 default values esprima uses `defaults` instead of AssignmentPattern ESTree node.
+        [ 'params', 'body', 'defaults' ],
+        undefined,
+        true
     );
 }
 

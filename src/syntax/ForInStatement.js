@@ -12,7 +12,9 @@ function get (settings) {
         function () {
             return settings.forin ? 1 : 0;
         },
-        'forin', undefined, [ 'left', 'right', 'body' ]
+        'forin',
+        undefined,
+        [ 'left', 'right', 'body' ]
     );
 }
 
