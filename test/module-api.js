@@ -4,7 +4,6 @@
 
 var assert = require('chai').assert;
 
-var parsers = require('./parsers');
 var mozWalker = require('../src/walker');
 var testconfig = require('./testconfig');
 

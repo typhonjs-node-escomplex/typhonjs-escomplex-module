@@ -20,7 +20,6 @@ function get () {
         undefined,                     // operands
         [ 'id', 'init' ],              // children
         function (node) {              // assignableName
-//console.log('!! VariableDeclarator - assignableName - node.id.name: ' +node.id.name + '; node.id: ' + JSON.stringify(node.id));
             return safeName(node.id);
         }
     );

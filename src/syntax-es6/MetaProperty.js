@@ -11,7 +11,7 @@ function get () {
         0,
         0,
         '.',
-        // Esprima doesn't follow the ESTree spec and `meta` & `property` are strings instead of Identifier nodes.
+        // esprima doesn't follow the ESTree spec and `meta` & `property` are strings instead of Identifier nodes.
         function(node) {
             return typeof node.meta === 'string' && typeof node.property === 'string' ? [node.meta, node.property] :
              undefined;

@@ -17,8 +17,6 @@ function get () {
         undefined,
         [ 'left', 'right' ],
         function (node) {
-//console.log('!! AssignmentExpression - node: ' + JSON.stringify(node));
-
             if (node.left.type === 'MemberExpression') {
                 return (node.left.object.type === 'ThisExpression' ? 'this' : safeName(node.left.object)) +
                  '.' + node.left.property.name;

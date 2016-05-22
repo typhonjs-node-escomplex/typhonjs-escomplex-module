@@ -2,7 +2,7 @@
 
 'use strict';
 
-var path, check, moduleAnalyser;
+var path, moduleAnalyser;
 
 exports.analyse = analyse;
 exports.processResults = processResults;
