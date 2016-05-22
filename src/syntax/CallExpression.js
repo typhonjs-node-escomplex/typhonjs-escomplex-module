@@ -51,7 +51,7 @@ function processRequire (node) {
 }
 
 function processCommonJsRequire (node) {
-    return createDependency(node, resolveRequireDependency(node.arguments[0]), 'CommonJS');
+    return createDependency(node, resolveRequireDependency(node.arguments[0]), 'cjs');
 }
 
 function resolveRequireDependency (dependency, resolver) {
@@ -83,11 +83,11 @@ function processAmdRequire (node) {
         return processAmdRequireItem(node, node.arguments[0]);
     }
 
-    return createDependency(node, '* dynamic dependencies *', 'AMD');
+    return createDependency(node, '* dynamic dependencies *', 'amd');
 }
 
 function processAmdRequireItem (node, item) {
-    return createDependency(node, resolveRequireDependency(item, resolveAmdRequireDependency), 'AMD');
+    return createDependency(node, resolveRequireDependency(item, resolveAmdRequireDependency), 'amd');
 }
 
 function resolveAmdRequireDependency (dependency) {

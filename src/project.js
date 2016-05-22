@@ -127,7 +127,7 @@ function checkDependency (from, dependency, to) {
 }
 
 function isCommonJSDependency (dependency) {
-    return dependency.type === 'CommonJS';
+    return dependency.type === 'cjs';
 }
 
 function isInternalCommonJSDependency (dependency) {

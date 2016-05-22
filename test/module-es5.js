@@ -2393,7 +2393,7 @@ if (testconfig.modules['module-es5']) {
                     assert.isObject(report.dependencies[0]);
                     assert.strictEqual(report.dependencies[0].line, 1);
                     assert.strictEqual(report.dependencies[0].path, './foo');
-                    assert.strictEqual(report.dependencies[0].type, 'CommonJS');
+                    assert.strictEqual(report.dependencies[0].type, 'cjs');
                 });
             });
 
@@ -2457,7 +2457,7 @@ if (testconfig.modules['module-es5']) {
                     assert.isObject(report.dependencies[0]);
                     assert.strictEqual(report.dependencies[0].line, 1);
                     assert.strictEqual(report.dependencies[0].path, '* dynamic dependency *');
-                    assert.strictEqual(report.dependencies[0].type, 'CommonJS');
+                    assert.strictEqual(report.dependencies[0].type, 'cjs');
                 });
             });
 
@@ -2480,7 +2480,7 @@ if (testconfig.modules['module-es5']) {
                     assert.isObject(report.dependencies[0]);
                     assert.strictEqual(report.dependencies[0].line, 1);
                     assert.strictEqual(report.dependencies[0].path, 'foo');
-                    assert.strictEqual(report.dependencies[0].type, 'AMD');
+                    assert.strictEqual(report.dependencies[0].type, 'amd');
                 });
             });
 
@@ -2522,7 +2522,7 @@ if (testconfig.modules['module-es5']) {
                     assert.strictEqual(report.dependencies[1].path, 'bar');
                     assert.strictEqual(report.dependencies[2].line, 1);
                     assert.strictEqual(report.dependencies[2].path, 'baz');
-                    assert.strictEqual(report.dependencies[2].type, 'AMD');
+                    assert.strictEqual(report.dependencies[2].type, 'amd');
                 });
             });
 
@@ -2544,7 +2544,7 @@ if (testconfig.modules['module-es5']) {
                 test('dependencies are correct', function () {
                     assert.strictEqual(report.dependencies[0].line, 2);
                     assert.strictEqual(report.dependencies[0].path, '* dynamic dependency *');
-                    assert.strictEqual(report.dependencies[0].type, 'AMD');
+                    assert.strictEqual(report.dependencies[0].type, 'amd');
                 });
             });
 
@@ -2587,13 +2587,13 @@ if (testconfig.modules['module-es5']) {
                 test('dependencies are correct', function () {
                     assert.strictEqual(report.dependencies[0].line, 7);
                     assert.strictEqual(report.dependencies[0].path, 'path/to/foo');
-                    assert.strictEqual(report.dependencies[0].type, 'AMD');
+                    assert.strictEqual(report.dependencies[0].type, 'amd');
                     assert.strictEqual(report.dependencies[1].line, 7);
                     assert.strictEqual(report.dependencies[1].path, 'bar');
-                    assert.strictEqual(report.dependencies[0].type, 'AMD');
+                    assert.strictEqual(report.dependencies[0].type, 'amd');
                     assert.strictEqual(report.dependencies[2].line, 7);
                     assert.strictEqual(report.dependencies[2].path, '../wibble');
-                    assert.strictEqual(report.dependencies[0].type, 'AMD');
+                    assert.strictEqual(report.dependencies[0].type, 'amd');
                 });
             });
 
@@ -2615,7 +2615,7 @@ if (testconfig.modules['module-es5']) {
                 test('dependencies are correct', function () {
                     assert.strictEqual(report.dependencies[0].line, 1);
                     assert.strictEqual(report.dependencies[0].path, 'foo');
-                    assert.strictEqual(report.dependencies[0].type, 'AMD');
+                    assert.strictEqual(report.dependencies[0].type, 'amd');
                 });
             });
         });
