@@ -2,14 +2,12 @@
 
 'use strict';
 
-var check = require('check-types');
-
 module.exports = function (object, defaultName) {
-    if (check.object(object) && check.nonEmptyString(object.name)) {
+    if (object !== null && typeof object === 'object' && typeof object.name === 'string' && object.name !== '') {
         return object.name;
     }
 
-    if (check.nonEmptyString(defaultName)) {
+    if (typeof defaultName === 'string' && defaultName !== '') {
         return defaultName;
     }
 

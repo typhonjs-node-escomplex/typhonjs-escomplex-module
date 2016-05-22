@@ -18,7 +18,6 @@ var esprimaESMOptions = { loc: true, sourceType: 'module' };
 
 var espreeESMOptions = {
     loc: true,
-    range: true,
     ecmaVersion: 6,
     sourceType: 'module',
     ecmaFeatures: {}

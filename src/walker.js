@@ -2,9 +2,8 @@
 
 'use strict';
 
-var check, safeName, syntaxDefinitions, syntaxDefinitionsES6;
+var safeName, syntaxDefinitions, syntaxDefinitionsES6;
 
-check = require('check-types');
 safeName = require('./safeName');
 syntaxDefinitions = require('./syntax');
 syntaxDefinitionsES6 = require('./syntax-es6');
@@ -20,13 +19,13 @@ exports.walk = walk;
 function walk (tree, settings, callbacks) {
     var syntaxes;
 
-    check.assert.object(tree, 'Invalid syntax tree');
-    check.assert.array(tree.body, 'Invalid syntax tree body');
-    check.assert.object(settings, 'Invalid settings');
-    check.assert.object(callbacks, 'Invalid callbacks');
-    check.assert.function(callbacks.processNode, 'Invalid processNode callback');
-    check.assert.function(callbacks.createScope, 'Invalid createScope callback');
-    check.assert.function(callbacks.popScope, 'Invalid popScope callback');
+    if (typeof tree !== 'object') { throw new TypeError('Invalid syntax tree'); }
+    if (!Array.isArray(tree.body)) { throw new TypeError('Invalid syntax tree body'); }
+    if (typeof settings !== 'object') { throw new TypeError('Invalid settings'); }
+    if (typeof callbacks !== 'object') { throw new TypeError('Invalid callbacks'); }
+    if (typeof callbacks.processNode !== 'function') { throw new TypeError('Invalid processNode callback'); }
+    if (typeof callbacks.createScope !== 'function') { throw new TypeError('Invalid createScope callback'); }
+    if (typeof callbacks.popScope !== 'function') { throw new TypeError('Invalid popScope callback'); }
 
     syntaxes = syntaxDefinitions.get(settings);
 
@@ -43,14 +42,10 @@ function walk (tree, settings, callbacks) {
     function visitNode (node, assignedName) {
         var syntax;
 
-//console.log('!! walker - visitNode - 0 - assignedName: ' + assignedName + '; node.type: ' + (node != null ? node.type : 'NULL'));
-//if (assignedName === '<anonymous>') { console.trace(); assignedName = undefined; }
-
-        if (check.object(node)) {
+        if (node !== null && typeof node === 'object') {
             syntax = syntaxes[node.type];
 
-//console.log('!! walker - visitNode - 1 - syntax: ' + JSON.stringify(syntax));
-            if (check.object(syntax)) {
+            if (syntax !== null && typeof syntax === 'object') {
                 callbacks.processNode(node, syntax, assignedName);
 
                 if (syntax.newScope) {
@@ -69,18 +64,18 @@ function walk (tree, settings, callbacks) {
     function visitChildren (node) {
         var syntax = syntaxes[node.type];
 
-        if (check.array(syntax.children)) {
+        if (Array.isArray(syntax.children)) {
             syntax.children.forEach(function (child) {
                 visitChild(
                     node[child],
-                    check.function(syntax.assignableName) ? syntax.assignableName(node) : undefined
+                    typeof syntax.assignableName === 'function' ? syntax.assignableName(node) : undefined
                 );
             });
         }
     }
 
     function visitChild (child, assignedName) {
-        var visitor = check.array(child) ? visitNodes : visitNode;
+        var visitor = Array.isArray(child) ? visitNodes : visitNode;
         visitor(child, assignedName);
     }
 }

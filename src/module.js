@@ -2,7 +2,7 @@
 
 'use strict';
 
-var check = require('check-types'), report;
+var report;
 
 exports.analyse = analyse;
 
@@ -11,11 +11,11 @@ function analyse (ast, walker, options) {
 
     var settings, currentReport, clearDependencies = true, scopeStack = [];
 
-    check.assert.object(ast, 'Invalid syntax tree');
-    check.assert.object(walker, 'Invalid walker');
-    check.assert.function(walker.walk, 'Invalid walker.walk method');
+    if (typeof ast !== 'object') { throw new TypeError('Invalid syntax tree'); }
+    if (typeof walker !== 'object') { throw new TypeError('Invalid walker'); }
+    if (typeof walker.walk !== 'function') { throw new TypeError('Invalid walker.walk method'); }
 
-    if (check.object(options)) {
+    if (typeof options === 'object') {
         settings = options;
     } else {
         settings = getDefaultSettings();
@@ -96,7 +96,7 @@ function createFunctionReport (name, lines, params) {
         params: params
     };
 
-    if (check.object(lines)) {
+    if (typeof lines === 'object') {
         result.line = lines.start.line;
         result.sloc.physical = lines.end.line - lines.start.line + 1;
     }
@@ -126,9 +126,9 @@ function processLloc (node, syntax, currentReport) {
 function incrementCounter (node, syntax, name, incrementFn, currentReport) {
     var amount = syntax[name];
 
-    if (check.number(amount)) {
+    if (typeof amount === 'number') {
         incrementFn(currentReport, amount);
-    } else if (check.function(amount)) {
+    } else if (typeof amount === 'function') {
         incrementFn(currentReport, amount(node));
     }
 }
@@ -162,19 +162,17 @@ function processOperands (node, syntax, currentReport, assignedName) {
 }
 
 function processHalsteadMetric (node, syntax, metric, currentReport, assignedName) {
-    if (check.array(syntax[metric])) {
+    if (Array.isArray(syntax[metric])) {
         syntax[metric].forEach(function (s) {
             var identifier;
 
-            if (check.function(s.identifier)) {
+            if (typeof s.identifier === 'function') {
                 identifier = s.identifier(node, assignedName);
-//console.log('!! walker - processHalsteadMetric - 0 - node.type: ' + node.type +'; identifier: ' + identifier);
             } else {
                 identifier = s.identifier;
-//console.log('!! walker - processHalsteadMetric - 1 - node.type: ' + node.type +'; identifier: ' + identifier);
             }
 
-            if (typeof identifier !== 'undefined' && (check.function(s.filter) === false || s.filter(node) === true)) {
+            if (typeof identifier !== 'undefined' && (typeof s.filter !== 'function' || s.filter(node) === true)) {
                 // Handle the case when a node / syntax returns an array of identifiers.
                 if (Array.isArray(identifier)) {
                     identifier.forEach(function (element) {
@@ -233,9 +231,9 @@ function incrementTotalHalsteadItems (baseReport, metric) {
 function processDependencies (node, syntax, clearDependencies) {
     var dependencies;
 
-    if (check.function(syntax.dependencies)) {
+    if (typeof syntax.dependencies === 'function') {
         dependencies = syntax.dependencies(node, clearDependencies);
-        if (check.object(dependencies) || check.array(dependencies)) {
+        if (typeof dependencies === 'object' || Array.isArray(dependencies)) {
             report.dependencies = report.dependencies.concat(dependencies);
         }
 

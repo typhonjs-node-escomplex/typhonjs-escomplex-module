@@ -8,7 +8,6 @@ exports.analyse = analyse;
 exports.processResults = processResults;
 
 path = require('path');
-check = require('check-types');
 moduleAnalyser = require('./module');
 
 function analyse (modules, walker, options) {
@@ -17,12 +16,12 @@ function analyse (modules, walker, options) {
     var reports;
     options = options || {};
 
-    check.assert.array(modules, 'Invalid modules');
+    if (!Array.isArray(modules)) { throw new TypeError('Invalid modules'); }
 
     reports = modules.map(function (m) {
         var report;
 
-        check.assert.nonEmptyString(m.path, 'Invalid path');
+        if (m.path === '') { throw new Error('Invalid path'); }
 
         try {
             report = moduleAnalyser.analyse(m.ast, walker, options);
@@ -261,7 +260,8 @@ function setCoreSize (result) {
 function getMedian (values) {
     values.sort(compareNumbers);
 
-    if (check.odd(values.length)) {
+    // Checks of values.length is odd.
+    if (values.length % 2) {
         return values[(values.length - 1) / 2];
     }
 
