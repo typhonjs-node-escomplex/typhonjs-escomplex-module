@@ -9,9 +9,9 @@ assert = require('chai').assert;
 var parsers = require('./parsers');
 var testconfig = require('./testconfig');
 
-if (testconfig.modules['module-es6']) {
+if (testconfig.modules['moduleES6']) {
     parsers.forEach(function (parser) {
-        suite('(' + parser.name + '): module-es6:', function () {
+        suite('(' + parser.name + '): module (ES6):', function () {
             setup(function () {
                 this.parse = parser.parse;
                 this.analyse = parser.analyse;

@@ -9,8 +9,8 @@ var testconfig = require('./testconfig');
 
 var modulePath = '../src/module';
 
-if (testconfig.modules['module-api']) {
-    suite('module-api: ', function () {
+if (testconfig.modules['moduleAPI']) {
+    suite('module (API): ', function () {
         test('require does not throw', function () {
             assert.doesNotThrow(function () {
                 require(modulePath);

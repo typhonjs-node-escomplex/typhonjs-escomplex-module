@@ -9,7 +9,7 @@ var walker = require('../src/walker');
 
 // List of test cases taken directly from the ESTree
 // spec (https://github.com/estree/estree/blob/master/es6.md)
-if (testconfig.modules['walker-es6']) {
+if (testconfig.modules['walkerES6']) {
     parsers.forEach(function (parser) {
         suite('(' + parser.name + '): AST Walker (ES6)', function () {
 
