@@ -6,6 +6,6 @@ var walker = require('./walker');
 exports.analyse = analyse;
 
 function analyse (ast, options) {
-    return module.analyse(ast, options, walker);
+    return module.analyse(ast, walker, options);
 }
 
