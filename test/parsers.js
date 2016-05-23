@@ -18,8 +18,8 @@ var acornESMOptions = { locations: true, sourceType: 'module' };
 var esprimaOptions = { loc: true };
 var esprimaESMOptions = { loc: true, sourceType: 'module' };
 
-var espreeOptions = { loc: true, ecmaVersion: 6, ecmaFeatures: {} };
-var espreeESMOptions = { loc: true, ecmaVersion: 6, sourceType: 'module', ecmaFeatures: {} };
+var espreeOptions = { loc: true, ecmaVersion: 6, ecmaFeatures: { jsx: true } };
+var espreeESMOptions = { loc: true, ecmaVersion: 6, sourceType: 'module', ecmaFeatures: { jsx: true } };
 
 var debug = false;
 
