@@ -5,8 +5,8 @@
 var safeName, syntaxDefinitions, syntaxDefinitionsES6;
 
 safeName = require('./safeName');
-syntaxDefinitions = require('./syntax');
-syntaxDefinitionsES6 = require('./syntax-es6');
+syntaxDefinitions = require('./walkerSyntaxCore');
+syntaxDefinitionsES6 = require('./walkerSyntaxES6');
 
 exports.walk = walk;
 
@@ -17,7 +17,7 @@ exports.walk = walk;
 // - switchcase (Boolean)
 //
 function walk (tree, settings, callbacks) {
-    var syntaxes;
+    var syntaxes = [];
 
     if (typeof tree !== 'object') { throw new TypeError('Invalid syntax tree'); }
     if (!Array.isArray(tree.body)) { throw new TypeError('Invalid syntax tree body'); }
@@ -27,8 +27,7 @@ function walk (tree, settings, callbacks) {
     if (typeof callbacks.createScope !== 'function') { throw new TypeError('Invalid createScope callback'); }
     if (typeof callbacks.popScope !== 'function') { throw new TypeError('Invalid popScope callback'); }
 
-    syntaxes = syntaxDefinitions.get(settings);
-
+    syntaxDefinitions.get(syntaxes, settings);
     syntaxDefinitionsES6.get(syntaxes, settings);
 
     visitNodes(tree.body);
