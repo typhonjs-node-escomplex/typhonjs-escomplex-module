@@ -12,7 +12,6 @@ module.exports.modules =
     'moduleES6': true,
     'operands': true,
     'operators': true,
-    'project': true,
     'traits': true,
     'walker': true,
     'walkerES6': true
