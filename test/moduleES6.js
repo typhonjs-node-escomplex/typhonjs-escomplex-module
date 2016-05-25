@@ -1516,7 +1516,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const key = "z"; const { [key]: foo } = { z: "bar" };');
+                        report = this.analyse('const id = "z"; const { [id]: foo } = { z: "bar" };');
                     });
 
                     teardown(function () {
@@ -1552,7 +1552,7 @@ if (testconfig.modules['moduleES6']) {
                     });
 
                     test('aggregate has correct Halstead distinct operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 5);
+                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 6);
                     });
 
                     test('aggregate has correct Halstead length', function () {
@@ -1560,11 +1560,11 @@ if (testconfig.modules['moduleES6']) {
                     });
 
                     test('aggregate has correct Halstead vocabulary', function () {
-                        assert.strictEqual(report.aggregate.halstead.vocabulary, 9);
+                        assert.strictEqual(report.aggregate.halstead.vocabulary, 10);
                     });
 
                     test('aggregate has correct Halstead difficulty', function () {
-                        assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                        assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
                     });
 
                     test('maintainability index is correct', function () {
@@ -2394,7 +2394,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('class Foo { set bar(value) { this._bar = value; } }');
+                        report = this.analyse('class Foo { set bar(data) { this._bar = data; } }');
                     });
 
                     teardown(function () {
@@ -3391,7 +3391,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const Foo = class { set bar(value) { this._bar = value; } }');
+                        report = this.analyse('const Foo = class { set bar(data) { this._bar = data; } }');
                     });
 
                     teardown(function () {

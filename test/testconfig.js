@@ -12,7 +12,7 @@ module.exports.modules =
     'moduleES6': true,
     'operands': true,
     'operators': true,
-    'traits': true,
+    'traits': false,
     'walker': true,
     'walkerES6': true
 };
@@ -25,6 +25,14 @@ module.exports.modules =
 module.exports.parsers =
 {
     acorn: true,
+    babylon: true,
     espree: true,
     esprima: true
 };
+
+/**
+ * Potentially enables extra debug statements to output AST and report JSON in `./parsers.js`
+ *
+ * @type {boolean}
+ */
+module.exports.parserDebug = false;

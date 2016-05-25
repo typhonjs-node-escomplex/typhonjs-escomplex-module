@@ -142,7 +142,15 @@ if (testconfig.modules['walkerES6']) {
                     var declaration = this.callbacks.processNode.firstCall.args[0].body.body[0];
 
                     assert.isObject(declaration);
-                    assert.strictEqual(declaration.type, 'MethodDefinition');
+                    switch (parser.name)
+                    {
+                        case 'babylon':
+                            assert.strictEqual(declaration.type, 'ClassMethod');
+                            break;
+                        default:
+                            assert.strictEqual(declaration.type, 'MethodDefinition');
+                            break;
+                    }
                     assert.isObject(declaration.key);
                     assert.strictEqual(declaration.key.type, 'Identifier');
                     assert.strictEqual(declaration.key.name, 'constructor');
@@ -162,8 +170,17 @@ if (testconfig.modules['walkerES6']) {
                 test('meta property (class)', function () {
                     this.walk('class Foo { constructor() { new.target.name; } }');
 
-                    var declaration =
-                        this.callbacks.processNode.firstCall.args[0].body.body[0].value.body.body[0].expression.object;
+                    var declaration;
+
+                    switch (parser.name)
+                    {
+                        case 'babylon':
+                            declaration = this.callbacks.processNode.firstCall.args[0].body.body[0].body.body[0].expression.object;
+                            break;
+                        default:
+                            declaration = this.callbacks.processNode.firstCall.args[0].body.body[0].value.body.body[0].expression.object;
+                            break;
+                    }
 
                     assert.strictEqual(declaration.type, 'MetaProperty');
 
@@ -275,7 +292,15 @@ if (testconfig.modules['walkerES6']) {
 
                     assert.strictEqual(declaration.type, 'ExportAllDeclaration');
                     assert.isObject(declaration.source);
-                    assert.strictEqual(declaration.source.type, 'Literal');
+                    switch (parser.name)
+                    {
+                        case 'babylon':
+                            assert.strictEqual(declaration.source.type, 'StringLiteral');
+                            break;
+                        default:
+                            assert.strictEqual(declaration.source.type, 'Literal');
+                            break;
+                    }
                     assert.strictEqual(declaration.source.value, 'mod');
                 });
 
@@ -316,7 +341,15 @@ if (testconfig.modules['walkerES6']) {
 
                     assert.strictEqual(declaration.type, 'ExportDefaultDeclaration');
                     assert.isObject(declaration.declaration);
-                    assert.strictEqual(declaration.declaration.type, 'Literal');
+                    switch (parser.name)
+                    {
+                        case 'babylon':
+                            assert.strictEqual(declaration.declaration.type, 'StringLiteral');
+                            break;
+                        default:
+                            assert.strictEqual(declaration.declaration.type, 'Literal');
+                            break;
+                    }
                     assert.strictEqual(declaration.declaration.value, 'foobar');
                 });
             });

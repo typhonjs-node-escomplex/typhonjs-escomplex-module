@@ -2,11 +2,12 @@
 
 'use strict';
 
-var safeName, syntaxDefinitions, syntaxDefinitionsES6;
+var safeName, syntaxDefinitions, syntaxDefinitionsES6, syntaxDefinitionsBabylon;
 
 safeName = require('./safeName');
 syntaxDefinitions = require('./walkerSyntaxCore');
 syntaxDefinitionsES6 = require('./walkerSyntaxES6');
+syntaxDefinitionsBabylon = require('./walkerSyntaxBabylon');
 
 exports.walk = walk;
 
@@ -20,7 +21,6 @@ function walk (tree, settings, callbacks) {
     var syntaxes = [];
 
     if (typeof tree !== 'object') { throw new TypeError('Invalid syntax tree'); }
-    if (!Array.isArray(tree.body)) { throw new TypeError('Invalid syntax tree body'); }
     if (typeof settings !== 'object') { throw new TypeError('Invalid settings'); }
     if (typeof callbacks !== 'object') { throw new TypeError('Invalid callbacks'); }
     if (typeof callbacks.processNode !== 'function') { throw new TypeError('Invalid processNode callback'); }
@@ -30,7 +30,18 @@ function walk (tree, settings, callbacks) {
     syntaxDefinitions.get(syntaxes, settings);
     syntaxDefinitionsES6.get(syntaxes, settings);
 
-    visitNodes(tree.body);
+    if (Array.isArray(tree.body)) {
+        visitNodes(tree.body);
+    }
+    else if (typeof tree.program === 'object' && Array.isArray(tree.program.body)) {
+        // Adds Babylon specific node syntax that differs from ESTree spec.
+        syntaxDefinitionsBabylon.get(syntaxes, settings);
+
+        visitNodes(tree.program.body);
+    }
+    else {
+        throw new TypeError('Invalid syntax tree body');
+    }
 
     function visitNodes (nodes, assignedName) {
         nodes.forEach(function (node) {
@@ -48,7 +59,9 @@ function walk (tree, settings, callbacks) {
                 callbacks.processNode(node, syntax, assignedName);
 
                 if (syntax.newScope) {
-                    callbacks.createScope(safeName(node.id, assignedName), node.loc, node.params.length);
+                    // Note that Babylon AST ClassMethod doesn't always have a value / FunctionExpression node so also
+                    // potentially use `node.key` to find the Identifier / name.
+                    callbacks.createScope(safeName(node.id || node.key, assignedName), node.loc, node.params.length);
                 }
 
                 visitChildren(node);

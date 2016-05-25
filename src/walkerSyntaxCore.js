@@ -36,6 +36,7 @@ function loadSyntaxModules () {
     modules['ConditionalExpression'] = ConditionalExpression;
     modules['ContinueStatement'] = ContinueStatement;
     modules['DoWhileStatement'] = DoWhileStatement;
+    modules['EmptyStatement'] = EmptyStatement;
     modules['ExpressionStatement'] = ExpressionStatement;
     modules['ForInStatement'] = ForInStatement;
     modules['ForStatement'] = ForStatement;
@@ -43,6 +44,7 @@ function loadSyntaxModules () {
     modules['FunctionExpression'] = FunctionExpression;
     modules['Identifier'] = Identifier;
     modules['IfStatement'] = IfStatement;
+    modules['LabeledStatement'] = LabeledStatement;
     modules['Literal'] = Literal;
     modules['LogicalExpression'] = LogicalExpression;
     modules['MemberExpression'] = MemberExpression;
@@ -159,6 +161,8 @@ function DoWhileStatement () {
     );
 }
 
+function EmptyStatement () { return traits.actualise(0, 0, undefined, undefined); }
+
 function ExpressionStatement () { return traits.actualise(1, 0, undefined, undefined, 'expression'); }
 
 function ForInStatement (settings) {
@@ -227,6 +231,8 @@ function IfStatement () {
     );
 }
 
+function LabeledStatement () { return traits.actualise(0, 0, undefined, undefined, 'body'); }
+
 function Literal () {
     return traits.actualise(
         0, 0, undefined,
@@ -286,7 +292,8 @@ function Property () {
         undefined,
         [ 'key', 'value' ],
         function (node) {
-            return safeName(node.key);
+            return typeof node.shorthand === 'undefined' ? undefined :
+                typeof node.shorthand === 'boolean' && !node.shorthand ? undefined : safeName(node.key);
         }
     );
 }
@@ -386,7 +393,8 @@ function processCommonJsRequire (node) {
 }
 
 function resolveRequireDependency (dependency, resolver) {
-    if (dependency.type === 'Literal') {
+    // Note: that `StringLiteral` supports Babylon AST.
+    if (dependency.type === 'Literal' || dependency.type === 'StringLiteral') {
         if (typeof resolver === 'function') {
             return resolver(dependency.value);
         }
@@ -410,7 +418,8 @@ function processAmdRequire (node) {
         return node.arguments[0].elements.map(processAmdRequireItem.bind(null, node));
     }
 
-    if (node.arguments[0].type === 'Literal') {
+    // Note: that `StringLiteral` supports Babylon AST.
+    if (node.arguments[0].type === 'Literal' || node.arguments[0].type === 'StringLiteral') {
         return processAmdRequireItem(node, node.arguments[0]);
     }
 
@@ -438,7 +447,8 @@ function processAmdRequireConfigProperty (property) {
 }
 
 function setAmdPathAlias (alias) {
-    if (alias.key.type === 'Identifier' && alias.value.type === 'Literal') {
+    // Note: that `StringLiteral` supports Babylon AST.
+    if (alias.key.type === 'Identifier' && (alias.value.type === 'Literal' || alias.value.type === 'StringLiteral')) {
         amdPathAliases[alias.key.name] = alias.value.value;
     }
 }

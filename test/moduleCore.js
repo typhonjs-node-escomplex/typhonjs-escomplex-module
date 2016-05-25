@@ -1985,7 +1985,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('function has correct name', function () {
-                    assert.strictEqual(report.functions[0].name, 'baz');
+                    assert.strictEqual(report.functions[0].name, '<anonymous>');
                 });
 
                 test('aggregate has correct Halstead total operators', function () {
@@ -2001,7 +2001,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('aggregate has correct Halstead distinct operands', function () {
-                    assert.strictEqual(report.aggregate.halstead.operands.distinct, 5);
+                    assert.strictEqual(report.aggregate.halstead.operands.distinct, 6);
                 });
             });
 
@@ -2021,11 +2021,11 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('first function has correct name', function () {
-                    assert.strictEqual(report.functions[0].name, 'bar');
+                    assert.strictEqual(report.functions[0].name, '<anonymous>');
                 });
 
                 test('second function has correct name', function () {
-                    assert.strictEqual(report.functions[1].name, 'bar');
+                    assert.strictEqual(report.functions[1].name, '<anonymous>');
                 });
 
                 test('first function has correct cyclomatic complexity', function () {
@@ -2171,9 +2171,10 @@ if (testconfig.modules['moduleCore']) {
                 test('aggregate has correct physical lines of code', function () {
                     switch (parser.name)
                     {
+                        // acorn & babylon sets the start location at line 1 (first comment) instead of line 4 (first
+                        // line of code).
                         case 'acorn':
-                            // acorn sets the start location at line 1 (first comment) instead of line 4 (first line of
-                            // code).
+                        case 'babylon':
                             assert.strictEqual(report.aggregate.sloc.physical, 14);
                             break;
                         default:

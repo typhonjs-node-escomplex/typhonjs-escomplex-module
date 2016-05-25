@@ -3,6 +3,7 @@
 'use strict';
 
 var acorn = require('acorn');
+var babylon = require('babylon');
 var espree = require('espree');
 var esprima = require('esprima');
 
@@ -15,16 +16,17 @@ var esmRegex = /(^\s*|[}\);\n]\s*)(import\s*(['"]|(\*\s+as\s+)?[^"'\(\)\n;]+\s*f
 var acornOptions = { locations: true };
 var acornESMOptions = { locations: true, sourceType: 'module' };
 
+var babylonOptions = { ecmaVersion: 6 };
+var babylonESMOptions = { ecmaVersion: 6, sourceType: 'module' };
+
 var esprimaOptions = { loc: true };
 var esprimaESMOptions = { loc: true, sourceType: 'module' };
 
 var espreeOptions = { loc: true, ecmaVersion: 6, ecmaFeatures: { jsx: true } };
 var espreeESMOptions = { loc: true, ecmaVersion: 6, sourceType: 'module', ecmaFeatures: { jsx: true } };
 
-var debug = false;
-
 function log(message) {
-    if (debug) {
+    if (testconfig.parserDebug) {
         console.log(message);
     }
 }
@@ -48,11 +50,28 @@ if (testconfig.parsers.acorn) {
     });
 }
 
+if (testconfig.parsers.babylon) {
+    parsers.push({
+        analyse: function (code, options) {
+            var report = escomplex.analyse(this.parse(code), mozWalker, options);
+            log('!! (babylon): analyse - report: ' + JSON.stringify(report));
+            return report;
+        },
+        name: 'babylon',
+        parse: function (code) {
+            var options = esmRegex.test(code) ? babylonESMOptions : babylonOptions;
+            var ast = babylon.parse(code, options);
+            log('!! (babylon): parse - ast: ' + JSON.stringify(ast));
+            return ast;
+        }
+    });
+}
+
 if (testconfig.parsers.espree) {
     parsers.push({
         analyse: function (code, options) {
             var report = escomplex.analyse(this.parse(code), mozWalker, options);
-            log('!! (espree): parser - report: ' + JSON.stringify(report));
+            log('!! (espree): analyse - report: ' + JSON.stringify(report));
             return report;
         },
         name: 'espree',

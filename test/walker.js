@@ -27,15 +27,15 @@ if (testconfig.modules['walker']) {
             });
 
 
-            suite('Unsupported Syntax', function () {
+            suite('Empty / Labeled Syntax', function () {
                 test('empty statement', function () {
                     this.walk(';');
-                    assert.strictEqual(this.callbacks.processNode.callCount, 0);
+                    assert.strictEqual(this.callbacks.processNode.callCount, 1);
                 });
 
                 test('labeled statement', function () {
                     this.walk('foo: a;');
-                    assert.strictEqual(this.callbacks.processNode.callCount, 0);
+                    assert.strictEqual(this.callbacks.processNode.callCount, 3);
                 });
             });
 
@@ -68,7 +68,17 @@ if (testconfig.modules['walker']) {
 
                     var statement = this.callbacks.processNode.firstCall.args[0];
                     assert.strictEqual(statement.type, 'IfStatement');
-                    assert.strictEqual(statement.test.type, 'Literal');
+
+                    switch (parser.name)
+                    {
+                        case 'babylon':
+                            assert.strictEqual(statement.test.type, 'BooleanLiteral');
+                            break;
+                        default:
+                            assert.strictEqual(statement.test.type, 'Literal');
+                            break;
+                    }
+
                     assert.strictEqual(statement.test.value, true);
                     assert.strictEqual(statement.consequent.body[0].expression.value, true);
                     assert.strictEqual(statement.alternate.body[0].expression.value, false);
