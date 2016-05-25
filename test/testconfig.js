@@ -8,9 +8,9 @@
 module.exports.modules =
 {
     'moduleAPI': true,
+    'moduleBabylon': true,
     'moduleCore': true,
     'moduleES6': true,
-    'moduleES7': true,
     'operands': true,
     'operators': true,
     'traits': true,

@@ -9,7 +9,7 @@ assert = require('chai').assert;
 var parsers = require('./parsers');
 var testconfig = require('./testconfig');
 
-if (testconfig.modules['moduleES7']) {
+if (testconfig.modules['moduleBabylon']) {
     parsers.forEach(function (parser) {
         if (parser.name !== 'babylon') { return; }
 
@@ -194,6 +194,116 @@ if (testconfig.modules['moduleES7']) {
 
                     test('aggregate has correct parameter count', function () {
                         assert.strictEqual(report.aggregate.params, 3);
+                    });
+                });
+            });
+
+            suite('Flow Typing', function () {
+                suite('basic function:', function () {
+                    var report;
+
+                    setup(function () {
+                        report = this.analyse('function bar(x: string, y: number): string { return x.length * y; }');
+                    });
+
+                    teardown(function () {
+                        report = undefined;
+                    });
+
+                    test('aggregate has correct logical lines of code', function () {
+                        assert.strictEqual(report.aggregate.sloc.logical, 2);
+                    });
+
+                    test('aggregate has correct cyclomatic complexity', function () {
+                        assert.strictEqual(report.aggregate.cyclomatic, 1);
+                    });
+
+                    test('functions has correct length', function () {
+                        assert.lengthOf(report.functions, 1);
+                    });
+
+                    test('function has correct name', function () {
+                        assert.strictEqual(report.functions[0].name, 'bar');
+                    });
+
+                    test('function has correct physical lines of code', function () {
+                        assert.strictEqual(report.functions[0].sloc.physical, 1);
+                    });
+
+                    test('function has correct logical lines of code', function () {
+                        assert.strictEqual(report.functions[0].sloc.logical, 1);
+                    });
+
+                    test('function has correct cyclomatic complexity', function () {
+                        assert.strictEqual(report.functions[0].cyclomatic, 1);
+                    });
+
+                    test('function has correct parameter count', function () {
+                        assert.strictEqual(report.functions[0].params, 2);
+                    });
+
+                    test('aggregate has correct Halstead total operators', function () {
+                        assert.strictEqual(report.aggregate.halstead.operators.total, 4);
+                    });
+
+                    test('aggregate has correct Halstead distinct operators', function () {
+                        assert.strictEqual(report.aggregate.halstead.operators.distinct, 4);
+                    });
+
+                    test('aggregate has correct Halstead total operands', function () {
+                        assert.strictEqual(report.aggregate.halstead.operands.total, 6);
+                    });
+
+                    test('aggregate has correct Halstead distinct operands', function () {
+                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 4);
+                    });
+
+                    test('aggregate has correct Halstead length', function () {
+                        assert.strictEqual(report.aggregate.halstead.length, 10);
+                    });
+
+                    test('aggregate has correct Halstead vocabulary', function () {
+                        assert.strictEqual(report.aggregate.halstead.vocabulary, 8);
+                    });
+
+                    test('aggregate has correct Halstead difficulty', function () {
+                        assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                    });
+
+                    test('function has correct Halstead length', function () {
+                        assert.strictEqual(report.functions[0].halstead.length, 8);
+                    });
+
+                    test('function has correct Halstead vocabulary', function () {
+                        assert.strictEqual(report.functions[0].halstead.vocabulary, 6);
+                    });
+
+                    test('function has correct Halstead difficulty', function () {
+                        assert.strictEqual(Math.round(report.functions[0].halstead.difficulty), 3);
+                    });
+
+                    test('function has correct Halstead volume', function () {
+                        assert.strictEqual(Math.round(report.functions[0].halstead.volume), 21);
+                    });
+
+                    test('function has correct Halstead effort', function () {
+                        assert.strictEqual(Math.round(report.functions[0].halstead.effort), 52);
+                    });
+
+                    test('function has correct Halstead bugs', function () {
+                        assert.strictEqual(Math.round(report.functions[0].halstead.bugs), 0);
+                    });
+
+                    test('function has correct Halstead time', function () {
+                        assert.strictEqual(Math.round(report.functions[0].halstead.time), 3);
+                    });
+
+                    test('maintainability index is correct', function () {
+                        assert.strictEqual(Math.round(report.maintainability), 158);
+                    });
+
+                    test('aggregate has correct parameter count', function () {
+                        assert.strictEqual(report.aggregate.params, 2);
                     });
                 });
             });
