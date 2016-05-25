@@ -14,17 +14,12 @@ if (testconfig.modules['moduleBabylon']) {
         if (parser.name !== 'babylon') { return; }
 
         suite('(' + parser.name + '): module (ES7):', function () {
-            setup(function () {
-                this.parse = parser.parse;
-                this.analyse = parser.analyse;
-            });
-
             suite('Experimental', function () {
                 suite('object spread / rest:', function () {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };');
+                        report = parser.analyse('let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };');
                     });
 
                     teardown(function () {
@@ -80,7 +75,7 @@ if (testconfig.modules['moduleBabylon']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse(
+                        report = parser.analyse(
                             'function expectTree(rootID, expectedTree, parentPath) {\n' +
                             '    var childIDs = [];\n' +
                             '    var path = "TEST";\n' +
@@ -203,7 +198,7 @@ if (testconfig.modules['moduleBabylon']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('function bar(x: string, y: number): string { return x.length * y; }');
+                        report = parser.analyse('function bar(x: string, y: number): string { return x.length * y; }');
                     });
 
                     teardown(function () {

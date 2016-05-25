@@ -10,16 +10,11 @@ var testconfig = require('./testconfig');
 if (testconfig.modules['moduleCore']) {
     parsers.forEach(function (parser) {
         suite('(' + parser.name + '): module (Core):', function () {
-            setup(function () {
-                this.parse = parser.parse;
-                this.analyse = parser.analyse;
-            });
-
             suite('function call:', function () {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('parseInt("10", 10);');
+                    report = parser.analyse('parseInt("10", 10);');
                 });
 
                 teardown(function () {
@@ -137,7 +132,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('if (true) { "foo"; }');
+                    report = parser.analyse('if (true) { "foo"; }');
                 });
 
                 teardown(function () {
@@ -251,7 +246,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('if (true) { "foo"; } else { "bar"; }');
+                    report = parser.analyse('if (true) { "foo"; } else { "bar"; }');
                 });
 
                 teardown(function () {
@@ -337,7 +332,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('if (true) { "foo"; } if (false) { "bar"; }');
+                    report = parser.analyse('if (true) { "foo"; } if (false) { "bar"; }');
                 });
 
                 teardown(function () {
@@ -399,7 +394,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('if (true) { "foo"; } else if (false) { "bar"; }');
+                    report = parser.analyse('if (true) { "foo"; } else if (false) { "bar"; }');
                 });
 
                 teardown(function () {
@@ -449,7 +444,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('if (true) { "foo"; if (false) { "bar"; } }');
+                    report = parser.analyse('if (true) { "foo"; if (false) { "bar"; } }');
                 });
 
                 teardown(function () {
@@ -469,7 +464,8 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: "baz"; }');
+                    report = parser.analyse(
+                        'switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: "baz"; }');
                 });
 
                 teardown(function () {
@@ -514,7 +510,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('switch (Date.now()) { case 1: case 2: "foo"; break; default: "bar"; }');
+                    report = parser.analyse('switch (Date.now()) { case 1: case 2: "foo"; break; default: "bar"; }');
                 });
 
                 teardown(function () {
@@ -554,7 +550,12 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: if (true) { "baz"; } }');
+                    report = parser.analyse(
+                        'switch (Date.now()) { ' +
+                        '    case 1: "foo"; break; ' +
+                        '    case 2: "bar"; break; ' +
+                        '    default: if (true) { "baz"; } ' +
+                        '}');
                 });
 
                 teardown(function () {
@@ -594,7 +595,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var i; for (i = 0; i < 10; i += 1) { "foo"; }');
+                    report = parser.analyse('var i; for (i = 0; i < 10; i += 1) { "foo"; }');
                 });
 
                 teardown(function () {
@@ -646,7 +647,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var i; for (i = 0; i < 10; i += 1) { if (true) { "foo"; } }');
+                    report = parser.analyse('var i; for (i = 0; i < 10; i += 1) { if (true) { "foo"; } }');
                 });
 
                 teardown(function () {
@@ -678,7 +679,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }');
+                    report = parser.analyse('var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }');
                 });
 
                 teardown(function () {
@@ -730,7 +731,9 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var property, object = { foo: "bar", baz: "qux" }; for (property in object) { if (object.hasOwnProperty(property)) { "wibble"; } }');
+                    report = parser.analyse(
+                        'var property, object = { foo: "bar", baz: "qux" }; ' +
+                        'for (property in object) { if (object.hasOwnProperty(property)) { "wibble"; } }');
                 });
 
                 teardown(function () {
@@ -762,7 +765,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('while (true) { "foo"; }');
+                    report = parser.analyse('while (true) { "foo"; }');
                 });
 
                 teardown(function () {
@@ -802,7 +805,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('while (true) { if (true) { "foo"; } }');
+                    report = parser.analyse('while (true) { if (true) { "foo"; } }');
                 });
 
                 teardown(function () {
@@ -834,7 +837,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('do { "foo"; } while (true)');
+                    report = parser.analyse('do { "foo"; } while (true)');
                 });
 
                 teardown(function () {
@@ -874,7 +877,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('do { if (true) { "foo"; } } while (true)');
+                    report = parser.analyse('do { if (true) { "foo"; } } while (true)');
                 });
 
                 teardown(function () {
@@ -906,7 +909,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('try { "foo"; } catch (e) { e.message; }');
+                    report = parser.analyse('try { "foo"; } catch (e) { e.message; }');
                 });
 
                 teardown(function () {
@@ -946,7 +949,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('try { if (true) { "foo"; } } catch (e) { "bar"; }');
+                    report = parser.analyse('try { if (true) { "foo"; } } catch (e) { "bar"; }');
                 });
 
                 teardown(function () {
@@ -978,7 +981,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('try { "foo"; } catch (e) { if (true) { "bar"; } }');
+                    report = parser.analyse('try { "foo"; } catch (e) { if (true) { "bar"; } }');
                 });
 
                 teardown(function () {
@@ -1010,7 +1013,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo () { "bar"; }');
+                    report = parser.analyse('function foo () { "bar"; }');
                 });
 
                 teardown(function () {
@@ -1118,7 +1121,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo () { bar(); function bar () { "baz"; } }');
+                    report = parser.analyse('function foo () { bar(); function bar () { "baz"; } }');
                 });
 
                 teardown(function () {
@@ -1170,7 +1173,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo () { if (true) { "bar"; } }');
+                    report = parser.analyse('function foo () { if (true) { "bar"; } }');
                 });
 
                 teardown(function () {
@@ -1210,7 +1213,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = "bar";');
+                    report = parser.analyse('var foo = "bar";');
                 });
 
                 teardown(function () {
@@ -1250,7 +1253,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = true ? "bar" : "baz";');
+                    report = parser.analyse('var foo = true ? "bar" : "baz";');
                 });
 
                 teardown(function () {
@@ -1286,7 +1289,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = true ? "bar" : (false ? "baz" : "qux");');
+                    report = parser.analyse('var foo = true ? "bar" : (false ? "baz" : "qux");');
                 });
 
                 teardown(function () {
@@ -1322,7 +1325,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = true || false;');
+                    report = parser.analyse('var foo = true || false;');
                 });
 
                 teardown(function () {
@@ -1358,7 +1361,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = function () { "bar"; }');
+                    report = parser.analyse('var foo = function () { "bar"; }');
                 });
 
                 teardown(function () {
@@ -1398,7 +1401,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = function bar () { "baz"; }');
+                    report = parser.analyse('var foo = function bar () { "baz"; }');
                 });
 
                 teardown(function () {
@@ -1426,7 +1429,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo () { return true ? "bar" : "baz"; }');
+                    report = parser.analyse('function foo () { return true ? "bar" : "baz"; }');
                 });
 
                 teardown(function () {
@@ -1466,7 +1469,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo () { return true || false; }');
+                    report = parser.analyse('function foo () { return true || false; }');
                 });
 
                 teardown(function () {
@@ -1498,7 +1501,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo () { return function () { "bar"; }; }');
+                    report = parser.analyse('function foo () { return function () { "bar"; }; }');
                 });
 
                 teardown(function () {
@@ -1542,7 +1545,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo () { return function bar () { "baz"; }; }');
+                    report = parser.analyse('function foo () { return function bar () { "baz"; }; }');
                 });
 
                 teardown(function () {
@@ -1566,7 +1569,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('parseInt("10", true ? 10 : 8);');
+                    report = parser.analyse('parseInt("10", true ? 10 : 8);');
                 });
 
                 teardown(function () {
@@ -1598,7 +1601,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('parseInt("10", 10 || 8);');
+                    report = parser.analyse('parseInt("10", 10 || 8);');
                 });
 
                 teardown(function () {
@@ -1614,7 +1617,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('setTimeout(function () { "foo"; }, 1000);');
+                    report = parser.analyse('setTimeout(function () { "foo"; }, 1000);');
                 });
 
                 teardown(function () {
@@ -1654,7 +1657,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('setTimeout(function foo () { "bar"; }, 1000);');
+                    report = parser.analyse('setTimeout(function foo () { "bar"; }, 1000);');
                 });
 
                 teardown(function () {
@@ -1668,7 +1671,7 @@ if (testconfig.modules['moduleCore']) {
 
             suite('logical AND expression:', function () {
                 test('aggregate has correct cyclomatic complexity', function () {
-                    var report = this.analyse('var foo = true && false;', {});
+                    var report = parser.analyse('var foo = true && false;', {});
                     assert.strictEqual(report.cyclomatic, 2);
                 });
             });
@@ -1677,7 +1680,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = true || false;', {logicalor: false});
+                    report = parser.analyse('var foo = true || false;', {logicalor: false});
                 });
 
                 teardown(function () {
@@ -1693,7 +1696,9 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: "baz"; }', {switchcase: false});
+                    report = parser.analyse(
+                        'switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: "baz"; }',
+                        {switchcase: false});
                 });
 
                 teardown(function () {
@@ -1709,7 +1714,8 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }', {forin: true});
+                    report = parser.analyse(
+                        'var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }', {forin: true});
                 });
 
                 teardown(function () {
@@ -1725,7 +1731,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('try { "foo"; } catch (e) { e.message; }', {trycatch: true});
+                    report = parser.analyse('try { "foo"; } catch (e) { e.message; }', {trycatch: true});
                 });
 
                 teardown(function () {
@@ -1741,7 +1747,8 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('(function (foo) { if (foo === "foo") { console.log(foo); return; } "bar"; }("foo"));');
+                    report = parser.analyse(
+                        '(function (foo) { if (foo === "foo") { console.log(foo); return; } "bar"; }("foo"));');
                 });
 
                 teardown(function () {
@@ -1793,7 +1800,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('if ("foo" && "bar") { "baz"; }');
+                    report = parser.analyse('if ("foo" && "bar") { "baz"; }');
                 });
 
                 teardown(function () {
@@ -1829,7 +1836,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('(function () { "foo"; }).call(this);');
+                    report = parser.analyse('(function () { "foo"; }).call(this);');
                 });
 
                 teardown(function () {
@@ -1865,7 +1872,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = {}; foo.bar = function () { "foobar"; };');
+                    report = parser.analyse('var foo = {}; foo.bar = function () { "foobar"; };');
                 });
 
                 teardown(function () {
@@ -1905,7 +1912,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('"".bar = function () { "bar"; };');
+                    report = parser.analyse('"".bar = function () { "bar"; };');
                 });
 
                 teardown(function () {
@@ -1929,7 +1936,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = {};');
+                    report = parser.analyse('var foo = {};');
                 });
 
                 teardown(function () {
@@ -1969,7 +1976,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = { bar: "bar", baz: function () { "baz"; } };');
+                    report = parser.analyse('var foo = { bar: "bar", baz: function () { "baz"; } };');
                 });
 
                 teardown(function () {
@@ -2009,7 +2016,8 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = { bar: function () { if (true) { "bar"; } }, bar: function () { "bar"; } };');
+                    report = parser.analyse(
+                        'var foo = { bar: function () { if (true) { "bar"; } }, bar: function () { "bar"; } };');
                 });
 
                 teardown(function () {
@@ -2045,7 +2053,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('try { throw new Error("foo"); } catch (e) { alert(error.message); }');
+                    report = parser.analyse('try { throw new Error("foo"); } catch (e) { alert(error.message); }');
                 });
 
                 teardown(function () {
@@ -2081,7 +2089,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var a = 0; ++a; a++;');
+                    report = parser.analyse('var a = 0; ++a; a++;');
                 });
 
                 teardown(function () {
@@ -2121,7 +2129,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('[ "foo", "bar" ];');
+                    report = parser.analyse('[ "foo", "bar" ];');
                 });
 
                 teardown(function () {
@@ -2161,7 +2169,9 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('// This is a\n// multi-line\n// comment.\nparseInt(\n\t(function () {\n\t\t// Moar\n\t\t// commentz!\n\t\treturn [\n\t\t\t"1",\n\t\t\t"0"\n\t\t].join("");\n\t}()),\n\t10\n);');
+                    report = parser.analyse(
+                        '// This is a\n// multi-line\n// comment.\nparseInt(\n\t(function () {\n\t\t// Moar\n\t\t' +
+                        '// commentz!\n\t\treturn [\n\t\t\t"1",\n\t\t\t"0"\n\t\t].join("");\n\t}()),\n\t10\n);');
                 });
 
                 teardown(function () {
@@ -2207,7 +2217,9 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }');
+                    report = parser.analyse(
+                        'function foo (a, b) { if (a) { b(a); } else { a(b); } } ' +
+                        'function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }');
                 });
 
                 teardown(function () {
@@ -2251,7 +2263,9 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var callback = arguments[arguments.length-1] instanceof Function ? arguments[arguments.length-1] : function() {};');
+                    report = parser.analyse(
+                        'var callback = arguments[arguments.length-1] instanceof Function ? ' +
+                        'arguments[arguments.length-1] : function() {};');
                 });
 
                 teardown(function () {
@@ -2267,7 +2281,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo () { return; }');
+                    report = parser.analyse('function foo () { return; }');
                 });
 
                 teardown(function () {
@@ -2307,7 +2321,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo () { function bar () {} }');
+                    report = parser.analyse('function foo () { function bar () {} }');
                 });
 
                 teardown(function () {
@@ -2323,7 +2337,10 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }', {newmi: true});
+                    report = parser.analyse(
+                        'function foo (a, b) { if (a) { b(a); } else { a(b); } }' +
+                        'function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }',
+                        {newmi: true});
                 });
 
                 teardown(function () {
@@ -2339,7 +2356,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo (a) {} function bar (b) {} function baz (c) {}');
+                    report = parser.analyse('function foo (a) {} function bar (b) {} function baz (c) {}');
                 });
 
                 teardown(function () {
@@ -2359,7 +2376,8 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('function foo (a, b, c, d, e) {} function bar (a, b, c, d, e) {} function baz (a) {}');
+                    report = parser.analyse(
+                        'function foo (a, b, c, d, e) {} function bar (a, b, c, d, e) {} function baz (a) {}');
                 });
 
                 teardown(function () {
@@ -2379,7 +2397,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('require("./foo");');
+                    report = parser.analyse('require("./foo");');
                 });
 
                 teardown(function () {
@@ -2402,7 +2420,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('require("./bar");');
+                    report = parser.analyse('require("./bar");');
                 });
 
                 teardown(function () {
@@ -2418,7 +2436,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('require("./foo");\nrequire("./bar");\n\nrequire("./baz");');
+                    report = parser.analyse('require("./foo");\nrequire("./bar");\n\nrequire("./baz");');
                 });
 
                 teardown(function () {
@@ -2443,7 +2461,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = "./foo";require(foo);');
+                    report = parser.analyse('var foo = "./foo";require(foo);');
                 });
 
                 teardown(function () {
@@ -2466,7 +2484,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('require([ "foo" ], function (foo) {});');
+                    report = parser.analyse('require([ "foo" ], function (foo) {});');
                 });
 
                 teardown(function () {
@@ -2489,7 +2507,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('require([ "bar" ], function (barModule) {});');
+                    report = parser.analyse('require([ "bar" ], function (barModule) {});');
                 });
 
                 teardown(function () {
@@ -2505,7 +2523,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('require([ "foo", "bar", "baz" ], function (foo, bar, baz) {});');
+                    report = parser.analyse('require([ "foo", "bar", "baz" ], function (foo, bar, baz) {});');
                 });
 
                 teardown(function () {
@@ -2531,7 +2549,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = "foo";\nrequire([ foo ], function (foo) {});');
+                    report = parser.analyse('var foo = "foo";\nrequire([ foo ], function (foo) {});');
                 });
 
                 teardown(function () {
@@ -2553,7 +2571,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('var foo = [ "foo" ];\nrequire(foo, function (foo) {});');
+                    report = parser.analyse('var foo = [ "foo" ];\nrequire(foo, function (foo) {});');
                 });
 
                 teardown(function () {
@@ -2574,7 +2592,9 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('require.config({\n\tpaths: {\n\t\tfoo: "path/to/foo",\n\t\tbaz: "../wibble"\n\t}\n});\nrequire([ "foo", "bar", "baz" ], function (foo, bar, baz) {});');
+                    report = parser.analyse(
+                        'require.config({\n\tpaths: {\n\t\tfoo: "path/to/foo",\n\t\tbaz: "../wibble"\n\t}\n});\n' +
+                        'require([ "foo", "bar", "baz" ], function (foo, bar, baz) {});');
                 });
 
                 teardown(function () {
@@ -2602,7 +2622,7 @@ if (testconfig.modules['moduleCore']) {
                 var report;
 
                 setup(function () {
-                    report = this.analyse('require("foo", function (foo) {});');
+                    report = parser.analyse('require("foo", function (foo) {});');
                 });
 
                 teardown(function () {

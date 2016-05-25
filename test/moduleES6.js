@@ -12,16 +12,12 @@ var testconfig = require('./testconfig');
 if (testconfig.modules['moduleES6']) {
     parsers.forEach(function (parser) {
         suite('(' + parser.name + '): module (ES6):', function () {
-            setup(function () {
-                this.parse = parser.parse;
-                this.analyse = parser.analyse;
-            });
             suite('Functions', function () {
                 suite('generator functions:', function () {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('function* foo() {}');
+                        report = parser.analyse('function* foo() {}');
                     });
 
                     teardown(function () {
@@ -131,7 +127,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('for (let value of [10, 20, 30]) {}');
+                        report = parser.analyse('for (let value of [10, 20, 30]) {}');
                     });
 
                     teardown(function () {
@@ -197,7 +193,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('let foo = "bar"; const bar = "foo";');
+                        report = parser.analyse('let foo = "bar"; const bar = "foo";');
                     });
 
                     teardown(function () {
@@ -264,7 +260,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('class Foo {}; class Bar extends Foo { constructor() { super(); } }');
+                        report = parser.analyse('class Foo {}; class Bar extends Foo { constructor() { super(); } }');
                     });
 
                     teardown(function () {
@@ -376,7 +372,8 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('class Foo { constructor() { this.foobar = "foobar"; } }; class Bar extends Foo { constructor() { let test = super.foobar; } }');
+                        report = parser.analyse('class Foo { constructor() { this.foobar = "foobar"; } }; ' +
+                            'class Bar extends Foo { constructor() { let test = super.foobar; } }');
                     });
 
                     teardown(function () {
@@ -536,7 +533,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const iter = [2, 3, 4]; const spread = [1, ...iter, 5];');
+                        report = parser.analyse('const iter = [2, 3, 4]; const spread = [1, ...iter, 5];');
                     });
 
                     teardown(function () {
@@ -600,7 +597,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const iter = [2, 3, 4]; const foo = (b, a, r) => {}; foo(...iter);');
+                        report = parser.analyse('const iter = [2, 3, 4]; const foo = (b, a, r) => {}; foo(...iter);');
                     });
 
                     teardown(function () {
@@ -712,7 +709,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('(x, y) => { return x + y; };');
+                        report = parser.analyse('(x, y) => { return x + y; };');
                     });
 
                     teardown(function () {
@@ -820,7 +817,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('(x, y) => x + y;');
+                        report = parser.analyse('(x, y) => x + y;');
                     });
 
                     teardown(function () {
@@ -928,7 +925,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('function* foo() { let index = 0; yield index++; }');
+                        report = parser.analyse('function* foo() { let index = 0; yield index++; }');
                     });
 
                     teardown(function () {
@@ -1036,7 +1033,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('function* foo() { yield* [1, 2, 3]; }');
+                        report = parser.analyse('function* foo() { yield* [1, 2, 3]; }');
                     });
 
                     teardown(function () {
@@ -1146,7 +1143,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const foo = `bar`;');
+                        report = parser.analyse('const foo = `bar`;');
                     });
 
                     teardown(function () {
@@ -1206,7 +1203,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const baz = "bar"; const foo = `fuz${baz}`;');
+                        report = parser.analyse('const baz = "bar"; const foo = `fuz${baz}`;');
                     });
 
                     teardown(function () {
@@ -1266,7 +1263,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const baz = "bar"; const foo = `fuz${JSON.stringify(baz)}`;');
+                        report = parser.analyse('const baz = "bar"; const foo = `fuz${JSON.stringify(baz)}`;');
                     });
 
                     teardown(function () {
@@ -1326,7 +1323,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const foo = tagged`bar`;');
+                        report = parser.analyse('const foo = tagged`bar`;');
                     });
 
                     teardown(function () {
@@ -1388,7 +1385,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const bar = { a: 1, b: 2, c: 3 }; const { a, b, c } = bar;');
+                        report = parser.analyse('const bar = { a: 1, b: 2, c: 3 }; const { a, b, c } = bar;');
                     });
 
                     teardown(function () {
@@ -1452,7 +1449,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const { a, b, c } = { a: 1, b: 2, c: 3 };');
+                        report = parser.analyse('const { a, b, c } = { a: 1, b: 2, c: 3 };');
                     });
 
                     teardown(function () {
@@ -1516,7 +1513,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const id = "z"; const { [id]: foo } = { z: "bar" };');
+                        report = parser.analyse('const id = "z"; const { [id]: foo } = { z: "bar" };');
                     });
 
                     teardown(function () {
@@ -1580,7 +1577,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('let a, b; ({a, b} = { a:1, b:2 });');
+                        report = parser.analyse('let a, b; ({a, b} = { a:1, b:2 });');
                     });
 
                     teardown(function () {
@@ -1644,7 +1641,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const foo = [1, 2]; let [a, b] = foo;');
+                        report = parser.analyse('const foo = [1, 2]; let [a, b] = foo;');
                     });
 
                     teardown(function () {
@@ -1708,7 +1705,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('let [a, b] = [1, 2];');
+                        report = parser.analyse('let [a, b] = [1, 2];');
                     });
 
                     teardown(function () {
@@ -1772,7 +1769,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const [a, b, ...rest] = [1, 2, 3, 4, 5];');
+                        report = parser.analyse('const [a, b, ...rest] = [1, 2, 3, 4, 5];');
                     });
 
                     teardown(function () {
@@ -1840,7 +1837,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('function foo(first, bar = "baz", ...items) {}');
+                        report = parser.analyse('function foo(first, bar = "baz", ...items) {}');
                     });
 
                     teardown(function () {
@@ -1950,7 +1947,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('class Foo {}');
+                        report = parser.analyse('class Foo {}');
                     });
 
                     teardown(function () {
@@ -2010,7 +2007,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('class Bar {} class Foo extends Bar {}');
+                        report = parser.analyse('class Bar {} class Foo extends Bar {}');
                     });
 
                     teardown(function () {
@@ -2070,7 +2067,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('class Foo { constructor() { this.bar = 1; } }');
+                        report = parser.analyse('class Foo { constructor() { this.bar = 1; } }');
                     });
 
                     teardown(function () {
@@ -2178,7 +2175,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('class Foo { bar() { this.baz = 1; } }');
+                        report = parser.analyse('class Foo { bar() { this.baz = 1; } }');
                     });
 
                     teardown(function () {
@@ -2286,7 +2283,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('class Foo { get bar() { return "bar"; } }');
+                        report = parser.analyse('class Foo { get bar() { return "bar"; } }');
                     });
 
                     teardown(function () {
@@ -2394,7 +2391,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('class Foo { set bar(data) { this._bar = data; } }');
+                        report = parser.analyse('class Foo { set bar(data) { this._bar = data; } }');
                     });
 
                     teardown(function () {
@@ -2502,7 +2499,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('class Foo { static bar() { return "bar"; } }');
+                        report = parser.analyse('class Foo { static bar() { return "bar"; } }');
                     });
 
                     teardown(function () {
@@ -2610,7 +2607,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('class Foo { static bar() { return "bar"; } }');
+                        report = parser.analyse('class Foo { static bar() { return "bar"; } }');
                     });
 
                     teardown(function () {
@@ -2718,7 +2715,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('class Foo { constructor() { new.target.name; } }');
+                        report = parser.analyse('class Foo { constructor() { new.target.name; } }');
                     });
 
                     teardown(function () {
@@ -2826,7 +2823,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const Foo = class {}');
+                        report = parser.analyse('const Foo = class {}');
                     });
 
                     teardown(function () {
@@ -2886,7 +2883,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const Foo = class Foo {}');
+                        report = parser.analyse('const Foo = class Foo {}');
                     });
 
                     teardown(function () {
@@ -2946,7 +2943,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const Bar = class {}; const Foo = class extends Bar {};');
+                        report = parser.analyse('const Bar = class {}; const Foo = class extends Bar {};');
                     });
 
                     teardown(function () {
@@ -3006,7 +3003,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const Bar = class Bar {}; const Foo = class Foo extends Bar {};');
+                        report = parser.analyse('const Bar = class Bar {}; const Foo = class Foo extends Bar {};');
                     });
 
                     teardown(function () {
@@ -3067,7 +3064,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const Foo = class { constructor() { this.bar = 1; } }');
+                        report = parser.analyse('const Foo = class { constructor() { this.bar = 1; } }');
                     });
 
                     teardown(function () {
@@ -3175,7 +3172,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const Foo = class { bar() { this.baz = 1; } }');
+                        report = parser.analyse('const Foo = class { bar() { this.baz = 1; } }');
                     });
 
                     teardown(function () {
@@ -3283,7 +3280,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const Foo = class { get bar() { return "bar"; } }');
+                        report = parser.analyse('const Foo = class { get bar() { return "bar"; } }');
                     });
 
                     teardown(function () {
@@ -3391,7 +3388,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const Foo = class { set bar(data) { this._bar = data; } }');
+                        report = parser.analyse('const Foo = class { set bar(data) { this._bar = data; } }');
                     });
 
                     teardown(function () {
@@ -3499,7 +3496,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const Foo = class { static bar() { return "bar"; } }');
+                        report = parser.analyse('const Foo = class { static bar() { return "bar"; } }');
                     });
 
                     teardown(function () {
@@ -3607,7 +3604,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const Foo = class { constructor() { new.target.name; } }');
+                        report = parser.analyse('const Foo = class { constructor() { new.target.name; } }');
                     });
 
                     teardown(function () {
@@ -3717,7 +3714,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('export * from "module";');
+                        report = parser.analyse('export * from "module";');
                     });
 
                     teardown(function () {
@@ -3777,7 +3774,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('export default class Foo {}');
+                        report = parser.analyse('export default class Foo {}');
                     });
 
                     teardown(function () {
@@ -3837,7 +3834,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('export default function foo () { return "bar"; }');
+                        report = parser.analyse('export default function foo () { return "bar"; }');
                     });
 
                     teardown(function () {
@@ -3945,7 +3942,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('export { foo, bar } from "module";');
+                        report = parser.analyse('export { foo, bar } from "module";');
                     });
 
                     teardown(function () {
@@ -4005,7 +4002,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('export function foo () { return "bar"; }');
+                        report = parser.analyse('export function foo () { return "bar"; }');
                     });
 
                     teardown(function () {
@@ -4113,7 +4110,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const s_FOO = () => { return "bar"; }; export default s_FOO;');
+                        report = parser.analyse('const s_FOO = () => { return "bar"; }; export default s_FOO;');
                     });
 
                     teardown(function () {
@@ -4221,7 +4218,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const s_FOO = () => { return "bar"; }; export { s_FOO };');
+                        report = parser.analyse('const s_FOO = () => { return "bar"; }; export { s_FOO };');
                     });
 
                     teardown(function () {
@@ -4329,7 +4326,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('const s_FOO = () => { return "bar"; }; export { s_FOO as s_BAR };');
+                        report = parser.analyse('const s_FOO = () => { return "bar"; }; export { s_FOO as s_BAR };');
                     });
 
                     teardown(function () {
@@ -4437,7 +4434,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('import foo from "module";');
+                        report = parser.analyse('import foo from "module";');
                     });
 
                     teardown(function () {
@@ -4509,7 +4506,8 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('import foo from "./foo.js";\nimport bar from "./bar.js";\nimport baz from "./baz.js";');
+                        report = parser.analyse(
+                            'import foo from "./foo.js";\nimport bar from "./bar.js";\nimport baz from "./baz.js";');
                     });
 
                     teardown(function () {
@@ -4605,7 +4603,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('import {baz} from "module";');
+                        report = parser.analyse('import {baz} from "module";');
                     });
 
                     teardown(function () {
@@ -4677,7 +4675,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('import {foo as bar} from "module";');
+                        report = parser.analyse('import {foo as bar} from "module";');
                     });
 
                     teardown(function () {
@@ -4749,7 +4747,7 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('import * as foo from "mod.js";');
+                        report = parser.analyse('import * as foo from "mod.js";');
                     });
 
                     teardown(function () {
@@ -4821,7 +4819,9 @@ if (testconfig.modules['moduleES6']) {
                     var report;
 
                     setup(function () {
-                        report = this.analyse('import foo from "./foo.js";\nimport {bar} from "./bar.js";\nimport {bar as baz} from "./bar.js";\nimport * as bam from "./bam.js";');
+                        report = parser.analyse(
+                            'import foo from "./foo.js";\nimport {bar} from "./bar.js";\n' +
+                            'import {bar as baz} from "./bar.js";\nimport * as bam from "./bam.js";');
                     });
 
                     teardown(function () {
