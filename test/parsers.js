@@ -14,7 +14,9 @@ var testconfig = require('./testconfig');
 var esmRegex = /(^\s*|[}\);\n]\s*)(import\s*(['"]|(\*\s+as\s+)?[^"'\(\)\n;]+\s*from\s*['"]|\{)|export\s+\*\s+from\s+["']|export\s* (\{|default|function|class|var|const|let|async\s+function))/;
 
 var acornOptions = { locations: true };
-var babylonOptions = { ecmaVersion: 6 };
+var babylonOptions = { plugins: ['asyncFunctions', 'asyncGenerators', 'classConstructorCall', 'classProperties',
+    'decorators', 'doExpressions', 'exportExtensions', 'exponentiationOperator', 'flow', 'functionBind', 'functionSent',
+    'jsx', 'objectRestSpread', 'trailingFunctionCommas'] };
 var esprimaOptions = { loc: true };
 var espreeOptions = { loc: true, ecmaVersion: 6, ecmaFeatures: { jsx: true } };
 

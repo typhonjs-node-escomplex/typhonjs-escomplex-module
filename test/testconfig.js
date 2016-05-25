@@ -10,9 +10,10 @@ module.exports.modules =
     'moduleAPI': true,
     'moduleCore': true,
     'moduleES6': true,
+    'moduleES7': true,
     'operands': true,
     'operators': true,
-    'traits': false,
+    'traits': true,
     'walker': true,
     'walkerES6': true
 };

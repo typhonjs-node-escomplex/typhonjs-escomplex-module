@@ -25,6 +25,7 @@ function loadSyntaxModules () {
     var modules = [];
 
     modules['BlockStatement'] = BlockStatement;
+    modules['BindExpression'] = BindExpression;
     modules['BooleanLiteral'] = BooleanLiteral;
     modules['ClassMethod'] = ClassMethod;
     modules['Decorator'] = Decorator;
@@ -49,16 +50,15 @@ function BlockStatement () {
     return traits.actualise(0, 0, undefined, undefined, ['body', 'directives']);
 }
 
+//TODO: create test case and verify Halstead values.
+function BindExpression () { return traits.actualise(0, 0, undefined, undefined, ['object', 'callee']); }
+
 function BooleanLiteral () { return traits.actualise(0, 0, undefined, function (node) { return node.value; }); }
 
 function ClassMethod () {
     return traits.actualise(0, 0, 'function',
         function (node) { return safeName(node.key); },
         ['decorators', 'value', 'body', 'params'],
-        // With class methods the FunctionExpression is stored in `value`, but doesn't have an `id` for the name which
-        // needs to be assigned from the `key` Identifier. Since this assignable name is forwarded on the child `key`
-        // is skipped from processing.
-        //function (node) { return safeName(node.key); },
         undefined,
         true
     );
