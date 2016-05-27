@@ -2,21 +2,37 @@
 
 'use strict';
 
-var operatorTraits = require('./operators'), operandTraits = require('./operands');
-
 exports.actualise = actualise;
+exports.actualiseOperands = actualiseOperands;
+exports.actualiseOperators = actualiseOperators;
 
 function actualise (lloc, cyclomatic, operators, operands, ignoreKeys, assignableName, newScope, dependencies) {
     return {
         lloc: lloc,
         cyclomatic: cyclomatic,
-        operators: operatorTraits.actualise(safeArray(operators)),
-        operands: operandTraits.actualise(safeArray(operands)),
+        operators: actualiseOperators(safeArray(operators)),
+        operands: actualiseOperands(safeArray(operands)),
         ignoreKeys: safeArray(ignoreKeys),
         assignableName: assignableName,
         newScope: newScope,
         dependencies: dependencies
     };
+}
+
+function actualiseOperands (identifiers) {
+    return identifiers.map(function (identifier) {
+        return { identifier: identifier };
+    });
+}
+
+function actualiseOperators (properties) {
+    return properties.map(function (property) {
+        if (property && typeof property.identifier !== 'undefined') {
+            return property;
+        }
+
+        return { identifier: property };
+    });
 }
 
 function safeArray (thing) {

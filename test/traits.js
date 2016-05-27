@@ -1,65 +1,33 @@
 'use strict';
 
-var assert, mockery, spooks, modulePath;
+var assert, modulePath;
 
 assert = require('chai').assert;
-mockery = require('mockery');
-spooks = require('spooks');
 
 modulePath = '../src/traits';
 var testconfig = require('./testconfig');
 
 if (testconfig.modules['traits']) {
-    mockery.registerAllowable(modulePath);
-
     suite('index:', function () {
-        var log;
+        var index;
 
         setup(function () {
-            log = {};
-            mockery.enable({ useCleanCache: true });
-            mockery.registerMock('./operands', {
-                actualise: spooks.fn({
-                    name: 'operands.actualise',
-                    log: log,
-                    results: [ 'operands result' ]
-                })
-            });
-            mockery.registerMock('./operators', {
-                actualise: spooks.fn({
-                    name: 'operators.actualise',
-                    log: log,
-                    results: [ 'operators result' ]
-                })
-            });
+            index = require(modulePath);
         });
 
         teardown(function () {
-            mockery.deregisterMock('./operands');
-            mockery.deregisterMock('./operators');
-            mockery.disable();
-            log = undefined;
-        });
-
-        test('require does not throw', function () {
-            assert.doesNotThrow(function () {
-                require(modulePath);
-            });
-        });
-
-        test('require returns object', function () {
-            assert.isObject(require(modulePath));
+            index = undefined;
         });
 
         suite('require:', function () {
-            var index;
-
-            setup(function () {
-                index = require(modulePath);
+            test('require does not throw', function () {
+                assert.doesNotThrow(function () {
+                    require(modulePath);
+                });
             });
 
-            teardown(function () {
-                index = undefined;
+            test('require returns object', function () {
+                assert.isObject(require(modulePath));
             });
 
             test('actualise function is exported', function () {
@@ -72,14 +40,40 @@ if (testconfig.modules['traits']) {
                 });
             });
 
-            test('operators.actualise was not called', function () {
-                assert.strictEqual(log.counts['operators.actualise'], 0);
+            test('actualiseOperands function is exported', function () {
+                assert.isFunction(index.actualiseOperands);
             });
 
-            test('operands.actualise was not called', function () {
-                assert.strictEqual(log.counts['operands.actualise'], 0);
+            test('actualiseOperands throws when identifiers is object', function () {
+                assert.throws(function () {
+                    index.actualiseOperands({});
+                });
             });
 
+            test('actualiseOperands does not throw when identifiers is array', function () {
+                assert.doesNotThrow(function () {
+                    index.actualiseOperands([]);
+                });
+            });
+
+            test('actualiseOperators function is exported', function () {
+                assert.isFunction(index.actualiseOperators);
+            });
+
+            test('actualiseOperators throws when properties is object', function () {
+                assert.throws(function () {
+                    index.actualiseOperators({});
+                });
+            });
+
+            test('actualiseOperators does not throw when properties is array', function () {
+                assert.doesNotThrow(function () {
+                    index.actualiseOperators([]);
+                });
+            });
+        });
+
+        suite('actualise:', function () {
             suite('string arguments:', function () {
                 var result;
 
@@ -89,28 +83,6 @@ if (testconfig.modules['traits']) {
 
                 teardown(function () {
                     result = undefined;
-                });
-
-                test('operators.actualise was called once', function () {
-                    assert.strictEqual(log.counts['operators.actualise'], 1);
-                });
-
-                test('operators.actualise was called correctly', function () {
-                    assert.lengthOf(log.args['operators.actualise'][0], 1);
-                    assert.isArray(log.args['operators.actualise'][0][0]);
-                    assert.lengthOf(log.args['operators.actualise'][0][0], 1);
-                    assert.strictEqual(log.args['operators.actualise'][0][0][0], 'bosoya');
-                });
-
-                test('operands.actualise was called once', function () {
-                    assert.strictEqual(log.counts['operands.actualise'], 1);
-                });
-
-                test('operands.actualise was called correctly', function () {
-                    assert.lengthOf(log.args['operands.actualise'][0], 1);
-                    assert.isArray(log.args['operands.actualise'][0][0]);
-                    assert.lengthOf(log.args['operands.actualise'][0][0], 1);
-                    assert.strictEqual(log.args['operands.actualise'][0][0][0], 'umahasha');
                 });
 
                 test('result was object', function () {
@@ -126,11 +98,11 @@ if (testconfig.modules['traits']) {
                 });
 
                 test('operators was correct', function () {
-                    assert.strictEqual(result.operators, 'operators result');
+                    assert.strictEqual(JSON.stringify(result.operators), '[{"identifier":"bosoya"}]');
                 });
 
                 test('operands was correct', function () {
-                    assert.strictEqual(result.operands, 'operands result');
+                    assert.strictEqual(JSON.stringify(result.operands), '[{"identifier":"umahasha"}]');
                 });
 
                 test('ignoreKeys was correct', function () {
@@ -161,20 +133,6 @@ if (testconfig.modules['traits']) {
 
                 teardown(function () {
                     result = undefined;
-                });
-
-                test('operators.actualise was called correctly', function () {
-                    assert.lengthOf(log.args['operators.actualise'][0], 1);
-                    assert.isArray(log.args['operators.actualise'][0][0]);
-                    assert.lengthOf(log.args['operators.actualise'][0][0], 1);
-                    assert.strictEqual(log.args['operators.actualise'][0][0][0], '3');
-                });
-
-                test('operands.actualise was called correctly', function () {
-                    assert.lengthOf(log.args['operands.actualise'][0], 1);
-                    assert.isArray(log.args['operands.actualise'][0][0]);
-                    assert.lengthOf(log.args['operands.actualise'][0][0], 1);
-                    assert.strictEqual(log.args['operands.actualise'][0][0][0], '4');
                 });
 
                 test('lloc was correct', function () {
@@ -215,21 +173,164 @@ if (testconfig.modules['traits']) {
                     result = undefined;
                 });
 
-                test('operators.actualise was called correctly', function () {
-                    assert.lengthOf(log.args['operators.actualise'][0], 1);
-                    assert.isArray(log.args['operators.actualise'][0][0]);
-                    assert.lengthOf(log.args['operators.actualise'][0][0], 0);
-                });
-
-                test('operands.actualise was called correctly', function () {
-                    assert.lengthOf(log.args['operands.actualise'][0], 1);
-                    assert.isArray(log.args['operands.actualise'][0][0]);
-                    assert.lengthOf(log.args['operands.actualise'][0][0], 0);
-                });
-
                 test('ignoreKeys was correct', function () {
                     assert.isArray(result.ignoreKeys);
                     assert.lengthOf(result.ignoreKeys, 0);
+                });
+            });
+        });
+
+        suite('actualiseOperands:', function () {
+            suite('no identifiers:', function () {
+                var result;
+
+                setup(function () {
+                    result = index.actualiseOperands([]);
+                });
+
+                teardown(function () {
+                    result = undefined;
+                });
+
+                test('result was array', function () {
+                    assert.isArray(result);
+                });
+
+                test('result was empty', function () {
+                    assert.lengthOf(result, 0);
+                });
+            });
+
+            suite('one identifier:', function () {
+                var result;
+
+                setup(function () {
+                    result = index.actualiseOperands([ 'foo' ]);
+                });
+
+                teardown(function () {
+                    result = undefined;
+                });
+
+                test('result contained one item', function () {
+                    assert.lengthOf(result, 1);
+                });
+
+                test('first item was correct', function () {
+                    assert.isObject(result[0]);
+                    assert.strictEqual(result[0].identifier, 'foo');
+                });
+            });
+
+            suite('two identifiers:', function () {
+                var result;
+
+                setup(function () {
+                    result = index.actualiseOperands([ 'bar', 'baz' ]);
+                });
+
+                teardown(function () {
+                    result = undefined;
+                });
+
+                test('result contained two items', function () {
+                    assert.lengthOf(result, 2);
+                });
+
+                test('first item was correct', function () {
+                    assert.strictEqual(result[0].identifier, 'bar');
+                });
+
+                test('second item was correct', function () {
+                    assert.strictEqual(result[1].identifier, 'baz');
+                });
+            });
+        });
+
+        suite('actualiseOperators:', function () {
+            suite('no properties:', function () {
+                var result;
+
+                setup(function () {
+                    result = index.actualiseOperators([]);
+                });
+
+                teardown(function () {
+                    result = undefined;
+                });
+
+                test('result was array', function () {
+                    assert.isArray(result);
+                });
+
+                test('result was empty', function () {
+                    assert.lengthOf(result, 0);
+                });
+            });
+
+            suite('one property with identifier:', function () {
+                var result;
+
+                setup(function () {
+                    result = index.actualiseOperators([ { identifier: 'foo' } ]);
+                });
+
+                teardown(function () {
+                    result = undefined;
+                });
+
+                test('result contained one item', function () {
+                    assert.lengthOf(result, 1);
+                });
+
+                test('first item was correct', function () {
+                    assert.isObject(result[0]);
+                    assert.strictEqual(result[0].identifier, 'foo');
+                });
+            });
+
+            suite('one identifier:', function () {
+                var result;
+
+                setup(function () {
+                    result = index.actualiseOperators([ 'foo' ]);
+                });
+
+                teardown(function () {
+                    result = undefined;
+                });
+
+                test('result contained one item', function () {
+                    assert.lengthOf(result, 1);
+                });
+
+                test('first item was correct', function () {
+                    assert.isObject(result[0]);
+                    assert.strictEqual(result[0].identifier, 'foo');
+                });
+            });
+
+            suite('two properties:', function () {
+                var result;
+
+                setup(function () {
+                    result = index.actualiseOperators([ 'bar', { identifier: 'baz' } ]);
+                });
+
+                teardown(function () {
+                    result = undefined;
+                });
+
+                test('result contained two items', function () {
+                    assert.lengthOf(result, 2);
+                });
+
+                test('first item was correct', function () {
+                    assert.strictEqual(result[0].identifier, 'bar');
+                });
+
+                test('second item was correct', function () {
+                    assert.strictEqual(result[1].identifier, 'baz');
                 });
             });
         });

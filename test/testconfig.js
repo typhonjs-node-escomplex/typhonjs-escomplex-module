@@ -7,12 +7,10 @@
  */
 module.exports.modules =
 {
-    'moduleAPI': true,     //
-    'moduleBabylon': true, //
-    'moduleCore': true,    //
-    'moduleES6': true,      //
-    'operands': true,
-    'operators': true,
+    'moduleAPI': true,
+    'moduleBabylon': true,
+    'moduleCore': true,
+    'moduleES6': true,
     'traits': true,
     'walker': true,
     'walkerES6': true

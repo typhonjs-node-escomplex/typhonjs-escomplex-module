@@ -11,8 +11,6 @@ syntaxDefinitionsBabylon = require('./walkerSyntaxBabylon');
 
 exports.walk = walk;
 
-var TEST = true;
-
 // Settings
 // - trycatch (Boolean)
 // - forin (Boolean)
@@ -31,14 +29,12 @@ function walk (tree, settings, callbacks) {
 
     syntaxDefinitions.get(syntaxes, settings);
     syntaxDefinitionsES6.get(syntaxes, settings);
+    syntaxDefinitionsBabylon.get(syntaxes, settings);
 
     if (Array.isArray(tree.body)) {
         visitNodes(tree.body);
     }
     else if (typeof tree.program === 'object' && Array.isArray(tree.program.body)) {
-        // Adds Babylon specific node syntax that differs from ESTree spec.
-        syntaxDefinitionsBabylon.get(syntaxes, settings);
-
         visitNodes(tree.program.body);
     }
     else {
@@ -98,4 +94,3 @@ function walk (tree, settings, callbacks) {
         visitor(child, assignedName);
     }
 }
-
