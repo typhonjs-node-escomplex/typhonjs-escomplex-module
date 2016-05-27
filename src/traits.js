@@ -6,7 +6,7 @@ exports.actualise = actualise;
 exports.actualiseOperands = actualiseOperands;
 exports.actualiseOperators = actualiseOperators;
 
-function actualise (lloc, cyclomatic, operators, operands, ignoreKeys, assignableName, newScope, dependencies) {
+function actualise (lloc, cyclomatic, operators, operands, assignableName, ignoreKeys, newScope, dependencies) {
     return {
         lloc: lloc,
         cyclomatic: cyclomatic,

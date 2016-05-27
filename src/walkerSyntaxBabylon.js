@@ -44,23 +44,23 @@ function setSyntax (syntaxes, name, settings) {
     syntaxes[name] = syntaxModules[name](settings);
 }
 
-function BindExpression () { return traits.actualise(0, 0, undefined, undefined); }
+function BindExpression () { return traits.actualise(0, 0); }
 
 function BooleanLiteral () { return traits.actualise(0, 0, undefined, function (node) { return node.value; }); }
 
 function ClassMethod () {
     return traits.actualise(0, 0, 'function',
         function (node) { return safeName(node.key); },
-        // Note: must skip key as the assigned name is forwarded on to FunctionExpression.
-        'key', //['decorators', 'value', 'body', 'params'],
         undefined,
+        // Note: must skip key as the assigned name is forwarded on to FunctionExpression.
+        'key',
         true
     );
 }
 
-function Decorator () { return traits.actualise(0, 0, undefined, undefined); }
+function Decorator () { return traits.actualise(0, 0); }
 
-function Directive () { return traits.actualise(1, 0, undefined, undefined); }
+function Directive () { return traits.actualise(1, 0); }
 
 function DirectiveLiteral () {
     return traits.actualise(0, 0, undefined,
@@ -87,7 +87,6 @@ function ObjectProperty () {
                 typeof node.shorthand === 'boolean' && !node.shorthand ? ':' : undefined;
         },
         undefined,
-        undefined, // [ 'key', 'value' ],
         function (node) {
             return typeof node.shorthand === 'undefined' ? undefined :
                 typeof node.shorthand === 'boolean' && !node.shorthand ? undefined : safeName(node.key);
@@ -95,9 +94,9 @@ function ObjectProperty () {
     );
 }
 
-function RestProperty () { return traits.actualise(0, 0, undefined, undefined); }
+function RestProperty () { return traits.actualise(0, 0); }
 
-function SpreadProperty () { return traits.actualise(0, 0, undefined, undefined); }
+function SpreadProperty () { return traits.actualise(0, 0); }
 
 function StringLiteral () {
     return traits.actualise(0, 0, undefined,

@@ -108,11 +108,11 @@ if (testconfig.modules['traits']) {
                 test('ignoreKeys was correct', function () {
                     assert.isArray(result.ignoreKeys);
                     assert.lengthOf(result.ignoreKeys, 1);
-                    assert.strictEqual(result.ignoreKeys[0], 'tikki');
+                    assert.strictEqual(result.ignoreKeys[0], 'ottobo');
                 });
 
                 test('assignableName was correct', function () {
-                    assert.strictEqual(result.assignableName, 'ottobo');
+                    assert.strictEqual(result.assignableName, 'tikki');
                 });
 
                 test('newScope was correct', function () {
@@ -146,11 +146,11 @@ if (testconfig.modules['traits']) {
                 test('ignoreKeys was correct', function () {
                     assert.isArray(result.ignoreKeys);
                     assert.lengthOf(result.ignoreKeys, 1);
-                    assert.strictEqual(result.ignoreKeys[0], '5');
+                    assert.strictEqual(result.ignoreKeys[0], '6');
                 });
 
                 test('assignableName was correct', function () {
-                    assert.strictEqual(result.assignableName, '6');
+                    assert.strictEqual(JSON.stringify(result.assignableName), '["5"]');
                 });
 
                 test('newScope was correct', function () {

@@ -14,7 +14,7 @@ function getSyntax (syntaxes, settings) {
 
     for (name in syntaxModules) {
         if (syntaxModules.hasOwnProperty(name)) {
-            setSyntax(syntaxes, name, settings);
+            setSyntax (syntaxes, name, settings);
         }
     }
 
@@ -58,7 +58,7 @@ function setSyntax (syntaxes, name, settings) {
 }
 
 function AssignmentPattern () {
-    return traits.actualise(0, 0, function (node) { return node.operator; }, undefined, undefined, // [ 'left', 'right' ],
+    return traits.actualise(0, 0, function (node) { return node.operator; }, undefined,
         function (node) {
             if (node.left.type === 'MemberExpression') {
                 return safeName(node.left.object) + '.' + node.left.property.name;
@@ -72,44 +72,36 @@ function AssignmentPattern () {
     );
 }
 
-function ArrayPattern () { return traits.actualise(0, 0, '[]', undefined); }//, 'elements'); }
+function ArrayPattern () { return traits.actualise(0, 0, '[]'); }
 
 function ArrowFunctionExpression () {
-    return traits.actualise(0, 0, 'arrowfunction', undefined,
-        undefined, // [ 'params', 'body' ],
-        undefined, true);
+    return traits.actualise(0, 0, 'arrowfunction', undefined, undefined, undefined, true);
 }
 
-function ClassBody () { return traits.actualise(0, 0, undefined, undefined); } //, 'body'); }
+function ClassBody () { return traits.actualise(0, 0); }
 
-function ClassDeclaration() { return traits.actualise(1, 0, 'class', undefined); }
+function ClassDeclaration() { return traits.actualise(1, 0, 'class'); }
 
-function ClassExpression() { return traits.actualise(1, 0, 'class', undefined); }
+function ClassExpression() { return traits.actualise(1, 0, 'class'); }
 
-function ExportAllDeclaration () { return traits.actualise(0, 0, ['export', '*'], undefined); } //, 'source'); }
+function ExportAllDeclaration () { return traits.actualise(0, 0, ['export', '*']); }
 
-function ExportDefaultDeclaration() { return traits.actualise(0, 0, ['export', 'default'], undefined); } //, 'declaration'); }
+function ExportDefaultDeclaration() { return traits.actualise(0, 0, ['export', 'default']); }
 
-function ExportNamedDeclaration() {
-    return traits.actualise(0, 0, ['export', '{}'], undefined); //, ['declaration', 'specifiers']);
-}
+function ExportNamedDeclaration() { return traits.actualise(0, 0, ['export', '{}']); }
 
 function ExportSpecifier() {
-    return traits.actualise(0, 0,
-        function (node) {
-            return node.exported.name === node.local.name ? undefined : 'as';
-        },
-        undefined//, ['exported', 'local']
-    );
+    return traits.actualise(0, 0, function (node) {
+        return node.exported.name === node.local.name ? undefined : 'as';
+    });
 }
 
 function ForOfStatement (settings) {
-    return traits.actualise(1, function () { return settings.forin ? 1 : 0; }, 'forof', undefined);
+    return traits.actualise(1, function () { return settings.forin ? 1 : 0; }, 'forof');
 }
 
 function ImportDeclaration () {
-    return traits.actualise(0, 0, ['import', 'from'], undefined, undefined, //'specifiers',
-        undefined, undefined,
+    return traits.actualise(0, 0, ['import', 'from'], undefined, undefined, undefined, undefined,
         function (node) {
             return {
                 line: node.source.loc.start.line,
@@ -120,16 +112,13 @@ function ImportDeclaration () {
     );
 }
 
-function ImportDefaultSpecifier() { return traits.actualise(0, 0, undefined, undefined); } //, 'local'); }
+function ImportDefaultSpecifier() { return traits.actualise(0, 0); }
 
-function ImportNamespaceSpecifier() { return traits.actualise(0, 0, ['import', '*', 'as'], undefined); } //, 'local'); }
+function ImportNamespaceSpecifier() { return traits.actualise(0, 0, ['import', '*', 'as']); }
 
 function ImportSpecifier() {
     return traits.actualise(0, 0,
-        function (node) {
-            return node.imported.name === node.local.name ? '{}' : ['{}', 'as'];
-        },
-        undefined//, ['local', 'imported']
+        function (node) { return node.imported.name === node.local.name ? '{}' : ['{}', 'as']; }
     );
 }
 
@@ -139,50 +128,41 @@ function MetaProperty () {
         function(node) {
             return typeof node.meta === 'string' && typeof node.property === 'string' ? [node.meta, node.property] :
                 undefined;
-        }//, [ 'meta', 'property' ]
+        }
     );
 }
 
 function MethodDefinition () {
-    // Note: must skip key as the assigned name is forwarded on to FunctionExpression.
-    return traits.actualise(0, 0, undefined, undefined, 'key', //'value',
+    return traits.actualise(0, 0, undefined, undefined,
         // With class methods the FunctionExpression is stored in `value`, but doesn't have an `id` for the name which
         // needs to be assigned from the `key` Identifier. Since this assignable name is forwarded on the child `key`
         // is skipped from processing.
-        function (node) { return safeName(node.key); }
+        function (node) { return safeName(node.key); },
+        // Note: must skip key as the assigned name is forwarded on to FunctionExpression.
+        'key'
     );
 }
 
-function ObjectPattern () { return traits.actualise(0, 0, '{}', undefined); }
+function ObjectPattern () { return traits.actualise(0, 0, '{}'); }
 
 function RestElement() {
-    return traits.actualise(0, 0, undefined, undefined, undefined, //'argument',
-        function (node) {
-            return '...' + safeName(node.argument);
-        }
-    );
+    return traits.actualise(0, 0, undefined, undefined, function (node) { return '...' + safeName(node.argument); });
 }
 
 function SpreadElement() {
-    return traits.actualise(0, 0, undefined, undefined, undefined, //'argument',
-        function (node) {
-            return '...' + safeName(node.argument);
-        }
-    );
+    return traits.actualise(0, 0, undefined, undefined, function (node) { return '...' + safeName(node.argument); });
 }
 
 function Super () { return traits.actualise(0, 0, undefined, 'super'); }
 
-function TaggedTemplateExpression () { return traits.actualise(0, 0, undefined, undefined); }//, [ 'tag', 'quasi' ]); }
+function TaggedTemplateExpression () { return traits.actualise(0, 0); }
 
 function TemplateElement () {
-    return traits.actualise(0, 0, undefined,
-        function (node) {
-            return node.value.cooked !== '' ? node.value.cooked : undefined;
-        }
-    );
+    return traits.actualise(0, 0, undefined, function (node) {
+        return node.value.cooked !== '' ? node.value.cooked : undefined;
+    });
 }
 
-function TemplateLiteral () { return traits.actualise(0, 0, undefined, undefined); }//, [ 'quasis', 'expressions' ]);}
+function TemplateLiteral () { return traits.actualise(0, 0); }
 
-function YieldExpression () { return traits.actualise(1, 0, 'yield', undefined); } // , [ 'argument' ]); }
+function YieldExpression () { return traits.actualise(1, 0, 'yield'); }
