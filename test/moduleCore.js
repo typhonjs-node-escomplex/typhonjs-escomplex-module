@@ -1009,6 +1009,38 @@ if (testconfig.modules['moduleCore']) {
                 });
             });
 
+            suite('catch with finally containing condition', function () {
+                var report;
+
+                setup(function () {
+                    report = parser.analyse('try { "foo"; } catch (e) { } finally { if (true) { "bar"; } }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.cyclomatic, 2);
+                });
+
+                test('aggregate has correct Halstead total operators', function () {
+                    assert.strictEqual(report.aggregate.halstead.operators.total, 2);
+                });
+
+                test('aggregate has correct Halstead distinct operators', function () {
+                    assert.strictEqual(report.aggregate.halstead.operators.distinct, 2);
+                });
+
+                test('aggregate has correct Halstead total operands', function () {
+                    assert.strictEqual(report.aggregate.halstead.operands.total, 4);
+                });
+
+                test('aggregate has correct Halstead distinct operands', function () {
+                    assert.strictEqual(report.aggregate.halstead.operands.distinct, 4);
+                });
+            });
+
             suite('function declaration:', function () {
                 var report;
 

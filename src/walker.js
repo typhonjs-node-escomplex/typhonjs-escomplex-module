@@ -11,6 +11,8 @@ syntaxDefinitionsBabylon = require('./walkerSyntaxBabylon');
 
 exports.walk = walk;
 
+var TEST = true;
+
 // Settings
 // - trycatch (Boolean)
 // - forin (Boolean)
@@ -76,14 +78,19 @@ function walk (tree, settings, callbacks) {
     function visitChildren (node) {
         var syntax = syntaxes[node.type];
 
-        if (Array.isArray(syntax.children)) {
-            syntax.children.forEach(function (child) {
+        // Visit all node keys which are an array or an object.
+        Object.keys(node).forEach(function(key) {
+            if (Array.isArray(syntax.ignoreKeys) && syntax.ignoreKeys.indexOf(key) >= 0) {
+                return;
+            }
+
+            if (Array.isArray(node[key]) || typeof node[key] === 'object') {
                 visitChild(
-                    node[child],
+                    node[key],
                     typeof syntax.assignableName === 'function' ? syntax.assignableName(node) : undefined
                 );
-            });
-        }
+            }
+        });
     }
 
     function visitChild (child, assignedName) {

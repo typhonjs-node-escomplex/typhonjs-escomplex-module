@@ -24,9 +24,9 @@ function getSyntax (syntaxes, settings) {
 function loadSyntaxModules () {
     var modules = [];
 
+    modules['AssignmentPattern'] = AssignmentPattern;
     modules['ArrayPattern'] = ArrayPattern;
     modules['ArrowFunctionExpression'] = ArrowFunctionExpression;
-    modules['AssignmentPattern'] = AssignmentPattern;
     modules['ClassBody'] = ClassBody;
     modules['ClassDeclaration'] = ClassDeclaration;
     modules['ClassExpression'] = ClassExpression;
@@ -57,14 +57,8 @@ function setSyntax (syntaxes, name, settings) {
     syntaxes[name] = syntaxModules[name](settings);
 }
 
-function ArrayPattern () { return traits.actualise(0, 0, '[]', undefined, 'elements'); }
-
-function ArrowFunctionExpression () {
-    return traits.actualise(0, 0, 'arrowfunction', undefined, [ 'params', 'body' ], undefined, true);
-}
-
 function AssignmentPattern () {
-    return traits.actualise(0, 0, function (node) { return node.operator; }, undefined, [ 'left', 'right' ],
+    return traits.actualise(0, 0, function (node) { return node.operator; }, undefined, undefined, // [ 'left', 'right' ],
         function (node) {
             if (node.left.type === 'MemberExpression') {
                 return safeName(node.left.object) + '.' + node.left.property.name;
@@ -78,18 +72,26 @@ function AssignmentPattern () {
     );
 }
 
-function ClassBody () { return traits.actualise(0, 0, undefined, undefined, 'body'); }
+function ArrayPattern () { return traits.actualise(0, 0, '[]', undefined); }//, 'elements'); }
 
-function ClassDeclaration() { return traits.actualise(1, 0, 'class', undefined, ['id', 'body', 'superClass']); }
+function ArrowFunctionExpression () {
+    return traits.actualise(0, 0, 'arrowfunction', undefined,
+        undefined, // [ 'params', 'body' ],
+        undefined, true);
+}
 
-function ClassExpression() { return traits.actualise(1, 0, 'class', undefined, ['id', 'body', 'superClass']); }
+function ClassBody () { return traits.actualise(0, 0, undefined, undefined); } //, 'body'); }
 
-function ExportAllDeclaration () { return traits.actualise(0, 0, ['export', '*'], undefined, 'source'); }
+function ClassDeclaration() { return traits.actualise(1, 0, 'class', undefined); }
 
-function ExportDefaultDeclaration() { return traits.actualise(0, 0, ['export', 'default'], undefined, 'declaration'); }
+function ClassExpression() { return traits.actualise(1, 0, 'class', undefined); }
+
+function ExportAllDeclaration () { return traits.actualise(0, 0, ['export', '*'], undefined); } //, 'source'); }
+
+function ExportDefaultDeclaration() { return traits.actualise(0, 0, ['export', 'default'], undefined); } //, 'declaration'); }
 
 function ExportNamedDeclaration() {
-    return traits.actualise(0, 0, ['export', '{}'], undefined, ['declaration', 'specifiers']);
+    return traits.actualise(0, 0, ['export', '{}'], undefined); //, ['declaration', 'specifiers']);
 }
 
 function ExportSpecifier() {
@@ -97,17 +99,17 @@ function ExportSpecifier() {
         function (node) {
             return node.exported.name === node.local.name ? undefined : 'as';
         },
-        undefined, ['exported', 'local']
+        undefined//, ['exported', 'local']
     );
 }
 
 function ForOfStatement (settings) {
-    return traits.actualise(1, function () { return settings.forin ? 1 : 0; }, 'forof', undefined,
-        [ 'left', 'right', 'body' ]);
+    return traits.actualise(1, function () { return settings.forin ? 1 : 0; }, 'forof', undefined);
 }
 
 function ImportDeclaration () {
-    return traits.actualise(0, 0, ['import', 'from'], undefined, 'specifiers', undefined, undefined,
+    return traits.actualise(0, 0, ['import', 'from'], undefined, undefined, //'specifiers',
+        undefined, undefined,
         function (node) {
             return {
                 line: node.source.loc.start.line,
@@ -118,16 +120,16 @@ function ImportDeclaration () {
     );
 }
 
-function ImportDefaultSpecifier() { return traits.actualise(0, 0, undefined, undefined, 'local'); }
+function ImportDefaultSpecifier() { return traits.actualise(0, 0, undefined, undefined); } //, 'local'); }
 
-function ImportNamespaceSpecifier() { return traits.actualise(0, 0, ['import', '*', 'as'], undefined, 'local'); }
+function ImportNamespaceSpecifier() { return traits.actualise(0, 0, ['import', '*', 'as'], undefined); } //, 'local'); }
 
 function ImportSpecifier() {
     return traits.actualise(0, 0,
         function (node) {
             return node.imported.name === node.local.name ? '{}' : ['{}', 'as'];
         },
-        undefined, ['local', 'imported']
+        undefined//, ['local', 'imported']
     );
 }
 
@@ -137,13 +139,13 @@ function MetaProperty () {
         function(node) {
             return typeof node.meta === 'string' && typeof node.property === 'string' ? [node.meta, node.property] :
                 undefined;
-        },
-        [ 'meta', 'property' ]
+        }//, [ 'meta', 'property' ]
     );
 }
 
 function MethodDefinition () {
-    return traits.actualise(0, 0, undefined, undefined, 'value',
+    // Note: must skip key as the assigned name is forwarded on to FunctionExpression.
+    return traits.actualise(0, 0, undefined, undefined, 'key', //'value',
         // With class methods the FunctionExpression is stored in `value`, but doesn't have an `id` for the name which
         // needs to be assigned from the `key` Identifier. Since this assignable name is forwarded on the child `key`
         // is skipped from processing.
@@ -151,10 +153,10 @@ function MethodDefinition () {
     );
 }
 
-function ObjectPattern () { return traits.actualise(0, 0, '{}', undefined, 'properties'); }
+function ObjectPattern () { return traits.actualise(0, 0, '{}', undefined); }
 
 function RestElement() {
-    return traits.actualise(0, 0, undefined, undefined, 'argument',
+    return traits.actualise(0, 0, undefined, undefined, undefined, //'argument',
         function (node) {
             return '...' + safeName(node.argument);
         }
@@ -162,7 +164,7 @@ function RestElement() {
 }
 
 function SpreadElement() {
-    return traits.actualise(0, 0, undefined, undefined, 'argument',
+    return traits.actualise(0, 0, undefined, undefined, undefined, //'argument',
         function (node) {
             return '...' + safeName(node.argument);
         }
@@ -171,7 +173,7 @@ function SpreadElement() {
 
 function Super () { return traits.actualise(0, 0, undefined, 'super'); }
 
-function TaggedTemplateExpression () { return traits.actualise(0, 0, undefined, undefined, [ 'tag', 'quasi' ]); }
+function TaggedTemplateExpression () { return traits.actualise(0, 0, undefined, undefined); }//, [ 'tag', 'quasi' ]); }
 
 function TemplateElement () {
     return traits.actualise(0, 0, undefined,
@@ -181,6 +183,6 @@ function TemplateElement () {
     );
 }
 
-function TemplateLiteral () { return traits.actualise(0, 0, undefined, undefined, [ 'quasis', 'expressions' ]); }
+function TemplateLiteral () { return traits.actualise(0, 0, undefined, undefined); }//, [ 'quasis', 'expressions' ]);}
 
-function YieldExpression () { return traits.actualise(1, 0, 'yield', undefined, [ 'argument' ]); }
+function YieldExpression () { return traits.actualise(1, 0, 'yield', undefined); } // , [ 'argument' ]); }

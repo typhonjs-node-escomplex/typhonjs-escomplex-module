@@ -35,7 +35,7 @@ if (testconfig.modules['walker']) {
 
                 test('labeled statement', function () {
                     this.walk('foo: a;');
-                    assert.strictEqual(this.callbacks.processNode.callCount, 3);
+                    assert.strictEqual(this.callbacks.processNode.callCount, 4);
                 });
             });
 

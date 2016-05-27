@@ -3970,23 +3970,23 @@ if (testconfig.modules['moduleES6']) {
                     });
 
                     test('aggregate has correct Halstead total operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.total, 4);
+                        assert.strictEqual(report.aggregate.halstead.operands.total, 5);
                     });
 
                     test('aggregate has correct Halstead distinct operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 2);
+                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 3);
                     });
 
                     test('aggregate has correct Halstead length', function () {
-                        assert.strictEqual(report.aggregate.halstead.length, 6);
+                        assert.strictEqual(report.aggregate.halstead.length, 7);
                     });
 
                     test('aggregate has correct Halstead vocabulary', function () {
-                        assert.strictEqual(report.aggregate.halstead.vocabulary, 4);
+                        assert.strictEqual(report.aggregate.halstead.vocabulary, 5);
                     });
 
                     test('aggregate has correct Halstead difficulty', function () {
-                        assert.strictEqual(report.aggregate.halstead.difficulty, 2);
+                        assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
                     });
 
                     test('maintainability index is correct', function () {
@@ -4462,19 +4462,19 @@ if (testconfig.modules['moduleES6']) {
                     });
 
                     test('aggregate has correct Halstead total operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.total, 1);
+                        assert.strictEqual(report.aggregate.halstead.operands.total, 2);
                     });
 
                     test('aggregate has correct Halstead distinct operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 1);
+                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 2);
                     });
 
                     test('aggregate has correct Halstead length', function () {
-                        assert.strictEqual(report.aggregate.halstead.length, 3);
+                        assert.strictEqual(report.aggregate.halstead.length, 4);
                     });
 
                     test('aggregate has correct Halstead vocabulary', function () {
-                        assert.strictEqual(report.aggregate.halstead.vocabulary, 3);
+                        assert.strictEqual(report.aggregate.halstead.vocabulary, 4);
                     });
 
                     test('aggregate has correct Halstead difficulty', function () {
@@ -4535,19 +4535,19 @@ if (testconfig.modules['moduleES6']) {
                     });
 
                     test('aggregate has correct Halstead total operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.total, 3);
+                        assert.strictEqual(report.aggregate.halstead.operands.total, 6);
                     });
 
                     test('aggregate has correct Halstead distinct operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 3);
+                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 6);
                     });
 
                     test('aggregate has correct Halstead length', function () {
-                        assert.strictEqual(report.aggregate.halstead.length, 9);
+                        assert.strictEqual(report.aggregate.halstead.length, 12);
                     });
 
                     test('aggregate has correct Halstead vocabulary', function () {
-                        assert.strictEqual(report.aggregate.halstead.vocabulary, 5);
+                        assert.strictEqual(report.aggregate.halstead.vocabulary, 8);
                     });
 
                     test('aggregate has correct Halstead difficulty', function () {
@@ -4631,23 +4631,23 @@ if (testconfig.modules['moduleES6']) {
                     });
 
                     test('aggregate has correct Halstead total operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.total, 2);
+                        assert.strictEqual(report.aggregate.halstead.operands.total, 3);
                     });
 
                     test('aggregate has correct Halstead distinct operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 1);
+                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 2);
                     });
 
                     test('aggregate has correct Halstead length', function () {
-                        assert.strictEqual(report.aggregate.halstead.length, 5);
+                        assert.strictEqual(report.aggregate.halstead.length, 6);
                     });
 
                     test('aggregate has correct Halstead vocabulary', function () {
-                        assert.strictEqual(report.aggregate.halstead.vocabulary, 4);
+                        assert.strictEqual(report.aggregate.halstead.vocabulary, 5);
                     });
 
                     test('aggregate has correct Halstead difficulty', function () {
-                        assert.strictEqual(report.aggregate.halstead.difficulty, 3);
+                        assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
                     });
 
                     test('maintainability index is correct', function () {
@@ -4703,19 +4703,19 @@ if (testconfig.modules['moduleES6']) {
                     });
 
                     test('aggregate has correct Halstead total operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.total, 2);
+                        assert.strictEqual(report.aggregate.halstead.operands.total, 3);
                     });
 
                     test('aggregate has correct Halstead distinct operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 2);
+                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 3);
                     });
 
                     test('aggregate has correct Halstead length', function () {
-                        assert.strictEqual(report.aggregate.halstead.length, 6);
+                        assert.strictEqual(report.aggregate.halstead.length, 7);
                     });
 
                     test('aggregate has correct Halstead vocabulary', function () {
-                        assert.strictEqual(report.aggregate.halstead.vocabulary, 6);
+                        assert.strictEqual(report.aggregate.halstead.vocabulary, 7);
                     });
 
                     test('aggregate has correct Halstead difficulty', function () {
@@ -4775,19 +4775,19 @@ if (testconfig.modules['moduleES6']) {
                     });
 
                     test('aggregate has correct Halstead total operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.total, 1);
+                        assert.strictEqual(report.aggregate.halstead.operands.total, 2);
                     });
 
                     test('aggregate has correct Halstead distinct operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 1);
+                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 2);
                     });
 
                     test('aggregate has correct Halstead length', function () {
-                        assert.strictEqual(report.aggregate.halstead.length, 6);
+                        assert.strictEqual(report.aggregate.halstead.length, 7);
                     });
 
                     test('aggregate has correct Halstead vocabulary', function () {
-                        assert.strictEqual(report.aggregate.halstead.vocabulary, 5);
+                        assert.strictEqual(report.aggregate.halstead.vocabulary, 6);
                     });
 
                     test('aggregate has correct Halstead difficulty', function () {
@@ -4849,23 +4849,23 @@ if (testconfig.modules['moduleES6']) {
                     });
 
                     test('aggregate has correct Halstead total operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.total, 6);
+                        assert.strictEqual(report.aggregate.halstead.operands.total, 10);
                     });
 
                     test('aggregate has correct Halstead distinct operands', function () {
-                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 4);
+                        assert.strictEqual(report.aggregate.halstead.operands.distinct, 7);
                     });
 
                     test('aggregate has correct Halstead length', function () {
-                        assert.strictEqual(report.aggregate.halstead.length, 20);
+                        assert.strictEqual(report.aggregate.halstead.length, 24);
                     });
 
                     test('aggregate has correct Halstead vocabulary', function () {
-                        assert.strictEqual(report.aggregate.halstead.vocabulary, 9);
+                        assert.strictEqual(report.aggregate.halstead.vocabulary, 12);
                     });
 
                     test('aggregate has correct Halstead difficulty', function () {
-                        assert.strictEqual(report.aggregate.halstead.difficulty, 3.75);
+                        assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 4);
                     });
 
                     test('maintainability index is correct', function () {

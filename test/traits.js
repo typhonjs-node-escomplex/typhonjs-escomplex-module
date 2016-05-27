@@ -133,10 +133,10 @@ if (testconfig.modules['traits']) {
                     assert.strictEqual(result.operands, 'operands result');
                 });
 
-                test('children was correct', function () {
-                    assert.isArray(result.children);
-                    assert.lengthOf(result.children, 1);
-                    assert.strictEqual(result.children[0], 'tikki');
+                test('ignoreKeys was correct', function () {
+                    assert.isArray(result.ignoreKeys);
+                    assert.lengthOf(result.ignoreKeys, 1);
+                    assert.strictEqual(result.ignoreKeys[0], 'tikki');
                 });
 
                 test('assignableName was correct', function () {
@@ -185,10 +185,10 @@ if (testconfig.modules['traits']) {
                     assert.strictEqual(result.cyclomatic, '2');
                 });
 
-                test('children was correct', function () {
-                    assert.isArray(result.children);
-                    assert.lengthOf(result.children, 1);
-                    assert.strictEqual(result.children[0], '5');
+                test('ignoreKeys was correct', function () {
+                    assert.isArray(result.ignoreKeys);
+                    assert.lengthOf(result.ignoreKeys, 1);
+                    assert.strictEqual(result.ignoreKeys[0], '5');
                 });
 
                 test('assignableName was correct', function () {
@@ -227,9 +227,9 @@ if (testconfig.modules['traits']) {
                     assert.lengthOf(log.args['operands.actualise'][0][0], 0);
                 });
 
-                test('children was correct', function () {
-                    assert.isArray(result.children);
-                    assert.lengthOf(result.children, 0);
+                test('ignoreKeys was correct', function () {
+                    assert.isArray(result.ignoreKeys);
+                    assert.lengthOf(result.ignoreKeys, 0);
                 });
             });
         });

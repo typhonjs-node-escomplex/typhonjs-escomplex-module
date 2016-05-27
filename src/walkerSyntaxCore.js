@@ -28,8 +28,8 @@ function loadSyntaxModules () {
 
     modules['ArrayExpression'] = ArrayExpression;
     modules['AssignmentExpression'] = AssignmentExpression;
-    modules['BinaryExpression'] = BinaryExpression;
     modules['BlockStatement'] = BlockStatement;
+    modules['BinaryExpression'] = BinaryExpression;
     modules['BreakStatement'] = BreakStatement;
     modules['CallExpression'] = CallExpression;
     modules['CatchClause'] = CatchClause;
@@ -72,7 +72,7 @@ function setSyntax (syntaxes, name, settings) {
     syntaxes[name] = syntaxModules[name](settings);
 }
 
-function ArrayExpression () { return traits.actualise(0, 0, '[]', safeName, 'elements'); }
+function ArrayExpression () { return traits.actualise(0, 0, '[]', safeName); }
 
 function AssignmentExpression () {
     return traits.actualise(0, 0,
@@ -80,7 +80,7 @@ function AssignmentExpression () {
             return node.operator;
         },
         undefined,
-        [ 'left', 'right' ],
+        undefined, // [ 'left', 'right' ],
         function (node) {
             if (node.left.type === 'MemberExpression') {
                 return (node.left.object.type === 'ThisExpression' ? 'this' : safeName(node.left.object)) +
@@ -95,13 +95,13 @@ function AssignmentExpression () {
     );
 }
 
+function BlockStatement () { return traits.actualise(0, 0, undefined, undefined); }
+
 function BinaryExpression () {
-    return traits.actualise(0, 0, function (node) { return node.operator; }, undefined, [ 'left', 'right' ]);
+    return traits.actualise(0, 0, function (node) { return node.operator; }, undefined);
 }
 
-function BlockStatement () { return traits.actualise(0, 0, undefined, undefined, 'body'); }
-
-function BreakStatement () { return traits.actualise(1, 0, 'break', undefined, 'label'); }
+function BreakStatement () { return traits.actualise(1, 0, 'break', undefined); }
 
 function CallExpression () {
     return traits.actualise(
@@ -111,7 +111,7 @@ function CallExpression () {
         0,                                                              // cyclomatic
         '()',                                                            // operators
         undefined,                                                      // operands
-        [ 'arguments', 'callee' ],                                      // children
+        undefined, //[ 'arguments', 'callee' ],                                      // children
         undefined,                                                      // assignableName
         undefined,                                                      // newScope
         function (node, clearAliases) {
@@ -142,35 +142,35 @@ function CatchClause (settings) {
         function () {
             return settings.trycatch ? 1 : 0;
         },
-        'catch', undefined, [ 'param', 'body' ]
+        'catch', undefined//, [ 'param', 'body' ]
     );
 }
 
 function ConditionalExpression () {
-    return traits.actualise(0, 1, ':?', undefined, [ 'test', 'consequent', 'alternate' ]);
+    return traits.actualise(0, 1, ':?', undefined);//, [ 'test', 'consequent', 'alternate' ]);
 }
 
-function ContinueStatement () { return traits.actualise(1, 0, 'continue', undefined, 'label'); }
+function ContinueStatement () { return traits.actualise(1, 0, 'continue', undefined); }
 
 function DoWhileStatement () {
     return traits.actualise(2,
         function (node) {
             return node.test ? 1 : 0;
         },
-        'dowhile', undefined, [ 'test', 'body' ]
+        'dowhile', undefined//, [ 'test', 'body' ]
     );
 }
 
 function EmptyStatement () { return traits.actualise(0, 0, undefined, undefined); }
 
-function ExpressionStatement () { return traits.actualise(1, 0, undefined, undefined, 'expression'); }
+function ExpressionStatement () { return traits.actualise(1, 0, undefined, undefined); }
 
 function ForInStatement (settings) {
     return traits.actualise(1,
         function () {
             return settings.forin ? 1 : 0;
         },
-        'forin', undefined, [ 'left', 'right', 'body' ]
+        'forin', undefined
     );
 }
 
@@ -179,7 +179,7 @@ function ForStatement () {
         function (node) {
             return node.test ? 1 : 0;
         },
-        'for', undefined, [ 'init', 'test', 'update', 'body' ]
+        'for', undefined
     );
 }
 
@@ -188,8 +188,10 @@ function FunctionDeclaration () {
         function (node) {
             return safeName(node.id);
         },
-        // Note: For ES6 default values esprima uses `defaults` instead of AssignmentPattern ESTree node.
-        [ 'params', 'body', 'defaults' ],
+        // OldNote: For ES6 default values esprima uses `defaults` instead of AssignmentPattern ESTree node.
+        // Note: The function name (node.id) is returned as an operand and excluded from traversal as to not
+        // be included in the function operand calculations.
+        [ 'id' ],
         undefined, true
     );
 }
@@ -199,7 +201,8 @@ function FunctionExpression () {
         function (node, assignedName) {
             return typeof assignedName === 'string' ? assignedName : safeName(node.id);
         },
-        [ 'params', 'body' ], undefined, true
+        [ 'id' ], //[ 'params', 'body' ],
+        undefined, true
     );
 }
 
@@ -227,11 +230,11 @@ function IfStatement () {
                 }
             }
         ],
-        undefined, [ 'test', 'consequent', 'alternate' ]
+        undefined
     );
 }
 
-function LabeledStatement () { return traits.actualise(0, 0, undefined, undefined, 'body'); }
+function LabeledStatement () { return traits.actualise(0, 0, undefined, undefined); }
 
 function Literal () {
     return traits.actualise(
@@ -257,7 +260,7 @@ function LogicalExpression (settings) {
         function (node) {
             return node.operator;
         },
-        undefined, [ 'left', 'right' ]
+        undefined//, [ 'left', 'right' ]
     );
 }
 
@@ -267,7 +270,7 @@ function MemberExpression () {
             return ['ObjectExpression', 'ArrayExpression', 'FunctionExpression'].indexOf(
                 node.object.type) === -1 ? 0 : 1;
         },
-        0, '.', undefined, [ 'object', 'property' ]
+        0, '.', undefined
     );
 }
 
@@ -276,11 +279,11 @@ function NewExpression () {
         function (node) {
             return node.callee.type === 'FunctionExpression' ? 1 : 0;
         },
-        0, 'new', undefined, [ 'arguments', 'callee' ]
+        0, 'new', undefined//, [ 'arguments', 'callee' ]
     );
 }
 
-function ObjectExpression () { return traits.actualise(0, 0, '{}', safeName, 'properties'); }
+function ObjectExpression () { return traits.actualise(0, 0, '{}', safeName); }
 
 function Property () {
     return traits.actualise(1, 0,
@@ -290,7 +293,7 @@ function Property () {
                 typeof node.shorthand === 'boolean' && !node.shorthand ? ':' : undefined;
         },
         undefined,
-        [ 'key', 'value' ],
+        undefined, //[ 'key', 'value' ],
         function (node) {
             return typeof node.shorthand === 'undefined' ? undefined :
                 typeof node.shorthand === 'boolean' && !node.shorthand ? undefined : safeName(node.key);
@@ -298,9 +301,9 @@ function Property () {
     );
 }
 
-function ReturnStatement () { return traits.actualise(1, 0, 'return', undefined, 'argument'); }
+function ReturnStatement () { return traits.actualise(1, 0, 'return', undefined); }
 
-function SequenceExpression () { return traits.actualise(0, 0, undefined, undefined, 'expressions'); }
+function SequenceExpression () { return traits.actualise(0, 0, undefined, undefined); }
 
 function SwitchCase (settings) {
     return traits.actualise(1,
@@ -310,24 +313,26 @@ function SwitchCase (settings) {
         function (node) {
             return node.test ? 'case' : 'default';
         },
-        undefined, [ 'test', 'consequent' ]
+        undefined
     );
 }
 
-function SwitchStatement () { return traits.actualise(1, 0, 'switch', undefined, [ 'discriminant', 'cases' ]); }
+function SwitchStatement () { return traits.actualise(1, 0, 'switch', undefined); }
 
 function ThisExpression () { return traits.actualise(0, 0, undefined, 'this'); }
 
-function ThrowStatement () { return traits.actualise(1, 0, 'throw', undefined, [ 'argument' ]); }
+function ThrowStatement () { return traits.actualise(1, 0, 'throw', undefined); }
 
-function TryStatement () { return traits.actualise(1, 0, undefined, undefined, [ 'block', 'handler', 'finalizer' ]); }
+function TryStatement () {
+    // esprima has duplicate nodes the catch block; `handler` is the actual ESTree spec.
+    return traits.actualise(1, 0, undefined, undefined, ['guardedHandlers', 'handlers']);
+}
 
 function UnaryExpression () {
     return traits.actualise(0, 0,
         function (node) {
             return node.operator + ' (' + (node.prefix ? 'pre' : 'post') + 'fix)';
-        },
-        undefined, [ 'argument' ]
+        }
     );
 }
 
@@ -336,7 +341,7 @@ function UpdateExpression () {
         function (node) {
             return node.operator + ' (' + (node.prefix ? 'pre' : 'post') + 'fix)';
         },
-        undefined, [ 'argument' ]
+        undefined
     );
 }
 
@@ -345,7 +350,7 @@ function VariableDeclaration () {
         function (node) {
             return node.kind;
         },
-        undefined, 'declarations'
+        undefined
     );
 }
 
@@ -358,7 +363,7 @@ function VariableDeclarator () {
             }
         },
         undefined,
-        [ 'id', 'init' ],
+        undefined, //[ 'id', 'init' ],
         function (node) {
             return safeName(node.id);
         }
@@ -370,11 +375,11 @@ function WhileStatement () {
         function (node) {
             return node.test ? 1 : 0;
         },
-        'while', undefined, [ 'test', 'body' ]
+        'while', undefined//, [ 'test', 'body' ]
     );
 }
 
-function WithStatement () { return traits.actualise(1, 0, 'with', undefined, [ 'object', 'body' ]); }
+function WithStatement () { return traits.actualise(1, 0, 'with', undefined); }
 
 // Private support functions for CallExpression ---------------------------------------------------------------------
 

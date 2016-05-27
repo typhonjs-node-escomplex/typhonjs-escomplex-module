@@ -24,7 +24,6 @@ function getSyntax (syntaxes, settings) {
 function loadSyntaxModules () {
     var modules = [];
 
-    modules['BlockStatement'] = BlockStatement;
     modules['BindExpression'] = BindExpression;
     modules['BooleanLiteral'] = BooleanLiteral;
     modules['ClassMethod'] = ClassMethod;
@@ -45,28 +44,23 @@ function setSyntax (syntaxes, name, settings) {
     syntaxes[name] = syntaxModules[name](settings);
 }
 
-function BlockStatement () {
-    // Note that Babylon AST has a directives field compared to ESTree AST.
-    return traits.actualise(0, 0, undefined, undefined, ['body', 'directives']);
-}
-
-//TODO: create test case and verify Halstead values.
-function BindExpression () { return traits.actualise(0, 0, undefined, undefined, ['object', 'callee']); }
+function BindExpression () { return traits.actualise(0, 0, undefined, undefined); }
 
 function BooleanLiteral () { return traits.actualise(0, 0, undefined, function (node) { return node.value; }); }
 
 function ClassMethod () {
     return traits.actualise(0, 0, 'function',
         function (node) { return safeName(node.key); },
-        ['decorators', 'value', 'body', 'params'],
+        // Note: must skip key as the assigned name is forwarded on to FunctionExpression.
+        'key', //['decorators', 'value', 'body', 'params'],
         undefined,
         true
     );
 }
 
-function Decorator () { return traits.actualise(0, 0, undefined, undefined, 'expression'); }
+function Decorator () { return traits.actualise(0, 0, undefined, undefined); }
 
-function Directive () { return traits.actualise(1, 0, undefined, undefined, 'value'); }
+function Directive () { return traits.actualise(1, 0, undefined, undefined); }
 
 function DirectiveLiteral () {
     return traits.actualise(0, 0, undefined,
@@ -93,7 +87,7 @@ function ObjectProperty () {
                 typeof node.shorthand === 'boolean' && !node.shorthand ? ':' : undefined;
         },
         undefined,
-        [ 'key', 'value' ],
+        undefined, // [ 'key', 'value' ],
         function (node) {
             return typeof node.shorthand === 'undefined' ? undefined :
                 typeof node.shorthand === 'boolean' && !node.shorthand ? undefined : safeName(node.key);
@@ -101,9 +95,9 @@ function ObjectProperty () {
     );
 }
 
-function RestProperty () { return traits.actualise(0, 0, undefined, undefined, 'argument'); }
+function RestProperty () { return traits.actualise(0, 0, undefined, undefined); }
 
-function SpreadProperty () { return traits.actualise(0, 0, undefined, undefined, 'argument'); }
+function SpreadProperty () { return traits.actualise(0, 0, undefined, undefined); }
 
 function StringLiteral () {
     return traits.actualise(0, 0, undefined,
