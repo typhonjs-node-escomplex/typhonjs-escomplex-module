@@ -4,7 +4,6 @@
 
 var assert = require('chai').assert;
 
-var mozWalker = require('../src/walker');
 var testconfig = require('./testconfig');
 
 var modulePath = '../src/module';
@@ -48,34 +47,19 @@ if (testconfig.modules['moduleAPI']) {
                                 line: 0
                             }
                         }
-                    }, mozWalker);
-                });
-            });
-
-            test('analyse throws when ast has no body', function () {
-                assert.throws(function () {
-                    escomplex.analyse({
-                        loc: {
-                            start: {
-                                line: 0
-                            },
-                            end: {
-                                line: 0
-                            }
-                        }
-                    }, mozWalker);
+                    });
                 });
             });
 
             test('analyse throws when ast is string', function () {
                 assert.throws(function () {
-                    escomplex.analyse('console.log("foo");', mozWalker);
+                    escomplex.analyse('console.log("foo");');
                 });
             });
 
             test('analyse throws when ast is array', function () {
                 assert.throws(function () {
-                    escomplex.analyse([], mozWalker);
+                    escomplex.analyse([]);
                 });
             });
 
@@ -90,7 +74,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker));
+                }));
             });
 
             test('analyse returns aggregate object', function () {
@@ -104,7 +88,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate);
+                }).aggregate);
             });
 
             test('analyse returns aggregate lines of code property', function () {
@@ -118,7 +102,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.sloc);
+                }).aggregate.sloc);
             });
 
             test('analyse returns aggregate physical lines of code property', function () {
@@ -132,7 +116,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.sloc.physical);
+                }).aggregate.sloc.physical);
             });
 
             test('analyse returns aggregate logical lines of code property', function () {
@@ -146,7 +130,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.sloc.logical);
+                }).aggregate.sloc.logical);
             });
 
             test('analyse returns aggregate cyclomatic complexity property', function () {
@@ -160,7 +144,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.cyclomatic);
+                }).aggregate.cyclomatic);
             });
 
             test('analyse returns aggregate cyclomatic complexity density property', function () {
@@ -174,7 +158,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.cyclomaticDensity);
+                }).aggregate.cyclomaticDensity);
             });
 
             test('analyse returns aggregate halstead property', function () {
@@ -188,7 +172,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.halstead);
+                }).aggregate.halstead);
             });
 
             test('analyse returns aggregate halstead operators property', function () {
@@ -202,7 +186,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.halstead.operators);
+                }).aggregate.halstead.operators);
             });
 
             test('analyse returns aggregate halstead total operators property', function () {
@@ -216,7 +200,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.halstead.operators.total);
+                }).aggregate.halstead.operators.total);
             });
 
             test('analyse returns aggregate halstead distinct operators property', function () {
@@ -230,7 +214,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.halstead.operators.distinct);
+                }).aggregate.halstead.operators.distinct);
             });
 
             test('analyse returns aggregate halstead operator identifiers property', function () {
@@ -244,7 +228,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.halstead.operators.identifiers);
+                }).aggregate.halstead.operators.identifiers);
             });
 
             test('analyse returns aggregate halstead operands property', function () {
@@ -258,7 +242,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.halstead.operands);
+                }).aggregate.halstead.operands);
             });
 
             test('analyse returns aggregate halstead total operands property', function () {
@@ -272,7 +256,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.halstead.operands.total);
+                }).aggregate.halstead.operands.total);
             });
 
             test('analyse returns aggregate halstead distinct operands property', function () {
@@ -286,7 +270,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.halstead.operands.distinct);
+                }).aggregate.halstead.operands.distinct);
             });
 
             test('analyse returns aggregate halstead operand identifiers property', function () {
@@ -300,7 +284,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).aggregate.halstead.operands.identifiers);
+                }).aggregate.halstead.operands.identifiers);
             });
 
             test('analyse returns maintainability property', function () {
@@ -314,7 +298,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).maintainability);
+                }).maintainability);
             });
 
             test('analyse returns functions property', function () {
@@ -328,7 +312,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).functions);
+                }).functions);
             });
 
             test('analyse returns dependencies property', function () {
@@ -342,7 +326,7 @@ if (testconfig.modules['moduleAPI']) {
                             line: 0
                         }
                     }
-                }, mozWalker).dependencies);
+                }).dependencies);
             });
         });
     });

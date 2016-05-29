@@ -17,8 +17,7 @@ function analyse (ast, options) {
 
     var settings, currentReport, clearDependencies = true, scopeStack = [];
 
-    if (typeof ast !== 'object') { throw new TypeError('Invalid syntax tree'); }
-
+    if (typeof ast !== 'object' || Array.isArray(ast)) { throw new TypeError('Invalid syntax tree'); }
     if (typeof walker !== 'object') { throw new TypeError('Invalid walker'); }
     if (typeof walker.walk !== 'function') { throw new TypeError('Invalid walker.walk method'); }
 
@@ -34,19 +33,7 @@ function analyse (ast, options) {
     syntaxDefinitionsESTree.get(syntaxes, settings);
     syntaxDefinitionsBabylon.get(syntaxes, settings);
 
-    var nodes;
-
-    if (Array.isArray(ast.body)) {
-        nodes = ast.body;
-    }
-    else if (typeof ast.program === 'object' && Array.isArray(ast.program.body)) {
-        nodes = ast.program.body;
-    }
-    else {
-        throw new TypeError('Invalid syntax tree body');
-    }
-
-    walker.walk(nodes, {
+    walker.walk(ast, {
         enterNode: function(node, parent) {
             var syntax = syntaxes[node.type];
 
