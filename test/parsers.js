@@ -7,9 +7,9 @@ var babylon = require('babylon');
 var espree = require('espree');
 var esprima = require('esprima');
 
-var escomplex = require('../src/module');
-var mozWalker = require('../src/walker');
 var testconfig = require('./testconfig');
+
+var escomplex = require('../src/module');
 
 var esmRegex = /(^\s*|[}\);\n]\s*)(import\s*(['"]|(\*\s+as\s+)?[^"'\(\)\n;]+\s*from\s*['"]|\{)|export\s+\*\s+from\s+["']|export\s* (\{|default|function|class|var|const|let|async\s+function))/;
 
@@ -34,7 +34,7 @@ var parsers = [];
 if (testconfig.parsers.acorn) {
     parsers.push({
         analyse: function (code, options, parserOptions) {
-            var report = escomplex.analyse(this.parse(code, parserOptions), mozWalker, options);
+            var report = escomplex.analyse(this.parse(code, parserOptions), options);
             log('!! (acorn): analyse - report: ' + JSON.stringify(report));
             return report;
         },
@@ -52,7 +52,7 @@ if (testconfig.parsers.acorn) {
 if (testconfig.parsers.babylon) {
     parsers.push({
         analyse: function (code, options, parserOptions) {
-            var report = escomplex.analyse(this.parse(code, parserOptions), mozWalker, options);
+            var report = escomplex.analyse(this.parse(code, parserOptions), options);
             log('!! (babylon): analyse - report: ' + JSON.stringify(report));
             return report;
         },
@@ -70,7 +70,7 @@ if (testconfig.parsers.babylon) {
 if (testconfig.parsers.espree) {
     parsers.push({
         analyse: function (code, options, parserOptions) {
-            var report = escomplex.analyse(this.parse(code, parserOptions), mozWalker, options);
+            var report = escomplex.analyse(this.parse(code, parserOptions), options);
             log('!! (espree): analyse - report: ' + JSON.stringify(report));
             return report;
         },
@@ -88,7 +88,7 @@ if (testconfig.parsers.espree) {
 if (testconfig.parsers.esprima) {
     parsers.push({
         analyse: function (code, options, parserOptions) {
-            var report = escomplex.analyse(this.parse(code, parserOptions), mozWalker, options);
+            var report = escomplex.analyse(this.parse(code, parserOptions), options);
             log('!! (esprima): analyse - report: ' + JSON.stringify(report));
             return report;
         },

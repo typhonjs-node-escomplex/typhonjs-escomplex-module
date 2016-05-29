@@ -78,7 +78,7 @@ if (testconfig.modules['traits']) {
                 var result;
 
                 setup(function () {
-                    result = index.actualise('koda', 'basanda', 'bosoya', 'umahasha', 'tikki', 'ottobo', 'heeta', 'boshatta');
+                    result = index.actualise('koda', 'basanda', 'bosoya', 'umahasha', 'tikki', 'ottobo', 'boshatta');
                 });
 
                 teardown(function () {
@@ -108,15 +108,11 @@ if (testconfig.modules['traits']) {
                 test('ignoreKeys was correct', function () {
                     assert.isArray(result.ignoreKeys);
                     assert.lengthOf(result.ignoreKeys, 1);
-                    assert.strictEqual(result.ignoreKeys[0], 'ottobo');
-                });
-
-                test('assignableName was correct', function () {
-                    assert.strictEqual(result.assignableName, 'tikki');
+                    assert.strictEqual(result.ignoreKeys[0], 'tikki');
                 });
 
                 test('newScope was correct', function () {
-                    assert.strictEqual(result.newScope, 'heeta');
+                    assert.strictEqual(result.newScope, 'ottobo');
                 });
 
                 test('dependencies was correct', function () {
@@ -128,7 +124,7 @@ if (testconfig.modules['traits']) {
                 var result;
 
                 setup(function () {
-                    result = index.actualise('1', '2', [ '3' ], [ '4' ], [ '5' ], '6', '7', '8');
+                    result = index.actualise('1', '2', [ '3' ], [ '4' ], [ '5' ], '6', '7');
                 });
 
                 teardown(function () {
@@ -146,19 +142,15 @@ if (testconfig.modules['traits']) {
                 test('ignoreKeys was correct', function () {
                     assert.isArray(result.ignoreKeys);
                     assert.lengthOf(result.ignoreKeys, 1);
-                    assert.strictEqual(result.ignoreKeys[0], '6');
-                });
-
-                test('assignableName was correct', function () {
-                    assert.strictEqual(JSON.stringify(result.assignableName), '["5"]');
+                    assert.strictEqual(result.ignoreKeys[0], '5');
                 });
 
                 test('newScope was correct', function () {
-                    assert.strictEqual(result.newScope, '7');
+                    assert.strictEqual(result.newScope, '6');
                 });
 
                 test('dependencies was correct', function () {
-                    assert.strictEqual(result.dependencies, '8');
+                    assert.strictEqual(result.dependencies, '7');
                 });
             });
 

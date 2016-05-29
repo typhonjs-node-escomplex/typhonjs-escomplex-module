@@ -52,10 +52,7 @@
     "espree": "^3.0.0",
     "esprima": "^2.0.0",
     "mocha": "^2.0.0",
-    "mockery": "^1.0.0",
-    "sinon": "^1.0.0",
-    "snyk": "^1.0.0",
-    "spooks": "2.0.0"
+    "snyk": "^1.0.0"
   },
   "scripts": {
     "lint": "eslint test src",

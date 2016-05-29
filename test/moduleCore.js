@@ -707,19 +707,19 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
-                    assert.strictEqual(report.aggregate.halstead.operands.total, 8);
+                    assert.strictEqual(report.aggregate.halstead.operands.total, 7);
                 });
 
                 test('aggregate has correct Halstead distinct operands', function () {
-                    assert.strictEqual(report.aggregate.halstead.operands.distinct, 7);
+                    assert.strictEqual(report.aggregate.halstead.operands.distinct, 6);
                 });
 
                 test('aggregate has correct Halstead length', function () {
-                    assert.strictEqual(report.aggregate.halstead.length, 13);
+                    assert.strictEqual(report.aggregate.halstead.length, 12);
                 });
 
                 test('aggregate has correct Halstead vocabulary', function () {
-                    assert.strictEqual(report.aggregate.halstead.vocabulary, 11);
+                    assert.strictEqual(report.aggregate.halstead.vocabulary, 10);
                 });
 
                 test('aggregate has correct Halstead difficulty', function () {
@@ -753,7 +753,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
-                    assert.strictEqual(report.aggregate.halstead.operands.total, 13);
+                    assert.strictEqual(report.aggregate.halstead.operands.total, 12);
                 });
 
                 test('aggregate has correct Halstead distinct operands', function () {
@@ -1409,7 +1409,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('function has correct name', function () {
-                    assert.strictEqual(report.functions[0].name, 'foo');
+                    assert.strictEqual(report.functions[0].name, '<anonymous>');
                 });
 
                 test('aggregate has correct Halstead total operators', function () {
@@ -1425,7 +1425,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('aggregate has correct Halstead distinct operands', function () {
-                    assert.strictEqual(report.aggregate.halstead.operands.distinct, 2);
+                    assert.strictEqual(report.aggregate.halstead.operands.distinct, 3);
                 });
             });
 
@@ -1453,7 +1453,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('aggregate has correct Halstead distinct operands', function () {
-                    assert.strictEqual(report.aggregate.halstead.operands.distinct, 2);
+                    assert.strictEqual(report.aggregate.halstead.operands.distinct, 3);
                 });
             });
 
@@ -1920,7 +1920,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('function has correct name', function () {
-                    assert.strictEqual(report.functions[0].name, 'foo.bar');
+                    assert.strictEqual(report.functions[0].name, '<anonymous>');
                 });
 
                 test('aggregate has correct Halstead total operators', function () {
@@ -1932,7 +1932,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
-                    assert.strictEqual(report.aggregate.halstead.operands.total, 6);
+                    assert.strictEqual(report.aggregate.halstead.operands.total, 5);
                 });
 
                 test('aggregate has correct Halstead distinct operands', function () {
@@ -1960,7 +1960,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('function has correct name', function () {
-                    assert.strictEqual(report.functions[0].name, '<anonymous>.bar');
+                    assert.strictEqual(report.functions[0].name, '<anonymous>');
                 });
             });
 
@@ -1996,7 +1996,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
-                    assert.strictEqual(report.aggregate.halstead.operands.total, 2);
+                    assert.strictEqual(report.aggregate.halstead.operands.total, 1);
                 });
 
                 test('aggregate has correct Halstead distinct operands', function () {
@@ -2036,7 +2036,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
-                    assert.strictEqual(report.aggregate.halstead.operands.total, 7);
+                    assert.strictEqual(report.aggregate.halstead.operands.total, 6);
                 });
 
                 test('aggregate has correct Halstead distinct operands', function () {
@@ -2189,11 +2189,11 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
-                    assert.strictEqual(report.aggregate.halstead.operands.total, 3);
+                    assert.strictEqual(report.aggregate.halstead.operands.total, 2);
                 });
 
                 test('aggregate has correct Halstead distinct operands', function () {
-                    assert.strictEqual(report.aggregate.halstead.operands.distinct, 3);
+                    assert.strictEqual(report.aggregate.halstead.operands.distinct, 2);
                 });
             });
 
@@ -2211,8 +2211,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('aggregate has correct physical lines of code', function () {
-                    switch (parser.name)
-                    {
+                    switch (parser.name) {
                         // acorn & babylon sets the start location at line 1 (first comment) instead of line 4 (first
                         // line of code).
                         case 'acorn':
@@ -2241,7 +2240,7 @@ if (testconfig.modules['moduleCore']) {
                 });
 
                 test('maintainability index is correct', function () {
-                    assert.strictEqual(Math.round(report.maintainability), 146);
+                    assert.strictEqual(Math.round(report.maintainability), 147);
                 });
             });
 

@@ -2,95 +2,56 @@
 
 'use strict';
 
-var safeName, syntaxDefinitions, syntaxDefinitionsES6, syntaxDefinitionsBabylon;
-
-safeName = require('./safeName');
-syntaxDefinitions = require('./walkerSyntaxCore');
-syntaxDefinitionsES6 = require('./walkerSyntaxES6');
-syntaxDefinitionsBabylon = require('./walkerSyntaxBabylon');
-
 exports.walk = walk;
 
-// Settings
-// - trycatch (Boolean)
-// - forin (Boolean)
-// - logicalor (Boolean)
-// - switchcase (Boolean)
-//
-function walk (tree, settings, callbacks) {
-    var syntaxes = [];
-
-    if (typeof tree !== 'object') { throw new TypeError('Invalid syntax tree'); }
-    if (typeof settings !== 'object') { throw new TypeError('Invalid settings'); }
+function walk (tree, callbacks) {
     if (typeof callbacks !== 'object') { throw new TypeError('Invalid callbacks'); }
-    if (typeof callbacks.processNode !== 'function') { throw new TypeError('Invalid processNode callback'); }
-    if (typeof callbacks.createScope !== 'function') { throw new TypeError('Invalid createScope callback'); }
-    if (typeof callbacks.popScope !== 'function') { throw new TypeError('Invalid popScope callback'); }
+    if (typeof callbacks.enterNode !== 'function') { throw new TypeError('Invalid enterNode callback'); }
+    if (typeof callbacks.exitNode !== 'function') { throw new TypeError('Invalid exitNode callback'); }
 
-    syntaxDefinitions.get(syntaxes, settings);
-    syntaxDefinitionsES6.get(syntaxes, settings);
-    syntaxDefinitionsBabylon.get(syntaxes, settings);
-
-    if (Array.isArray(tree.body)) {
-        visitNodes(tree.body);
+    if (Array.isArray(tree)) {
+        visitNodes(tree);
     }
-    else if (typeof tree.program === 'object' && Array.isArray(tree.program.body)) {
-        visitNodes(tree.program.body);
+    else if (typeof tree === 'object') {
+        visitNode(tree);
     }
     else {
         throw new TypeError('Invalid syntax tree body');
     }
 
-    function visitNodes (nodes, assignedName) {
+    function visitNodes (nodes, parent) {
         nodes.forEach(function (node) {
-            visitNode(node, assignedName);
+            visitNode(node, parent);
         });
     }
 
-    function visitNode (node, assignedName) {
-        var syntax;
-
+    function visitNode (node, parent) {
         if (node !== null && typeof node === 'object') {
-            syntax = syntaxes[node.type];
+            var ignoreNodeKeys = callbacks.enterNode(node, parent);
 
-            if (syntax !== null && typeof syntax === 'object') {
-                callbacks.processNode(node, syntax, assignedName);
+            visitChildren(node, ignoreNodeKeys);
 
-                if (syntax.newScope) {
-                    // Note that Babylon AST ClassMethod doesn't always have a value / FunctionExpression node so also
-                    // potentially use `node.key` to find the Identifier / name.
-                    callbacks.createScope(safeName(node.id || node.key, assignedName), node.loc, node.params.length);
-                }
-
-                visitChildren(node);
-
-                if (syntax.newScope) {
-                    callbacks.popScope();
-                }
-            }
+            callbacks.exitNode(node, parent);
         }
     }
 
-    function visitChildren (node) {
-        var syntax = syntaxes[node.type];
+    function visitChildren (node, ignoreNodeKeys) {
+        ignoreNodeKeys = Array.isArray(ignoreNodeKeys) ? ignoreNodeKeys : [];
 
         // Visit all node keys which are an array or an object.
         Object.keys(node).forEach(function(key) {
-            if (Array.isArray(syntax.ignoreKeys) && syntax.ignoreKeys.indexOf(key) >= 0) {
+            if (ignoreNodeKeys.indexOf(key) >= 0) {
                 return;
             }
 
             if (Array.isArray(node[key]) || typeof node[key] === 'object') {
-                visitChild(
-                    node[key],
-                    typeof syntax.assignableName === 'function' ? syntax.assignableName(node) : undefined
-                );
+                visitChild(node[key], node);
             }
         });
     }
 
-    function visitChild (child, assignedName) {
+    function visitChild (child, parent) {
         var visitor = Array.isArray(child) ? visitNodes : visitNode;
-        visitor(child, assignedName);
+        visitor(child, parent);
     }
 }

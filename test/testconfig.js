@@ -7,11 +7,11 @@
  */
 module.exports.modules =
 {
-    moduleAPI: false,
-    moduleBabylon: false,
+    moduleAPI: true,
+    moduleBabylon: true,
     moduleCore: true,
-    moduleES6: false,
-    traits: false
+    moduleES6: true,
+    traits: true
 };
 
 /**
@@ -32,6 +32,4 @@ module.exports.parsers =
  *
  * @type {boolean}
  */
-module.exports.parserDebug = true;
-
-module.exports.TESTING = false;
+module.exports.parserDebug = false;

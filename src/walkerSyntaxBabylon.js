@@ -32,6 +32,7 @@ function loadSyntaxModules () {
     modules['DirectiveLiteral'] = DirectiveLiteral;
     modules['NullLiteral'] = NullLiteral;
     modules['NumericLiteral'] = NumericLiteral;
+    modules['ObjectMethod'] = ObjectMethod;
     modules['ObjectProperty'] = ObjectProperty;
     modules['RestProperty'] = RestProperty;
     modules['SpreadProperty'] = SpreadProperty;
@@ -49,9 +50,14 @@ function BindExpression () { return traits.actualise(0, 0); }
 function BooleanLiteral () { return traits.actualise(0, 0, undefined, function (node) { return node.value; }); }
 
 function ClassMethod () {
-    return traits.actualise(0, 0, 'function',
+    return traits.actualise(0, 0,
+        function (node) {
+            var operators = ['function'];
+            if (node.kind && (node.kind === 'get' || node.kind === 'set')) { operators.push(node.kind); }
+            if (typeof node.static === 'boolean' && node.static) { operators.push('static'); }
+            return operators;
+        },
         function (node) { return safeName(node.key); },
-        undefined,
         // Note: must skip key as the assigned name is forwarded on to FunctionExpression.
         'key',
         true
@@ -79,17 +85,24 @@ function NullLiteral () { return traits.actualise(0, 0, undefined, 'null'); }
 
 function NumericLiteral () { return traits.actualise(0, 0, undefined, function (node) { return node.value; }); }
 
+function ObjectMethod () {
+    return traits.actualise(0, 0,
+        function (node) {
+            return typeof node.kind === 'string' && (node.kind === 'get' || node.kind === 'set') ?
+                node.kind : undefined;
+        },
+        undefined,
+        // Note: must skip key as the assigned name is forwarded on to FunctionExpression.
+        'key'
+    );
+}
+
 function ObjectProperty () {
     return traits.actualise(1, 0,
         function (node) {
             // Note that w/ ES6+ `:` may be omitted and the Property node defines `shorthand` to indicate this case.
             return typeof node.shorthand === 'undefined' ? ':' :
                 typeof node.shorthand === 'boolean' && !node.shorthand ? ':' : undefined;
-        },
-        undefined,
-        function (node) {
-            return typeof node.shorthand === 'undefined' ? undefined :
-                typeof node.shorthand === 'boolean' && !node.shorthand ? undefined : safeName(node.key);
         }
     );
 }

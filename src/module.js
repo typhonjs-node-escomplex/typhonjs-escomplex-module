@@ -2,16 +2,25 @@
 
 'use strict';
 
+var safeName =                  require('./safeName');
+var syntaxDefinitions =         require('./walkerSyntaxCore');
+var syntaxDefinitionsES6 =      require('./walkerSyntaxES6');
+var syntaxDefinitionsBabylon =  require('./walkerSyntaxBabylon');
+
+var walker = require('./walker');
+
 var report;
+var syntaxes = [];
 
 exports.analyse = analyse;
 
-function analyse (ast, walker, options) {
+function analyse (ast, options) {
     // TODO: Asynchronise
 
     var settings, currentReport, clearDependencies = true, scopeStack = [];
 
     if (typeof ast !== 'object') { throw new TypeError('Invalid syntax tree'); }
+
     if (typeof walker !== 'object') { throw new TypeError('Invalid walker'); }
     if (typeof walker.walk !== 'function') { throw new TypeError('Invalid walker.walk method'); }
 
@@ -24,21 +33,53 @@ function analyse (ast, walker, options) {
     // TODO: loc is moz-specific, move to walker?
     report = createReport(ast.loc);
 
-    walker.walk(ast, settings, {
-        processNode: processNode,
-        createScope: createScope,
-        popScope: popScope
+    syntaxDefinitions.get(syntaxes, settings);
+    syntaxDefinitionsES6.get(syntaxes, settings);
+    syntaxDefinitionsBabylon.get(syntaxes, settings);
+
+    var nodes;
+
+    if (Array.isArray(ast.body)) {
+        nodes = ast.body;
+    }
+    else if (typeof ast.program === 'object' && Array.isArray(ast.program.body)) {
+        nodes = ast.program.body;
+    }
+    else {
+        throw new TypeError('Invalid syntax tree body');
+    }
+
+    walker.walk(nodes, {
+        enterNode: function(node, parent) {
+            var syntax = syntaxes[node.type];
+
+            if (syntax !== null && typeof syntax === 'object') {
+                processNode(node, parent, syntax);
+
+                if (syntax.newScope) { createScope(node, parent); }
+
+                return syntax.ignoreKeys;
+            }
+        },
+
+        exitNode: function(node) {
+            var syntax = syntaxes[node.type];
+
+            if (syntax !== null && typeof syntax === 'object') {
+                if (syntax.newScope) { popScope(); }
+            }
+        }
     });
 
     calculateMetrics(settings);
 
     return report;
 
-    function processNode (node, syntax, assignedName) {
+    function processNode (node, parent, syntax) {
         processLloc(node, syntax, currentReport);
         processCyclomatic(node, syntax, currentReport);
-        processOperators(node, syntax, currentReport, assignedName);
-        processOperands(node, syntax, currentReport, assignedName);
+        processOperators(node, parent, syntax, currentReport);
+        processOperands(node, parent, syntax, currentReport);
 
         if (processDependencies(node, syntax, clearDependencies)) {
             // HACK: This will fail with async or if other syntax than CallExpression introduces dependencies.
@@ -47,11 +88,15 @@ function analyse (ast, walker, options) {
         }
     }
 
-    function createScope (name, loc, parameterCount) {
-        currentReport = createFunctionReport(name, loc, parameterCount);
+    function createScope (node, parent) {
+        // ESTree has a parent node which defines the method name with a child FunctionExpression / FunctionDeclaration.
+        // Babylon AST only has ClassMethod with a child `key` providing the method name.
+        var name = parent && parent.type === 'MethodDefinition' ? safeName(parent.key) : safeName(node.id || node.key);
+
+        currentReport = createFunctionReport(name, node.loc, node.params.length);
 
         report.functions.push(currentReport);
-        report.aggregate.params += parameterCount;
+        report.aggregate.params += node.params.length;
 
         scopeStack.push(currentReport);
     }
@@ -153,25 +198,25 @@ function incrementCyclomatic (currentReport, amount) {
     }
 }
 
-function processOperators (node, syntax, currentReport, assignedName) {
-    processHalsteadMetric(node, syntax, 'operators', currentReport, assignedName);
+function processOperators (node, parent, syntax, currentReport) {
+    processHalsteadMetric(node, parent, syntax, 'operators', currentReport);
 }
 
-function processOperands (node, syntax, currentReport, assignedName) {
-    processHalsteadMetric(node, syntax, 'operands', currentReport, assignedName);
+function processOperands (node, parent, syntax, currentReport) {
+    processHalsteadMetric(node, parent, syntax, 'operands', currentReport);
 }
 
-function processHalsteadMetric (node, syntax, metric, currentReport, assignedName) {
+function processHalsteadMetric (node, parent, syntax, metric, currentReport) {
     if (Array.isArray(syntax[metric])) {
         syntax[metric].forEach(function (s) {
             var identifier;
 
             if (typeof s.identifier === 'function') {
-                identifier = s.identifier(node, assignedName);
+                identifier = s.identifier(node, parent);
             } else {
                 identifier = s.identifier;
             }
-
+//console.log('!! moduleTest - processHalsteadMetric - node.type: ' + node.type +'; metric: ' + metric +'; identifier: ' + identifier);
             if (typeof identifier !== 'undefined' && (typeof s.filter !== 'function' || s.filter(node) === true)) {
                 // Handle the case when a node / syntax returns an array of identifiers.
                 if (Array.isArray(identifier)) {
@@ -306,11 +351,11 @@ function calculateHalsteadMetrics (data) {
 function nilHalsteadMetrics (data) {
     data.vocabulary =
         data.difficulty =
-        data.volume =
-        data.effort =
-        data.bugs =
-        data.time =
-            0;
+            data.volume =
+                data.effort =
+                    data.bugs =
+                        data.time =
+                            0;
 }
 
 function sumMaintainabilityMetrics (sums, indices, data) {

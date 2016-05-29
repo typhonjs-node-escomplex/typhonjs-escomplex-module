@@ -75,7 +75,7 @@ function AssignmentPattern () {
 function ArrayPattern () { return traits.actualise(0, 0, '[]'); }
 
 function ArrowFunctionExpression () {
-    return traits.actualise(0, 0, 'arrowfunction', undefined, undefined, undefined, true);
+    return traits.actualise(0, 0, 'arrowfunction', undefined, undefined, true);
 }
 
 function ClassBody () { return traits.actualise(0, 0); }
@@ -101,7 +101,7 @@ function ForOfStatement (settings) {
 }
 
 function ImportDeclaration () {
-    return traits.actualise(0, 0, ['import', 'from'], undefined, undefined, undefined, undefined,
+    return traits.actualise(0, 0, ['import', 'from'], undefined, undefined, undefined,
         function (node) {
             return {
                 line: node.source.loc.start.line,
@@ -133,11 +133,14 @@ function MetaProperty () {
 }
 
 function MethodDefinition () {
-    return traits.actualise(0, 0, undefined, undefined,
-        // With class methods the FunctionExpression is stored in `value`, but doesn't have an `id` for the name which
-        // needs to be assigned from the `key` Identifier. Since this assignable name is forwarded on the child `key`
-        // is skipped from processing.
-        function (node) { return safeName(node.key); },
+    return traits.actualise(0, 0,
+        function (node) {
+            var operators = [];
+            if (node.kind && (node.kind === 'get' || node.kind === 'set')) { operators.push(node.kind); }
+            if (typeof node.static === 'boolean' && node.static) { operators.push('static'); }
+            return operators;
+        },
+        undefined,
         // Note: must skip key as the assigned name is forwarded on to FunctionExpression.
         'key'
     );
@@ -146,11 +149,11 @@ function MethodDefinition () {
 function ObjectPattern () { return traits.actualise(0, 0, '{}'); }
 
 function RestElement() {
-    return traits.actualise(0, 0, undefined, undefined, function (node) { return '...' + safeName(node.argument); });
+    return traits.actualise(0, 0, '... (rest)');
 }
 
 function SpreadElement() {
-    return traits.actualise(0, 0, undefined, undefined, function (node) { return '...' + safeName(node.argument); });
+    return traits.actualise(0, 0, '... (spread)');
 }
 
 function Super () { return traits.actualise(0, 0, undefined, 'super'); }
