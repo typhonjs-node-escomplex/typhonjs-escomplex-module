@@ -24,6 +24,8 @@ function getSyntax (syntaxes, settings) {
 function loadSyntaxModules () {
     var modules = [];
 
+    // Unique Babylon AST nodes that are not present in ESTree (https://github.com/babel/babel/blob/master/doc/ast/spec.md)
+
     modules['BindExpression'] = BindExpression;
     modules['BooleanLiteral'] = BooleanLiteral;
     modules['ClassMethod'] = ClassMethod;

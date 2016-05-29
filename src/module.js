@@ -3,11 +3,9 @@
 'use strict';
 
 var safeName =                  require('./safeName');
-var syntaxDefinitions =         require('./walkerSyntaxCore');
-var syntaxDefinitionsES6 =      require('./walkerSyntaxES6');
+var syntaxDefinitionsESTree =   require('./walkerSyntaxESTree');
 var syntaxDefinitionsBabylon =  require('./walkerSyntaxBabylon');
-
-var walker = require('./walker');
+var walker =                    require('./walker');
 
 var report;
 var syntaxes = [];
@@ -33,8 +31,7 @@ function analyse (ast, options) {
     // TODO: loc is moz-specific, move to walker?
     report = createReport(ast.loc);
 
-    syntaxDefinitions.get(syntaxes, settings);
-    syntaxDefinitionsES6.get(syntaxes, settings);
+    syntaxDefinitionsESTree.get(syntaxes, settings);
     syntaxDefinitionsBabylon.get(syntaxes, settings);
 
     var nodes;
