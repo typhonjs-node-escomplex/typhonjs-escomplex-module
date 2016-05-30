@@ -2,7 +2,7 @@
 
 'use strict';
 
-var safeName =                  require('./safeName');
+var safeName =                  require('./traits/safeName');
 var syntaxDefinitionsESTree =   require('./walkerSyntaxESTree');
 var syntaxDefinitionsBabylon =  require('./walkerSyntaxBabylon');
 var walker =                    require('./walker');

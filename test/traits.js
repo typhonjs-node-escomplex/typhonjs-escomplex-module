@@ -1,74 +1,76 @@
 'use strict';
 
-var assert, modulePath;
+var assert =        require('chai').assert;
+var testconfig =    require('./testconfig');
 
-assert = require('chai').assert;
-
-modulePath = '../src/traits';
-var testconfig = require('./testconfig');
+var actualisePath = '../src/traits/actualise';
+var actualiseOperandsPath = '../src/traits/actualiseOperands';
+var actualiseOperatorsPath = '../src/traits/actualiseOperators';
 
 if (testconfig.modules['traits']) {
-    suite('index:', function () {
-        var index;
+    suite('traits:', function () {
+        var actualise, actualiseOperands, actualiseOperators;
 
         setup(function () {
-            index = require(modulePath);
+            actualise = require(actualisePath);
+            actualiseOperands = require(actualiseOperandsPath);
+            actualiseOperators = require(actualiseOperatorsPath);
         });
 
         teardown(function () {
-            index = undefined;
+            actualise = undefined;
         });
 
-        suite('require:', function () {
+        suite('require actualise:', function () {
             test('require does not throw', function () {
                 assert.doesNotThrow(function () {
-                    require(modulePath);
+                    require(actualisePath);
                 });
             });
 
-            test('require returns object', function () {
-                assert.isObject(require(modulePath));
-            });
-
             test('actualise function is exported', function () {
-                assert.isFunction(index.actualise);
+                assert.isFunction(actualise);
             });
 
             test('actualise does not throw', function () {
                 assert.doesNotThrow(function () {
-                    index.actualise();
+                    actualise();
                 });
             });
+        });
 
+        suite('require actualiseOperands:', function () {
             test('actualiseOperands function is exported', function () {
-                assert.isFunction(index.actualiseOperands);
+                assert.isFunction(actualiseOperands);
             });
 
             test('actualiseOperands throws when identifiers is object', function () {
                 assert.throws(function () {
-                    index.actualiseOperands({});
+                    actualiseOperands({});
                 });
             });
 
             test('actualiseOperands does not throw when identifiers is array', function () {
                 assert.doesNotThrow(function () {
-                    index.actualiseOperands([]);
+                    actualiseOperands([]);
                 });
             });
+        });
 
+        suite('require actualiseOperators:', function () {
             test('actualiseOperators function is exported', function () {
-                assert.isFunction(index.actualiseOperators);
+                assert.isFunction(actualiseOperators);
             });
 
             test('actualiseOperators throws when properties is object', function () {
                 assert.throws(function () {
-                    index.actualiseOperators({});
+                    actualiseOperators({});
                 });
             });
 
             test('actualiseOperators does not throw when properties is array', function () {
                 assert.doesNotThrow(function () {
-                    index.actualiseOperators([]);
+                    actualiseOperators([]);
                 });
             });
         });
@@ -78,7 +80,7 @@ if (testconfig.modules['traits']) {
                 var result;
 
                 setup(function () {
-                    result = index.actualise('koda', 'basanda', 'bosoya', 'umahasha', 'tikki', 'ottobo', 'boshatta');
+                    result = actualise('koda', 'basanda', 'bosoya', 'umahasha', 'tikki', 'ottobo', 'boshatta');
                 });
 
                 teardown(function () {
@@ -124,7 +126,7 @@ if (testconfig.modules['traits']) {
                 var result;
 
                 setup(function () {
-                    result = index.actualise('1', '2', [ '3' ], [ '4' ], [ '5' ], '6', '7');
+                    result = actualise('1', '2', [ '3' ], [ '4' ], [ '5' ], '6', '7');
                 });
 
                 teardown(function () {
@@ -158,7 +160,7 @@ if (testconfig.modules['traits']) {
                 var result;
 
                 setup(function () {
-                    result = index.actualise();
+                    result = actualise();
                 });
 
                 teardown(function () {
@@ -177,7 +179,7 @@ if (testconfig.modules['traits']) {
                 var result;
 
                 setup(function () {
-                    result = index.actualiseOperands([]);
+                    result = actualiseOperands([]);
                 });
 
                 teardown(function () {
@@ -197,7 +199,7 @@ if (testconfig.modules['traits']) {
                 var result;
 
                 setup(function () {
-                    result = index.actualiseOperands([ 'foo' ]);
+                    result = actualiseOperands([ 'foo' ]);
                 });
 
                 teardown(function () {
@@ -218,7 +220,7 @@ if (testconfig.modules['traits']) {
                 var result;
 
                 setup(function () {
-                    result = index.actualiseOperands([ 'bar', 'baz' ]);
+                    result = actualiseOperands([ 'bar', 'baz' ]);
                 });
 
                 teardown(function () {
@@ -244,7 +246,7 @@ if (testconfig.modules['traits']) {
                 var result;
 
                 setup(function () {
-                    result = index.actualiseOperators([]);
+                    result = actualiseOperators([]);
                 });
 
                 teardown(function () {
@@ -264,7 +266,7 @@ if (testconfig.modules['traits']) {
                 var result;
 
                 setup(function () {
-                    result = index.actualiseOperators([ { identifier: 'foo' } ]);
+                    result = actualiseOperators([ { identifier: 'foo' } ]);
                 });
 
                 teardown(function () {
@@ -285,7 +287,7 @@ if (testconfig.modules['traits']) {
                 var result;
 
                 setup(function () {
-                    result = index.actualiseOperators([ 'foo' ]);
+                    result = actualiseOperators([ 'foo' ]);
                 });
 
                 teardown(function () {
@@ -306,7 +308,7 @@ if (testconfig.modules['traits']) {
                 var result;
 
                 setup(function () {
-                    result = index.actualiseOperators([ 'bar', { identifier: 'baz' } ]);
+                    result = actualiseOperators([ 'bar', { identifier: 'baz' } ]);
                 });
 
                 teardown(function () {

@@ -2,8 +2,8 @@
 
 'use strict';
 
-var safeName = require('./safeName');
-var traits = require('./traits');
+var safeName =  require('./traits/safeName');
+var actualise = require('./traits/actualise');
 
 var syntaxModules = loadSyntaxModules();
 
@@ -47,12 +47,12 @@ function setSyntax (syntaxes, name, settings) {
     syntaxes[name] = syntaxModules[name](settings);
 }
 
-function BindExpression () { return traits.actualise(0, 0); }
+function BindExpression () { return actualise(0, 0); }
 
-function BooleanLiteral () { return traits.actualise(0, 0, undefined, function (node) { return node.value; }); }
+function BooleanLiteral () { return actualise(0, 0, undefined, function (node) { return node.value; }); }
 
 function ClassMethod () {
-    return traits.actualise(0, 0,
+    return actualise(0, 0,
         function (node) {
             var operators = ['function'];
             if (node.kind && (node.kind === 'get' || node.kind === 'set')) { operators.push(node.kind); }
@@ -66,12 +66,12 @@ function ClassMethod () {
     );
 }
 
-function Decorator () { return traits.actualise(0, 0); }
+function Decorator () { return actualise(0, 0); }
 
-function Directive () { return traits.actualise(1, 0); }
+function Directive () { return actualise(1, 0); }
 
 function DirectiveLiteral () {
-    return traits.actualise(0, 0, undefined,
+    return actualise(0, 0, undefined,
         function (node) {
             if (typeof node.value === 'string') {
                 // Avoid conflicts between string literals and identifiers.
@@ -83,41 +83,34 @@ function DirectiveLiteral () {
     );
 }
 
-function NullLiteral () { return traits.actualise(0, 0, undefined, 'null'); }
+function NullLiteral () { return actualise(0, 0, undefined, 'null'); }
 
-function NumericLiteral () { return traits.actualise(0, 0, undefined, function (node) { return node.value; }); }
+function NumericLiteral () { return actualise(0, 0, undefined, function (node) { return node.value; }); }
 
 function ObjectMethod () {
-    return traits.actualise(0, 0,
+    return actualise(0, 0,
         function (node) {
             return typeof node.kind === 'string' && (node.kind === 'get' || node.kind === 'set') ?
                 node.kind : undefined;
         },
         undefined,
-        // Note: must skip key as the assigned name is forwarded on to FunctionExpression.
-        'key'
+        'key'  // Note: must skip key as the assigned name is forwarded on to FunctionExpression.
     );
 }
 
+// Note that w/ ES6+ `:` may be omitted and the Property node defines `shorthand` to indicate this case.
 function ObjectProperty () {
-    return traits.actualise(1, 0,
+    return actualise(1, 0,
         function (node) {
-            // Note that w/ ES6+ `:` may be omitted and the Property node defines `shorthand` to indicate this case.
             return typeof node.shorthand === 'undefined' ? ':' :
                 typeof node.shorthand === 'boolean' && !node.shorthand ? ':' : undefined;
         }
     );
 }
 
-function RestProperty () { return traits.actualise(0, 0); }
+function RestProperty () { return actualise(0, 0); }
 
-function SpreadProperty () { return traits.actualise(0, 0); }
+function SpreadProperty () { return actualise(0, 0); }
 
-function StringLiteral () {
-    return traits.actualise(0, 0, undefined,
-        function (node) {
-            // Avoid conflicts between string literals and identifiers.
-            return '"' + node.value + '"';
-        }
-    );
-}
+// Avoid conflicts between string literals and identifiers.
+function StringLiteral () { return actualise(0, 0, undefined, function (node) { return '"' + node.value + '"'; }); }

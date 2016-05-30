@@ -2,8 +2,8 @@
 
 'use strict';
 
-var safeName = require('./safeName');
-var traits = require('./traits');
+var safeName =  require('./traits/safeName');
+var actualise = require('./traits/actualise');
 
 var syntaxModules = loadSyntaxModules();
 
@@ -102,64 +102,49 @@ function setSyntax (syntaxes, name, settings) {
 
 // Core / ES5 ESTree AST nodes --------------------------------------------------------------------------------------
 
-function ArrayExpression () { return traits.actualise(0, 0, '[]'); }
+function ArrayExpression () { return actualise(0, 0, '[]'); }
 
-function AssignmentExpression () { return traits.actualise(0, 0, function (node) { return node.operator; }); }
+function AssignmentExpression () { return actualise(0, 0, function (node) { return node.operator; }); }
 
-function BlockStatement () { return traits.actualise(0, 0); }
+function BlockStatement () { return actualise(0, 0); }
 
-function BinaryExpression () { return traits.actualise(0, 0, function (node) { return node.operator; }); }
+function BinaryExpression () { return actualise(0, 0, function (node) { return node.operator; }); }
 
-function BreakStatement () { return traits.actualise(1, 0, 'break'); }
+function BreakStatement () { return actualise(1, 0, 'break'); }
 
 function CallExpression () {
-    return traits.actualise(
-        function (node) {                                               // lloc
-            return node.callee.type === 'FunctionExpression' ? 1 : 0;
-        },
-        0,                                                              // cyclomatic
-        '()',                                                           // operators
-        undefined,                                                      // operands
-        undefined,                                                      // ignoreKeys
-        undefined,                                                      // newScope
+    return actualise(
+        function (node) { return node.callee.type === 'FunctionExpression' ? 1 : 0; },  // lloc
+        0,                                                                              // cyclomatic
+        '()',                                                                           // operators
+        undefined,                                                                      // operands
+        undefined,                                                                      // ignoreKeys
+        undefined,                                                                      // newScope
         function (node, clearAliases) {
-            if (clearAliases) {
-                // TODO: This prohibits async running. Refine by passing in module id as key for amdPathAliases.
-                amdPathAliases = {};
-            }
+            // TODO: This prohibits async running. Refine by passing in module id as key for amdPathAliases.
+            if (clearAliases) { amdPathAliases = {}; }
 
-            if (node.callee.type === 'Identifier' && node.callee.name === 'require') {
-                return processRequire(node);
-            }
+            if (node.callee.type === 'Identifier' && node.callee.name === 'require') { return processRequire(node); }
 
-            if (
-                node.callee.type === 'MemberExpression' &&
-                node.callee.object.type === 'Identifier' &&
-                node.callee.object.name === 'require' &&
-                node.callee.property.type === 'Identifier' &&
-                node.callee.property.name === 'config'
-            ) {
+            if (node.callee.type === 'MemberExpression' && node.callee.object.type === 'Identifier' &&
+                node.callee.object.name === 'require' && node.callee.property.type === 'Identifier' &&
+                node.callee.property.name === 'config') {
                 processAmdRequireConfig(node.arguments);
             }
         }
     );
 
     function processRequire (node) {
-        if (node.arguments.length === 1) {
-            return processCommonJsRequire(node);
-        }
-
-        if (node.arguments.length === 2) {
-            return processAmdRequire(node);
-        }
+        if (node.arguments.length === 1) { return processCommonJsRequire(node); }
+        if (node.arguments.length === 2) { return processAmdRequire(node); }
     }
 
     function processCommonJsRequire (node) {
         return createDependency(node, resolveRequireDependency(node.arguments[0]), 'cjs');
     }
 
+    // Note: that `StringLiteral` supports Babylon AST.
     function resolveRequireDependency (dependency, resolver) {
-        // Note: that `StringLiteral` supports Babylon AST.
         if (dependency.type === 'Literal' || dependency.type === 'StringLiteral') {
             if (typeof resolver === 'function') {
                 return resolver(dependency.value);
@@ -171,13 +156,7 @@ function CallExpression () {
         return '* dynamic dependency *';
     }
 
-    function createDependency (node, path, type) {
-        return {
-            line: node.loc.start.line,
-            path: path,
-            type: type
-        };
-    }
+    function createDependency (node, path, type) { return { line: node.loc.start.line, path: path, type: type }; }
 
     function processAmdRequire (node) {
         if (node.arguments[0].type === 'ArrayExpression') {
@@ -196,9 +175,7 @@ function CallExpression () {
         return createDependency(node, resolveRequireDependency(item, resolveAmdRequireDependency), 'amd');
     }
 
-    function resolveAmdRequireDependency (dependency) {
-        return amdPathAliases[dependency] || dependency;
-    }
+    function resolveAmdRequireDependency (dependency) { return amdPathAliases[dependency] || dependency; }
 
     function processAmdRequireConfig (args) {
         if (args.length === 1 && args[0].type === 'ObjectExpression') {
@@ -222,30 +199,26 @@ function CallExpression () {
     }
 }
 
-function CatchClause (settings) {
-    return traits.actualise(1, function () { return settings.trycatch ? 1 : 0; }, 'catch');
-}
+function CatchClause (settings) { return actualise(1, function () { return settings.trycatch ? 1 : 0; }, 'catch'); }
 
-function ConditionalExpression () { return traits.actualise(0, 1, ':?'); }
+function ConditionalExpression () { return actualise(0, 1, ':?'); }
 
-function ContinueStatement () { return traits.actualise(1, 0, 'continue'); }
+function ContinueStatement () { return actualise(1, 0, 'continue'); }
 
-function DoWhileStatement () { return traits.actualise(2, function (node) { return node.test ? 1 : 0; }, 'dowhile'); }
+function DoWhileStatement () { return actualise(2, function (node) { return node.test ? 1 : 0; }, 'dowhile'); }
 
-function EmptyStatement () { return traits.actualise(0, 0); }
+function EmptyStatement () { return actualise(0, 0); }
 
-function ExpressionStatement () { return traits.actualise(1, 0); }
+function ExpressionStatement () { return actualise(1, 0); }
 
-function ForInStatement (settings) {
-    return traits.actualise(1, function () { return settings.forin ? 1 : 0; }, 'forin');
-}
+function ForInStatement (settings) { return actualise(1, function () { return settings.forin ? 1 : 0; }, 'forin'); }
 
-function ForStatement () { return traits.actualise(1, function (node) { return node.test ? 1 : 0; }, 'for'); }
+function ForStatement () { return actualise(1, function (node) { return node.test ? 1 : 0; }, 'for'); }
 
+// Note: The function name (node.id) is returned as an operand and excluded from traversal as to not
+// be included in the function operand calculations.
 function FunctionDeclaration () {
-    // Note: The function name (node.id) is returned as an operand and excluded from traversal as to not
-    // be included in the function operand calculations.
-    return traits.actualise(1, 0,
+    return actualise(1, 0,
         function (node) {
             return typeof node.generator === 'boolean' && node.generator ? 'generatorfunction' : 'function';
         },
@@ -255,10 +228,10 @@ function FunctionDeclaration () {
         'id', true);
 }
 
+// Note: The function name (node.id) is returned as an operand and excluded from traversal as to not
+// be included in the function operand calculations.
 function FunctionExpression () {
-    // Note: The function name (node.id) is returned as an operand and excluded from traversal as to not
-    // be included in the function operand calculations.
-    return traits.actualise(0, 0,
+    return actualise(0, 0,
         function (node) {
             return typeof node.generator === 'boolean' && node.generator ? 'generatorfunction' : 'function';
         },
@@ -269,55 +242,39 @@ function FunctionExpression () {
     );
 }
 
-function Identifier () {
-    return traits.actualise(0, 0, undefined, function (node) { return node.name; });
-}
+function Identifier () { return actualise(0, 0, undefined, function (node) { return node.name; }); }
 
 function IfStatement () {
-    return traits.actualise(
+    return actualise(
         function (node) { return node.alternate ? 2 : 1; },
         1,
-        [
-            'if',
-            {
-                identifier: 'else',
-                filter: function (node) { return !!node.alternate; }
-            }
-        ]
+        [ 'if', { identifier: 'else', filter: function (node) { return !!node.alternate; } } ]
     );
 }
 
-function LabeledStatement () { return traits.actualise(0, 0); }
+function LabeledStatement () { return actualise(0, 0); }
 
+// Avoid conflicts between string literals and identifiers.
 function Literal () {
-    return traits.actualise(
+    return actualise(
         0, 0, undefined,
-        function (node) {
-            if (typeof node.value === 'string') {
-                // Avoid conflicts between string literals and identifiers.
-                return '"' + node.value + '"';
-            }
-
-            return node.value;
-        }
+        function (node) { return typeof node.value === 'string' ? '"' + node.value + '"' : node.value; }
     );
 }
 
 function LogicalExpression (settings) {
-    return traits.actualise(0,
+    return actualise(0,
         function (node) {
             var isAnd = node.operator === '&&';
             var isOr = node.operator === '||';
             return (isAnd || (settings.logicalor && isOr)) ? 1 : 0;
         },
-        function (node) {
-            return node.operator;
-        }
+        function (node) { return node.operator; }
     );
 }
 
 function MemberExpression () {
-    return traits.actualise(
+    return actualise(
         function (node) {
             return ['ObjectExpression', 'ArrayExpression', 'FunctionExpression'].indexOf(
                 node.object.type) === -1 ? 0 : 1;
@@ -327,145 +284,108 @@ function MemberExpression () {
 }
 
 function NewExpression () {
-    return traits.actualise( function (node) { return node.callee.type === 'FunctionExpression' ? 1 : 0; }, 0, 'new');
+    return actualise( function (node) { return node.callee.type === 'FunctionExpression' ? 1 : 0; }, 0, 'new');
 }
 
-function ObjectExpression () { return traits.actualise(0, 0, '{}'); }
+function ObjectExpression () { return actualise(0, 0, '{}'); }
 
+// Note that w/ ES6+ `:` may be omitted and the Property node defines `shorthand` to indicate this case.
 function Property () {
-    return traits.actualise(1, 0,
+    return actualise(1, 0,
         function (node) {
-            // Note that w/ ES6+ `:` may be omitted and the Property node defines `shorthand` to indicate this case.
             return typeof node.shorthand === 'undefined' ? ':' :
-                typeof node.shorthand === 'boolean' && !node.shorthand ? ':' : undefined;
+            typeof node.shorthand === 'boolean' && !node.shorthand ? ':' : undefined;
         }
     );
 }
 
-function ReturnStatement () { return traits.actualise(1, 0, 'return'); }
+function ReturnStatement () { return actualise(1, 0, 'return'); }
 
-function SequenceExpression () { return traits.actualise(0, 0); }
+function SequenceExpression () { return actualise(0, 0); }
 
 function SwitchCase (settings) {
-    return traits.actualise(1,
-        function (node) {
-            return settings.switchcase && node.test ? 1 : 0;
-        },
-        function (node) {
-            return node.test ? 'case' : 'default';
-        }
+    return actualise(1,
+        function (node) { return settings.switchcase && node.test ? 1 : 0; },
+        function (node) { return node.test ? 'case' : 'default'; }
     );
 }
 
-function SwitchStatement () { return traits.actualise(1, 0, 'switch'); }
+function SwitchStatement () { return actualise(1, 0, 'switch'); }
 
-function ThisExpression () { return traits.actualise(0, 0, undefined, 'this'); }
+function ThisExpression () { return actualise(0, 0, undefined, 'this'); }
 
-function ThrowStatement () { return traits.actualise(1, 0, 'throw'); }
+function ThrowStatement () { return actualise(1, 0, 'throw'); }
 
-function TryStatement () {
-    // esprima has duplicate nodes the catch block; `handler` is the actual ESTree spec.
-    return traits.actualise(1, 0, undefined, undefined, ['guardedHandlers', 'handlers']);
-}
+// esprima has duplicate nodes the catch block; `handler` is the actual ESTree spec.
+function TryStatement () { return actualise(1, 0, undefined, undefined, ['guardedHandlers', 'handlers']); }
 
 function UnaryExpression () {
-    return traits.actualise(0, 0,
-        function (node) { return node.operator + ' (' + (node.prefix ? 'pre' : 'post') + 'fix)'; }
-    );
+    return actualise(0, 0, function (node) { return node.operator + ' (' + (node.prefix ? 'pre' : 'post') + 'fix)'; });
 }
 
 function UpdateExpression () {
-    return traits.actualise(0, 0,
-        function (node) { return node.operator + ' (' + (node.prefix ? 'pre' : 'post') + 'fix)'; }
-    );
+    return actualise(0, 0, function (node) { return node.operator + ' (' + (node.prefix ? 'pre' : 'post') + 'fix)'; });
 }
 
-function VariableDeclaration () { return traits.actualise(0, 0, function (node) { return node.kind; } ); }
+function VariableDeclaration () { return actualise(0, 0, function (node) { return node.kind; } ); }
 
 function VariableDeclarator () {
-    return traits.actualise(1, 0,
-        {
-            identifier: '=',
-            filter: function (node) {
-                return !!node.init;
-            }
-        }
-    );
+    return actualise(1, 0, { identifier: '=', filter: function (node) { return !!node.init; } });
 }
 
-function WhileStatement () { return traits.actualise(1, function (node) { return node.test ? 1 : 0; }, 'while' ); }
+function WhileStatement () { return actualise(1, function (node) { return node.test ? 1 : 0; }, 'while' ); }
 
-function WithStatement () { return traits.actualise(1, 0, 'with'); }
+function WithStatement () { return actualise(1, 0, 'with'); }
 
 // ES6 ESTree AST nodes ---------------------------------------------------------------------------------------------
 
 function AssignmentPattern () {
-    return traits.actualise(0, 0, function (node) { return node.operator; }, undefined,
+    return actualise(0, 0, function (node) { return node.operator; }, undefined,
         function (node) {
-            if (node.left.type === 'MemberExpression') {
-                return safeName(node.left.object) + '.' + node.left.property.name;
-            }
-            else if (typeof node.left.id !== 'undefined') {
-                return safeName(node.left.id);
-            }
-
-            return safeName(node.left);
+            return node.left.type === 'MemberExpression' ? safeName(node.left.object) + '.' + node.left.property.name :
+            typeof node.left.id !== 'undefined' ? safeName(node.left.id) : safeName(node.left);
         }
     );
 }
 
-function ArrayPattern () { return traits.actualise(0, 0, '[]'); }
+function ArrayPattern () { return actualise(0, 0, '[]'); }
 
-function ArrowFunctionExpression () {
-    return traits.actualise(0, 0, 'arrowfunction', undefined, undefined, true);
-}
+function ArrowFunctionExpression () { return actualise(0, 0, 'arrowfunction', undefined, undefined, true); }
 
-function ClassBody () { return traits.actualise(0, 0); }
+function ClassBody () { return actualise(0, 0); }
 
-function ClassDeclaration() { return traits.actualise(1, 0, 'class'); }
+function ClassDeclaration() { return actualise(1, 0, 'class'); }
 
-function ClassExpression() { return traits.actualise(1, 0, 'class'); }
+function ClassExpression() { return actualise(1, 0, 'class'); }
 
-function ExportAllDeclaration () { return traits.actualise(0, 0, ['export', '*']); }
+function ExportAllDeclaration () { return actualise(0, 0, ['export', '*']); }
 
-function ExportDefaultDeclaration() { return traits.actualise(0, 0, ['export', 'default']); }
+function ExportDefaultDeclaration() { return actualise(0, 0, ['export', 'default']); }
 
-function ExportNamedDeclaration() { return traits.actualise(0, 0, ['export', '{}']); }
+function ExportNamedDeclaration() { return actualise(0, 0, ['export', '{}']); }
 
 function ExportSpecifier() {
-    return traits.actualise(0, 0, function (node) {
-        return node.exported.name === node.local.name ? undefined : 'as';
-    });
+    return actualise(0, 0, function (node) { return node.exported.name === node.local.name ? undefined : 'as'; });
 }
 
-function ForOfStatement (settings) {
-    return traits.actualise(1, function () { return settings.forin ? 1 : 0; }, 'forof');
-}
+function ForOfStatement (settings) { return actualise(1, function () { return settings.forin ? 1 : 0; }, 'forof'); }
 
 function ImportDeclaration () {
-    return traits.actualise(0, 0, ['import', 'from'], undefined, undefined, undefined,
-        function (node) {
-            return {
-                line: node.source.loc.start.line,
-                path: node.source.value,
-                type: 'esm'
-            };
-        }
+    return actualise(0, 0, ['import', 'from'], undefined, undefined, undefined,
+        function (node) { return { line: node.source.loc.start.line, path: node.source.value, type: 'esm' }; }
     );
 }
 
-function ImportDefaultSpecifier() { return traits.actualise(0, 0); }
+function ImportDefaultSpecifier() { return actualise(0, 0); }
 
-function ImportNamespaceSpecifier() { return traits.actualise(0, 0, ['import', '*', 'as']); }
+function ImportNamespaceSpecifier() { return actualise(0, 0, ['import', '*', 'as']); }
 
 function ImportSpecifier() {
-    return traits.actualise(0, 0,
-        function (node) { return node.imported.name === node.local.name ? '{}' : ['{}', 'as']; }
-    );
+    return actualise(0, 0, function (node) { return node.imported.name === node.local.name ? '{}' : ['{}', 'as']; });
 }
 
 function MetaProperty () {
-    return traits.actualise(0, 0, '.',
+    return actualise(0, 0, '.',
         // esprima doesn't follow the ESTree spec and `meta` & `property` are strings instead of Identifier nodes.
         function(node) {
             return typeof node.meta === 'string' && typeof node.property === 'string' ? [node.meta, node.property] :
@@ -475,7 +395,7 @@ function MetaProperty () {
 }
 
 function MethodDefinition () {
-    return traits.actualise(0, 0,
+    return actualise(0, 0,
         function (node) {
             var operators = [];
             if (node.kind && (node.kind === 'get' || node.kind === 'set')) { operators.push(node.kind); }
@@ -483,31 +403,26 @@ function MethodDefinition () {
             return operators;
         },
         undefined,
-        // Note: must skip key as the assigned name is forwarded on to FunctionExpression.
-        'key'
+        'key'   // Note: must skip as the following FunctionExpression assigns the name.
     );
 }
 
-function ObjectPattern () { return traits.actualise(0, 0, '{}'); }
+function ObjectPattern () { return actualise(0, 0, '{}'); }
 
-function RestElement() {
-    return traits.actualise(0, 0, '... (rest)');
-}
+function RestElement() { return actualise(0, 0, '... (rest)'); }
 
-function SpreadElement() {
-    return traits.actualise(0, 0, '... (spread)');
-}
+function SpreadElement() { return actualise(0, 0, '... (spread)'); }
 
-function Super () { return traits.actualise(0, 0, undefined, 'super'); }
+function Super () { return actualise(0, 0, undefined, 'super'); }
 
-function TaggedTemplateExpression () { return traits.actualise(0, 0); }
+function TaggedTemplateExpression () { return actualise(0, 0); }
 
 function TemplateElement () {
-    return traits.actualise(0, 0, undefined, function (node) {
+    return actualise(0, 0, undefined, function (node) {
         return node.value.cooked !== '' ? node.value.cooked : undefined;
     });
 }
 
-function TemplateLiteral () { return traits.actualise(0, 0); }
+function TemplateLiteral () { return actualise(0, 0); }
 
-function YieldExpression () { return traits.actualise(1, 0, 'yield'); }
+function YieldExpression () { return actualise(1, 0, 'yield'); }
