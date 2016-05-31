@@ -47,26 +47,26 @@ export default class ESComplexCore
       metricPlugin.onModuleStart(event);
 
       walker.traverse(ast,
+      {
+         enterNode: (node, parent) =>
          {
-            enterNode: (node, parent) =>
-            {
-               event.data.ignoreKeys = undefined;
-               event.data.node = node;
-               event.data.parent = parent;
+            event.data.ignoreKeys = undefined;
+            event.data.node = node;
+            event.data.parent = parent;
 
-               metricPlugin.onEnterNode(event);
+            metricPlugin.onEnterNode(event);
 
-               return event.data.ignoreKeys;
-            },
+            return event.data.ignoreKeys;
+         },
 
-            exitNode: (node, parent) =>
-            {
-               event.data.node = node;
-               event.data.parent = parent;
+         exitNode: (node, parent) =>
+         {
+            event.data.node = node;
+            event.data.parent = parent;
 
-               metricPlugin.onExitNode(event);
-            }
-         });
+            metricPlugin.onExitNode(event);
+         }
+      });
 
       metricPlugin.onModuleEnd(event);
 
