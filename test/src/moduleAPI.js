@@ -4,7 +4,7 @@ import { assert }       from 'chai';
 
 import * as testconfig  from './testconfig';
 
-const modulePath = '../../dist/module';
+const modulePath = '../../dist';
 
 if (testconfig.modules['moduleAPI'])
 {

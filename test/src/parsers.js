@@ -7,7 +7,7 @@ import * as esprima     from 'esprima';
 
 import * as testconfig  from './testconfig';
 
-import * as escomplex   from '../../src/module';
+import escomplex        from '../../src';
 
 const esmRegex = /(^\s*|[}\);\n]\s*)(import\s*(['"]|(\*\s+as\s+)?[^"'\(\)\n;]+\s*from\s*['"]|\{)|export\s+\*\s+from\s+["']|export\s* (\{|default|function|class|var|const|let|async\s+function))/;
 
