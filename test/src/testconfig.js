@@ -5,13 +5,12 @@
  *
  * @type {{}}
  */
-module.exports.modules =
+export const modules =
 {
-    moduleAPI: true,
-    moduleBabylon: true,
-    moduleCore: true,
-    moduleES6: true,
-    traits: true
+   moduleAPI: true,
+   moduleBabylon: true,
+   moduleCore: true,
+   moduleES6: true
 };
 
 /**
@@ -19,12 +18,12 @@ module.exports.modules =
  *
  * @type {{}}
  */
-module.exports.parsers =
+export const parsers =
 {
-    acorn: true,
-    babylon: true,
-    espree: true,
-    esprima: true
+   acorn: true,
+   babylon: true,
+   espree: true,
+   esprima: true
 };
 
 /**
@@ -32,4 +31,4 @@ module.exports.parsers =
  *
  * @type {boolean}
  */
-module.exports.parserDebug = false;
+export const parserDebug = false;
