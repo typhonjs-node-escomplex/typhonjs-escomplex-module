@@ -28,14 +28,11 @@
   },
   "devDependencies": {
     "acorn": "^3.0.0",
-    "babel-plugin-add-module-exports": "^0.2.0",
-    "babel-plugin-module-alias": "^1.0.0",
     "babylon": "^6.0.0",
     "espree": "^3.0.0",
     "esprima": "^2.0.0",
     "typhonjs-config-eslint": "^0.4.0",
-    "typhonjs-npm-build-test": "^0.1.0",
-    "snyk": "^1.0.0"
+    "typhonjs-npm-build-test": "^0.2.0"
   },
   "scripts": {
     "build": "babel-node ./node_modules/typhonjs-npm-scripts-build-babel/scripts/build.js",
