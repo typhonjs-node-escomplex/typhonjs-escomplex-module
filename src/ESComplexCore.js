@@ -1,75 +1,62 @@
 'use strict';
 
-import PluginMetricsModule from 'escomplex-plugin-metrics-module/src/PluginMetricsModule.js';
-import PluginSyntaxBabylon from 'escomplex-plugin-syntax-babylon/src/PluginSyntaxBabylon.js';
+import walker  from 'typhonjs-ast-walker';
 
-import walker              from 'typhonjs-ast-walker';
+import Plugins from './Plugins.js';
 
 /**
  * Provides the core ESComplex functionality.
  */
 export default class ESComplexCore
 {
+   constructor(options = {})
+   {
+      if (typeof options !== 'object') { throw new TypeError('ctor error: `options` is not an `object`.'); }
+
+      Plugins.initialize(options);
+   }
+
    /**
     * Processes the given ast and calculates metrics via plugins.
     *
     * @param {object}   ast - Javascript AST.
-    * @param {object}   options - ESComplex options
+    * @param {object}   options - module options
     *
     * @returns {*}
     */
    analyse(ast, options)
    {
-      // TODO: Asynchronise
-
-      let settings;
-
       if (typeof ast !== 'object' || Array.isArray(ast)) { throw new TypeError('Invalid syntax tree'); }
 
-      if (typeof options === 'object')
-      {
-         settings = options;
-      }
-      else
-      {
-         // Default escomplex settings
-         settings = { logicalor: true, switchcase: true, forin: false, trycatch: false, newmi: false };
-      }
+      const settings = Plugins.onConfigure(options);
 
-      const event = { data: { settings } };
+      const syntaxes = Plugins.onLoadSyntax(settings);
 
-      new PluginSyntaxBabylon().onLoadSyntax(event);
-
-      const metricPlugin = new PluginMetricsModule();
-
-      event.data.ast = ast;
-
-      metricPlugin.onModuleStart(event);
+      Plugins.onModuleStart(ast, syntaxes, settings);
 
       walker.traverse(ast,
       {
-         enterNode: (node, parent) =>
-         {
-            event.data.ignoreKeys = undefined;
-            event.data.node = node;
-            event.data.parent = parent;
-
-            metricPlugin.onEnterNode(event);
-
-            return event.data.ignoreKeys;
-         },
-
-         exitNode: (node, parent) =>
-         {
-            event.data.node = node;
-            event.data.parent = parent;
-
-            metricPlugin.onExitNode(event);
-         }
+         enterNode: (node, parent) => { return Plugins.onEnterNode(node, parent); },
+         exitNode: (node, parent) => { return Plugins.onExitNode(node, parent); }
       });
 
-      metricPlugin.onModuleEnd(event);
+      return Plugins.onModuleEnd();
+   }
 
-      return event.data.report;
+   /**
+    * Wraps processing the given ast and calculates metrics via plugins in a Promise.
+    *
+    * @param {object}   ast - Javascript AST.
+    * @param {object}   options - module options
+    *
+    * @returns {*}
+    */
+   analyzeThen(ast, options)
+   {
+      return new Promise((resolve, reject) =>
+      {
+         try { resolve(this.analyse(ast, options)); }
+         catch (err) { reject(err); }
+      });
    }
 }
