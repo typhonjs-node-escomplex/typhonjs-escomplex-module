@@ -49,9 +49,14 @@ var ESComplexCore = function () {
 
    _createClass(ESComplexCore, [{
       key: 'analyze',
-      value: function analyze(ast, options) {
+      value: function analyze(ast) {
+         var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
          if ((typeof ast === 'undefined' ? 'undefined' : _typeof(ast)) !== 'object' || Array.isArray(ast)) {
             throw new TypeError('Invalid syntax tree');
+         }
+         if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) !== 'object') {
+            throw new TypeError('analyze error: `options` is not an `object`.');
          }
 
          var settings = _Plugins2.default.onConfigure(options);

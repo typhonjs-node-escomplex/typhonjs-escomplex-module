@@ -24,9 +24,10 @@ export default class ESComplexCore
     *
     * @returns {*}
     */
-   analyze(ast, options)
+   analyze(ast, options = {})
    {
       if (typeof ast !== 'object' || Array.isArray(ast)) { throw new TypeError('Invalid syntax tree'); }
+      if (typeof options !== 'object') { throw new TypeError('analyze error: `options` is not an `object`.'); }
 
       const settings = Plugins.onConfigure(options);
 

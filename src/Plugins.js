@@ -21,19 +21,9 @@ export default class Plugin
 
    static onConfigure(options)
    {
-      let settings;
-
-      if (typeof options === 'object')
-      {
-         settings = options;
-      }
-      else
-      {
-         // Default escomplex settings
-         settings = { logicalor: true, switchcase: true, forin: false, trycatch: false, newmi: false };
-      }
-
-      return settings;
+      const settings = {};
+      const event = s_PLUGIN_MANAGER.invoke('onConfigure', { options, settings }, true);
+      return event !== null ? event.data.settings : settings;
    }
 
    static onEnterNode(node, parent)
@@ -49,8 +39,9 @@ export default class Plugin
 
    static onLoadSyntax(settings)
    {
-      const event = s_PLUGIN_MANAGER.invoke('onLoadSyntax', { settings });
-      return event !== null ? event.data.syntaxes : {};
+      const syntaxes = {};
+      const event = s_PLUGIN_MANAGER.invoke('onLoadSyntax', { settings, syntaxes }, true);
+      return event !== null ? event.data.syntaxes : syntaxes;
    }
 
    static onModuleStart(ast, syntaxes, settings)
