@@ -17,7 +17,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('parseInt("10", 10);');
+               report = parser.analyze('parseInt("10", 10);');
             });
 
             teardown(() =>
@@ -163,7 +163,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('if (true) { "foo"; }');
+               report = parser.analyze('if (true) { "foo"; }');
             });
 
             teardown(() =>
@@ -304,7 +304,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('if (true) { "foo"; } else { "bar"; }');
+               report = parser.analyze('if (true) { "foo"; } else { "bar"; }');
             });
 
             teardown(() =>
@@ -410,7 +410,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('if (true) { "foo"; } if (false) { "bar"; }');
+               report = parser.analyze('if (true) { "foo"; } if (false) { "bar"; }');
             });
 
             teardown(() =>
@@ -486,7 +486,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('if (true) { "foo"; } else if (false) { "bar"; }');
+               report = parser.analyze('if (true) { "foo"; } else if (false) { "bar"; }');
             });
 
             teardown(() =>
@@ -547,7 +547,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('if (true) { "foo"; if (false) { "bar"; } }');
+               report = parser.analyze('if (true) { "foo"; if (false) { "bar"; } }');
             });
 
             teardown(() =>
@@ -572,7 +572,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   'switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: "baz"; }');
             });
 
@@ -629,7 +629,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('switch (Date.now()) { case 1: case 2: "foo"; break; default: "bar"; }');
+               report = parser.analyze('switch (Date.now()) { case 1: case 2: "foo"; break; default: "bar"; }');
             });
 
             teardown(() =>
@@ -679,7 +679,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   'switch (Date.now()) { '
                 + '    case 1: "foo"; break; '
                 + '    case 2: "bar"; break; '
@@ -734,7 +734,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var i; for (i = 0; i < 10; i += 1) { "foo"; }');
+               report = parser.analyze('var i; for (i = 0; i < 10; i += 1) { "foo"; }');
             });
 
             teardown(() =>
@@ -799,7 +799,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var i; for (i = 0; i < 10; i += 1) { if (true) { "foo"; } }');
+               report = parser.analyze('var i; for (i = 0; i < 10; i += 1) { if (true) { "foo"; } }');
             });
 
             teardown(() =>
@@ -839,7 +839,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }');
+               report = parser.analyze('var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }');
             });
 
             teardown(() =>
@@ -904,7 +904,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   'var property, object = { foo: "bar", baz: "qux" }; '
                 + 'for (property in object) { if (object.hasOwnProperty(property)) { "wibble"; } }');
             });
@@ -946,7 +946,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('while (true) { "foo"; }');
+               report = parser.analyze('while (true) { "foo"; }');
             });
 
             teardown(() =>
@@ -996,7 +996,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('while (true) { if (true) { "foo"; } }');
+               report = parser.analyze('while (true) { if (true) { "foo"; } }');
             });
 
             teardown(() =>
@@ -1036,7 +1036,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('do { "foo"; } while (true)');
+               report = parser.analyze('do { "foo"; } while (true)');
             });
 
             teardown(() =>
@@ -1086,7 +1086,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('do { if (true) { "foo"; } } while (true)');
+               report = parser.analyze('do { if (true) { "foo"; } } while (true)');
             });
 
             teardown(() =>
@@ -1126,7 +1126,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('try { "foo"; } catch (e) { e.message; }');
+               report = parser.analyze('try { "foo"; } catch (e) { e.message; }');
             });
 
             teardown(() =>
@@ -1176,7 +1176,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('try { if (true) { "foo"; } } catch (e) { "bar"; }');
+               report = parser.analyze('try { if (true) { "foo"; } } catch (e) { "bar"; }');
             });
 
             teardown(() =>
@@ -1216,7 +1216,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('try { "foo"; } catch (e) { if (true) { "bar"; } }');
+               report = parser.analyze('try { "foo"; } catch (e) { if (true) { "bar"; } }');
             });
 
             teardown(() =>
@@ -1256,7 +1256,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('try { "foo"; } catch (e) { } finally { if (true) { "bar"; } }');
+               report = parser.analyze('try { "foo"; } catch (e) { } finally { if (true) { "bar"; } }');
             });
 
             teardown(() =>
@@ -1296,7 +1296,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('function foo () { "bar"; }');
+               report = parser.analyze('function foo () { "bar"; }');
             });
 
             teardown(() =>
@@ -1431,7 +1431,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('function foo () { bar(); function bar () { "baz"; } }');
+               report = parser.analyze('function foo () { bar(); function bar () { "baz"; } }');
             });
 
             teardown(() =>
@@ -1496,7 +1496,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('function foo () { if (true) { "bar"; } }');
+               report = parser.analyze('function foo () { if (true) { "bar"; } }');
             });
 
             teardown(() =>
@@ -1546,7 +1546,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = "bar";');
+               report = parser.analyze('var foo = "bar";');
             });
 
             teardown(() =>
@@ -1596,7 +1596,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = true ? "bar" : "baz";');
+               report = parser.analyze('var foo = true ? "bar" : "baz";');
             });
 
             teardown(() =>
@@ -1641,7 +1641,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = true ? "bar" : (false ? "baz" : "qux");');
+               report = parser.analyze('var foo = true ? "bar" : (false ? "baz" : "qux");');
             });
 
             teardown(() =>
@@ -1686,7 +1686,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = true || false;');
+               report = parser.analyze('var foo = true || false;');
             });
 
             teardown(() =>
@@ -1731,7 +1731,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = function () { "bar"; }');
+               report = parser.analyze('var foo = function () { "bar"; }');
             });
 
             teardown(() =>
@@ -1781,7 +1781,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = function bar () { "baz"; }');
+               report = parser.analyze('var foo = function bar () { "baz"; }');
             });
 
             teardown(() =>
@@ -1816,7 +1816,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('function foo () { return true ? "bar" : "baz"; }');
+               report = parser.analyze('function foo () { return true ? "bar" : "baz"; }');
             });
 
             teardown(() =>
@@ -1866,7 +1866,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('function foo () { return true || false; }');
+               report = parser.analyze('function foo () { return true || false; }');
             });
 
             teardown(() =>
@@ -1906,7 +1906,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('function foo () { return function () { "bar"; }; }');
+               report = parser.analyze('function foo () { return function () { "bar"; }; }');
             });
 
             teardown(() =>
@@ -1961,7 +1961,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('function foo () { return function bar () { "baz"; }; }');
+               report = parser.analyze('function foo () { return function bar () { "baz"; }; }');
             });
 
             teardown(() =>
@@ -1991,7 +1991,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('parseInt("10", true ? 10 : 8);');
+               report = parser.analyze('parseInt("10", true ? 10 : 8);');
             });
 
             teardown(() =>
@@ -2031,7 +2031,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('parseInt("10", 10 || 8);');
+               report = parser.analyze('parseInt("10", 10 || 8);');
             });
 
             teardown(() =>
@@ -2051,7 +2051,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('setTimeout(function () { "foo"; }, 1000);');
+               report = parser.analyze('setTimeout(function () { "foo"; }, 1000);');
             });
 
             teardown(() =>
@@ -2101,7 +2101,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('setTimeout(function foo () { "bar"; }, 1000);');
+               report = parser.analyze('setTimeout(function foo () { "bar"; }, 1000);');
             });
 
             teardown(() =>
@@ -2119,7 +2119,7 @@ if (testconfig.modules['moduleCore'])
          {
             test('aggregate has correct cyclomatic complexity', () =>
             {
-               const report = parser.analyse('var foo = true && false;', {});
+               const report = parser.analyze('var foo = true && false;', {});
                assert.strictEqual(report.cyclomatic, 2);
             });
          });
@@ -2130,7 +2130,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = true || false;', { logicalor: false });
+               report = parser.analyze('var foo = true || false;', { logicalor: false });
             });
 
             teardown(() =>
@@ -2150,7 +2150,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   'switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: "baz"; }',
                   { switchcase: false });
             });
@@ -2172,7 +2172,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   'var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }', { forin: true });
             });
 
@@ -2193,7 +2193,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('try { "foo"; } catch (e) { e.message; }', { trycatch: true });
+               report = parser.analyze('try { "foo"; } catch (e) { e.message; }', { trycatch: true });
             });
 
             teardown(() =>
@@ -2213,7 +2213,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   '(function (foo) { if (foo === "foo") { console.log(foo); return; } "bar"; }("foo"));');
             });
 
@@ -2279,7 +2279,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('if ("foo" && "bar") { "baz"; }');
+               report = parser.analyze('if ("foo" && "bar") { "baz"; }');
             });
 
             teardown(() =>
@@ -2324,7 +2324,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('(function () { "foo"; }).call(this);');
+               report = parser.analyze('(function () { "foo"; }).call(this);');
             });
 
             teardown(() =>
@@ -2369,7 +2369,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = {}; foo.bar = function () { "foobar"; };');
+               report = parser.analyze('var foo = {}; foo.bar = function () { "foobar"; };');
             });
 
             teardown(() =>
@@ -2419,7 +2419,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('"".bar = function () { "bar"; };');
+               report = parser.analyze('"".bar = function () { "bar"; };');
             });
 
             teardown(() =>
@@ -2449,7 +2449,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = {};');
+               report = parser.analyze('var foo = {};');
             });
 
             teardown(() =>
@@ -2499,7 +2499,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = { bar: "bar", baz: function () { "baz"; } };');
+               report = parser.analyze('var foo = { bar: "bar", baz: function () { "baz"; } };');
             });
 
             teardown(() =>
@@ -2549,7 +2549,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   'var foo = { bar: function () { if (true) { "bar"; } }, bar: function () { "bar"; } };');
             });
 
@@ -2595,7 +2595,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('try { throw new Error("foo"); } catch (e) { alert(error.message); }');
+               report = parser.analyze('try { throw new Error("foo"); } catch (e) { alert(error.message); }');
             });
 
             teardown(() =>
@@ -2640,7 +2640,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var a = 0; ++a; a++;');
+               report = parser.analyze('var a = 0; ++a; a++;');
             });
 
             teardown(() =>
@@ -2690,7 +2690,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('[ "foo", "bar" ];');
+               report = parser.analyze('[ "foo", "bar" ];');
             });
 
             teardown(() =>
@@ -2740,7 +2740,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   '// This is a\n// multi-line\n// comment.\nparseInt(\n\t(function () {\n\t\t// Moar\n\t\t'
                 + '// commentz!\n\t\treturn [\n\t\t\t"1",\n\t\t\t"0"\n\t\t].join("");\n\t}()),\n\t10\n);');
             });
@@ -2797,7 +2797,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   'function foo (a, b) { if (a) { b(a); } else { a(b); } } '
                 + 'function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }');
             });
@@ -2854,7 +2854,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   'var callback = arguments[arguments.length-1] instanceof Function ? '
                 + 'arguments[arguments.length-1] : function() {};');
             });
@@ -2876,7 +2876,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('function foo () { return; }');
+               report = parser.analyze('function foo () { return; }');
             });
 
             teardown(() =>
@@ -2926,7 +2926,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('function foo () { function bar () {} }');
+               report = parser.analyze('function foo () { function bar () {} }');
             });
 
             teardown(() =>
@@ -2946,7 +2946,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   'function foo (a, b) { if (a) { b(a); } else { a(b); } }'
                  + 'function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }',
                     { newmi: true }
@@ -2970,7 +2970,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('function foo (a) {} function bar (b) {} function baz (c) {}');
+               report = parser.analyze('function foo (a) {} function bar (b) {} function baz (c) {}');
             });
 
             teardown(() =>
@@ -2995,7 +2995,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   'function foo (a, b, c, d, e) {} function bar (a, b, c, d, e) {} function baz (a) {}');
             });
 
@@ -3021,7 +3021,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('require("./foo");');
+               report = parser.analyze('require("./foo");');
             });
 
             teardown(() =>
@@ -3049,7 +3049,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('require("./bar");');
+               report = parser.analyze('require("./bar");');
             });
 
             teardown(() =>
@@ -3069,7 +3069,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('require("./foo");\nrequire("./bar");\n\nrequire("./baz");');
+               report = parser.analyze('require("./foo");\nrequire("./bar");\n\nrequire("./baz");');
             });
 
             teardown(() =>
@@ -3099,7 +3099,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = "./foo";require(foo);');
+               report = parser.analyze('var foo = "./foo";require(foo);');
             });
 
             teardown(() =>
@@ -3127,7 +3127,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('require([ "foo" ], function (foo) {});');
+               report = parser.analyze('require([ "foo" ], function (foo) {});');
             });
 
             teardown(() =>
@@ -3155,7 +3155,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('require([ "bar" ], function (barModule) {});');
+               report = parser.analyze('require([ "bar" ], function (barModule) {});');
             });
 
             teardown(() =>
@@ -3175,7 +3175,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('require([ "foo", "bar", "baz" ], function (foo, bar, baz) {});');
+               report = parser.analyze('require([ "foo", "bar", "baz" ], function (foo, bar, baz) {});');
             });
 
             teardown(() =>
@@ -3206,7 +3206,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = "foo";\nrequire([ foo ], function (foo) {});');
+               report = parser.analyze('var foo = "foo";\nrequire([ foo ], function (foo) {});');
             });
 
             teardown(() =>
@@ -3233,7 +3233,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('var foo = [ "foo" ];\nrequire(foo, function (foo) {});');
+               report = parser.analyze('var foo = [ "foo" ];\nrequire(foo, function (foo) {});');
             });
 
             teardown(() =>
@@ -3259,7 +3259,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse(
+               report = parser.analyze(
                   'require.config({\n\tpaths: {\n\t\tfoo: "path/to/foo",\n\t\tbaz: "../wibble"\n\t}\n});\n'
                 + 'require([ "foo", "bar", "baz" ], function (foo, bar, baz) {});');
             });
@@ -3294,7 +3294,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyse('require("foo", function (foo) {});');
+               report = parser.analyze('require("foo", function (foo) {});');
             });
 
             teardown(() =>

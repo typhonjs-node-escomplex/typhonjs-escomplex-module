@@ -21,7 +21,7 @@ if (testconfig.modules['moduleBabylon'])
 
                setup(() =>
                {
-                  report = parser.analyse('let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };');
+                  report = parser.analyze('let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };');
                });
 
                teardown(() =>
@@ -91,7 +91,7 @@ if (testconfig.modules['moduleBabylon'])
 
                setup(() =>
                {
-                  report = parser.analyse(
+                  report = parser.analyze(
                      'function expectTree(rootID, expectedTree, parentPath) {\n'
                    + '    var childIDs = [];\n'
                    + '    var path = "TEST";\n'
@@ -242,7 +242,7 @@ if (testconfig.modules['moduleBabylon'])
 
                setup(() =>
                {
-                  report = parser.analyse('function bar(x: string, y: number): string { return x.length * y; }');
+                  report = parser.analyze('function bar(x: string, y: number): string { return x.length * y; }');
                });
 
                teardown(() =>

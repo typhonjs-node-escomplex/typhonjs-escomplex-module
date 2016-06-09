@@ -24,7 +24,7 @@ export default class ESComplexCore
     *
     * @returns {*}
     */
-   analyse(ast, options)
+   analyze(ast, options)
    {
       if (typeof ast !== 'object' || Array.isArray(ast)) { throw new TypeError('Invalid syntax tree'); }
 
@@ -55,7 +55,7 @@ export default class ESComplexCore
    {
       return new Promise((resolve, reject) =>
       {
-         try { resolve(this.analyse(ast, options)); }
+         try { resolve(this.analyze(ast, options)); }
          catch (err) { reject(err); }
       });
    }

@@ -28,16 +28,16 @@ if (testconfig.modules['moduleAPI'])
 
          teardown(() => { escomplex = undefined; });
 
-         test('analyse function is exported', () =>
+         test('analyze function is exported', () =>
          {
-            assert.isFunction(escomplex.analyse);
+            assert.isFunction(escomplex.analyze);
          });
 
-         test('analyse does not throw with valid arguments', () =>
+         test('analyze does not throw with valid arguments', () =>
          {
             assert.doesNotThrow(() =>
             {
-               escomplex.analyse({
+               escomplex.analyze({
                   body: [],
                   loc: {
                      start: {
@@ -51,19 +51,19 @@ if (testconfig.modules['moduleAPI'])
             });
          });
 
-         test('analyse throws when ast is string', () =>
+         test('analyze throws when ast is string', () =>
          {
-            assert.throws(() => { escomplex.analyse('console.log("foo");'); });
+            assert.throws(() => { escomplex.analyze('console.log("foo");'); });
          });
 
-         test('analyse throws when ast is array', () =>
+         test('analyze throws when ast is array', () =>
          {
-            assert.throws(() => { escomplex.analyse([]); });
+            assert.throws(() => { escomplex.analyze([]); });
          });
 
-         test('analyse returns object', () =>
+         test('analyze returns object', () =>
          {
-            assert.isObject(escomplex.analyse({
+            assert.isObject(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -76,9 +76,9 @@ if (testconfig.modules['moduleAPI'])
             }));
          });
 
-         test('analyse returns aggregate object', () =>
+         test('analyze returns aggregate object', () =>
          {
-            assert.isObject(escomplex.analyse({
+            assert.isObject(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -91,9 +91,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate);
          });
 
-         test('analyse returns aggregate lines of code property', () =>
+         test('analyze returns aggregate lines of code property', () =>
          {
-            assert.isObject(escomplex.analyse({
+            assert.isObject(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -106,9 +106,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.sloc);
          });
 
-         test('analyse returns aggregate physical lines of code property', () =>
+         test('analyze returns aggregate physical lines of code property', () =>
          {
-            assert.isNumber(escomplex.analyse({
+            assert.isNumber(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -121,9 +121,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.sloc.physical);
          });
 
-         test('analyse returns aggregate logical lines of code property', () =>
+         test('analyze returns aggregate logical lines of code property', () =>
          {
-            assert.isNumber(escomplex.analyse({
+            assert.isNumber(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -136,9 +136,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.sloc.logical);
          });
 
-         test('analyse returns aggregate cyclomatic complexity property', () =>
+         test('analyze returns aggregate cyclomatic complexity property', () =>
          {
-            assert.isNumber(escomplex.analyse({
+            assert.isNumber(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -151,9 +151,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.cyclomatic);
          });
 
-         test('analyse returns aggregate cyclomatic complexity density property', () =>
+         test('analyze returns aggregate cyclomatic complexity density property', () =>
          {
-            assert.isNumber(escomplex.analyse({
+            assert.isNumber(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -166,9 +166,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.cyclomaticDensity);
          });
 
-         test('analyse returns aggregate halstead property', () =>
+         test('analyze returns aggregate halstead property', () =>
          {
-            assert.isObject(escomplex.analyse({
+            assert.isObject(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -181,9 +181,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.halstead);
          });
 
-         test('analyse returns aggregate halstead operators property', () =>
+         test('analyze returns aggregate halstead operators property', () =>
          {
-            assert.isObject(escomplex.analyse({
+            assert.isObject(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -196,9 +196,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.halstead.operators);
          });
 
-         test('analyse returns aggregate halstead total operators property', () =>
+         test('analyze returns aggregate halstead total operators property', () =>
          {
-            assert.isNumber(escomplex.analyse({
+            assert.isNumber(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -211,9 +211,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.halstead.operators.total);
          });
 
-         test('analyse returns aggregate halstead distinct operators property', () =>
+         test('analyze returns aggregate halstead distinct operators property', () =>
          {
-            assert.isNumber(escomplex.analyse({
+            assert.isNumber(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -226,9 +226,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.halstead.operators.distinct);
          });
 
-         test('analyse returns aggregate halstead operator identifiers property', () =>
+         test('analyze returns aggregate halstead operator identifiers property', () =>
          {
-            assert.isArray(escomplex.analyse({
+            assert.isArray(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -241,9 +241,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.halstead.operators.identifiers);
          });
 
-         test('analyse returns aggregate halstead operands property', () =>
+         test('analyze returns aggregate halstead operands property', () =>
          {
-            assert.isObject(escomplex.analyse({
+            assert.isObject(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -256,9 +256,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.halstead.operands);
          });
 
-         test('analyse returns aggregate halstead total operands property', () =>
+         test('analyze returns aggregate halstead total operands property', () =>
          {
-            assert.isNumber(escomplex.analyse({
+            assert.isNumber(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -271,9 +271,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.halstead.operands.total);
          });
 
-         test('analyse returns aggregate halstead distinct operands property', () =>
+         test('analyze returns aggregate halstead distinct operands property', () =>
          {
-            assert.isNumber(escomplex.analyse({
+            assert.isNumber(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -286,9 +286,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.halstead.operands.distinct);
          });
 
-         test('analyse returns aggregate halstead operand identifiers property', () =>
+         test('analyze returns aggregate halstead operand identifiers property', () =>
          {
-            assert.isArray(escomplex.analyse({
+            assert.isArray(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -301,9 +301,9 @@ if (testconfig.modules['moduleAPI'])
             }).aggregate.halstead.operands.identifiers);
          });
 
-         test('analyse returns maintainability property', () =>
+         test('analyze returns maintainability property', () =>
          {
-            assert.isNumber(escomplex.analyse({
+            assert.isNumber(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -316,9 +316,9 @@ if (testconfig.modules['moduleAPI'])
             }).maintainability);
          });
 
-         test('analyse returns functions property', () =>
+         test('analyze returns functions property', () =>
          {
-            assert.isArray(escomplex.analyse({
+            assert.isArray(escomplex.analyze({
                body: [],
                loc: {
                   start: {
@@ -331,9 +331,9 @@ if (testconfig.modules['moduleAPI'])
             }).functions);
          });
 
-         test('analyse returns dependencies property', () =>
+         test('analyze returns dependencies property', () =>
          {
-            assert.isArray(escomplex.analyse({
+            assert.isArray(escomplex.analyze({
                body: [],
                loc: {
                   start: {

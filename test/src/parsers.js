@@ -39,10 +39,10 @@ if (testconfig.parsers.acorn)
 {
    parsers.push(
    {
-      analyse: function(code, options, parserOptions)
+      analyze: function(code, options, parserOptions)
       {
-         const report = escomplex.analyse(this.parse(code, parserOptions), options);
-         log(`!! (acorn): analyse - report: ${JSON.stringify(report)}`);
+         const report = escomplex.analyze(this.parse(code, parserOptions), options);
+         log(`!! (acorn): analyze - report: ${JSON.stringify(report)}`);
          return report;
       },
       name: 'acorn',
@@ -61,10 +61,10 @@ if (testconfig.parsers.babylon)
 {
    parsers.push(
    {
-      analyse: function(code, options, parserOptions)
+      analyze: function(code, options, parserOptions)
       {
-         const report = escomplex.analyse(this.parse(code, parserOptions), options);
-         log(`!! (babylon): analyse - report: ${JSON.stringify(report)}`);
+         const report = escomplex.analyze(this.parse(code, parserOptions), options);
+         log(`!! (babylon): analyze - report: ${JSON.stringify(report)}`);
          return report;
       },
       name: 'babylon',
@@ -83,10 +83,10 @@ if (testconfig.parsers.espree)
 {
    parsers.push(
    {
-      analyse: function(code, options, parserOptions)
+      analyze: function(code, options, parserOptions)
       {
-         const report = escomplex.analyse(this.parse(code, parserOptions), options);
-         log(`!! (espree): analyse - report: ${JSON.stringify(report)}`);
+         const report = escomplex.analyze(this.parse(code, parserOptions), options);
+         log(`!! (espree): analyze - report: ${JSON.stringify(report)}`);
          return report;
       },
       name: 'espree',
@@ -105,10 +105,10 @@ if (testconfig.parsers.esprima)
 {
    parsers.push(
    {
-      analyse: function(code, options, parserOptions)
+      analyze: function(code, options, parserOptions)
       {
-         const report = escomplex.analyse(this.parse(code, parserOptions), options);
-         log(`!! (esprima): analyse - report: ${JSON.stringify(report)}`);
+         const report = escomplex.analyze(this.parse(code, parserOptions), options);
+         log(`!! (esprima): analyze - report: ${JSON.stringify(report)}`);
          return report;
       },
       name: 'esprima',

@@ -48,8 +48,8 @@ var ESComplexCore = function () {
 
 
    _createClass(ESComplexCore, [{
-      key: 'analyse',
-      value: function analyse(ast, options) {
+      key: 'analyze',
+      value: function analyze(ast, options) {
          if ((typeof ast === 'undefined' ? 'undefined' : _typeof(ast)) !== 'object' || Array.isArray(ast)) {
             throw new TypeError('Invalid syntax tree');
          }
@@ -88,7 +88,7 @@ var ESComplexCore = function () {
 
          return new Promise(function (resolve, reject) {
             try {
-               resolve(_this.analyse(ast, options));
+               resolve(_this.analyze(ast, options));
             } catch (err) {
                reject(err);
             }

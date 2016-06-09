@@ -19,7 +19,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('function* foo() {}');
+                  report = parser.analyze('function* foo() {}');
                });
 
                teardown(() =>
@@ -157,7 +157,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('for (let value of [10, 20, 30]) {}');
+                  report = parser.analyze('for (let value of [10, 20, 30]) {}');
                });
 
                teardown(() =>
@@ -240,7 +240,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('let foo = "bar"; const bar = "foo";');
+                  report = parser.analyze('let foo = "bar"; const bar = "foo";');
                });
 
                teardown(() =>
@@ -324,7 +324,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('class Foo {}; class Bar extends Foo { constructor() { super(); } }');
+                  report = parser.analyze('class Foo {}; class Bar extends Foo { constructor() { super(); } }');
                });
 
                teardown(() =>
@@ -464,7 +464,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('class Foo { constructor() { this.foobar = "foobar"; } }; '
+                  report = parser.analyze('class Foo { constructor() { this.foobar = "foobar"; } }; '
                    + 'class Bar extends Foo { constructor() { let test = super.foobar; } }');
                });
 
@@ -665,7 +665,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const iter = [2, 3, 4]; const spreadTest = [1, ...iter, 5];');
+                  report = parser.analyze('const iter = [2, 3, 4]; const spreadTest = [1, ...iter, 5];');
                });
 
                teardown(() =>
@@ -745,7 +745,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const iter = [2, 3, 4]; const foo = (b, a, r) => {}; foo(...iter);');
+                  report = parser.analyze('const iter = [2, 3, 4]; const foo = (b, a, r) => {}; foo(...iter);');
                });
 
                teardown(() =>
@@ -885,7 +885,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('(x, y) => { return x + y; };');
+                  report = parser.analyze('(x, y) => { return x + y; };');
                });
 
                teardown(() =>
@@ -1020,7 +1020,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('(x, y) => x + y;');
+                  report = parser.analyze('(x, y) => x + y;');
                });
 
                teardown(() =>
@@ -1155,7 +1155,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('function* foo() { let index = 0; yield index++; }');
+                  report = parser.analyze('function* foo() { let index = 0; yield index++; }');
                });
 
                teardown(() =>
@@ -1290,7 +1290,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('function* foo() { yield* [1, 2, 3]; }');
+                  report = parser.analyze('function* foo() { yield* [1, 2, 3]; }');
                });
 
                teardown(() =>
@@ -1433,7 +1433,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const foo = `bar`;');
+                  report = parser.analyze('const foo = `bar`;');
                });
 
                teardown(() =>
@@ -1508,7 +1508,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const baz = "bar"; const foo = `fuz${baz}`;');
+                  report = parser.analyze('const baz = "bar"; const foo = `fuz${baz}`;');
                });
 
                teardown(() =>
@@ -1583,7 +1583,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const baz = "bar"; const foo = `fuz${JSON.stringify(baz)}`;');
+                  report = parser.analyze('const baz = "bar"; const foo = `fuz${JSON.stringify(baz)}`;');
                });
 
                teardown(() =>
@@ -1658,7 +1658,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const foo = tagged`bar`;');
+                  report = parser.analyze('const foo = tagged`bar`;');
                });
 
                teardown(() =>
@@ -1736,7 +1736,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const bar = { a: 1, b: 2, c: 3 }; const { a, b, c } = bar;');
+                  report = parser.analyze('const bar = { a: 1, b: 2, c: 3 }; const { a, b, c } = bar;');
                });
 
                teardown(() =>
@@ -1811,7 +1811,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const { a, b, c } = { a: 1, b: 2, c: 3 };');
+                  report = parser.analyze('const { a, b, c } = { a: 1, b: 2, c: 3 };');
                });
 
                teardown(() =>
@@ -1886,7 +1886,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const id = "z"; const { [id]: foo } = { z: "bar" };');
+                  report = parser.analyze('const id = "z"; const { [id]: foo } = { z: "bar" };');
                });
 
                teardown(() =>
@@ -1961,7 +1961,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('let a, b; ({a, b} = { a:1, b:2 });');
+                  report = parser.analyze('let a, b; ({a, b} = { a:1, b:2 });');
                });
 
                teardown(() =>
@@ -2036,7 +2036,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const foo = [1, 2]; let [a, b] = foo;');
+                  report = parser.analyze('const foo = [1, 2]; let [a, b] = foo;');
                });
 
                teardown(() =>
@@ -2116,7 +2116,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('let [a, b] = [1, 2];');
+                  report = parser.analyze('let [a, b] = [1, 2];');
                });
 
                teardown(() =>
@@ -2191,7 +2191,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const [a, b, ...restTest] = [1, 2, 3, 4, 5];');
+                  report = parser.analyze('const [a, b, ...restTest] = [1, 2, 3, 4, 5];');
                });
 
                teardown(() =>
@@ -2271,7 +2271,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('function foo(first, bar = "baz", ...items) {}');
+                  report = parser.analyze('function foo(first, bar = "baz", ...items) {}');
                });
 
                teardown(() =>
@@ -2414,7 +2414,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('class Foo {}');
+                  report = parser.analyze('class Foo {}');
                });
 
                teardown(() =>
@@ -2489,7 +2489,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('class Bar {} class Foo extends Bar {}');
+                  report = parser.analyze('class Bar {} class Foo extends Bar {}');
                });
 
                teardown(() =>
@@ -2564,7 +2564,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('class Foo { constructor() { this.bar = 1; } }');
+                  report = parser.analyze('class Foo { constructor() { this.bar = 1; } }');
                });
 
                teardown(() =>
@@ -2699,7 +2699,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('class Foo { bar() { this.baz = 1; } }');
+                  report = parser.analyze('class Foo { bar() { this.baz = 1; } }');
                });
 
                teardown(() =>
@@ -2834,7 +2834,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('class Foo { get bar() { return "bar"; } }');
+                  report = parser.analyze('class Foo { get bar() { return "bar"; } }');
                });
 
                teardown(() =>
@@ -2974,7 +2974,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('class Foo { set bar(data) { this._bar = data; } }');
+                  report = parser.analyze('class Foo { set bar(data) { this._bar = data; } }');
                });
 
                teardown(() =>
@@ -3114,7 +3114,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('class Foo { static bar() { return "bar"; } }');
+                  report = parser.analyze('class Foo { static bar() { return "bar"; } }');
                });
 
                teardown(() =>
@@ -3254,7 +3254,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('class Foo { constructor() { new.target.name; } }');
+                  report = parser.analyze('class Foo { constructor() { new.target.name; } }');
                });
 
                teardown(() =>
@@ -3389,7 +3389,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const Foo = class {}');
+                  report = parser.analyze('const Foo = class {}');
                });
 
                teardown(() =>
@@ -3464,7 +3464,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const Foo = class Foo {}');
+                  report = parser.analyze('const Foo = class Foo {}');
                });
 
                teardown(() =>
@@ -3539,7 +3539,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const Bar = class {}; const Foo = class extends Bar {};');
+                  report = parser.analyze('const Bar = class {}; const Foo = class extends Bar {};');
                });
 
                teardown(() =>
@@ -3614,7 +3614,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const Bar = class Bar {}; const Foo = class Foo extends Bar {};');
+                  report = parser.analyze('const Bar = class Bar {}; const Foo = class Foo extends Bar {};');
                });
 
                teardown(() =>
@@ -3690,7 +3690,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const Foo = class { constructor() { this.bar = 1; } }');
+                  report = parser.analyze('const Foo = class { constructor() { this.bar = 1; } }');
                });
 
                teardown(() =>
@@ -3825,7 +3825,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const Foo = class { bar() { this.baz = 1; } }');
+                  report = parser.analyze('const Foo = class { bar() { this.baz = 1; } }');
                });
 
                teardown(() =>
@@ -3960,7 +3960,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const Foo = class { get bar() { return "bar"; } }');
+                  report = parser.analyze('const Foo = class { get bar() { return "bar"; } }');
                });
 
                teardown(() =>
@@ -4100,7 +4100,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const Foo = class { set bar(data) { this._bar = data; } }');
+                  report = parser.analyze('const Foo = class { set bar(data) { this._bar = data; } }');
                });
 
                teardown(() =>
@@ -4240,7 +4240,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const Foo = class { static bar() { return "bar"; } }');
+                  report = parser.analyze('const Foo = class { static bar() { return "bar"; } }');
                });
 
                teardown(() =>
@@ -4380,7 +4380,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const Foo = class { constructor() { new.target.name; } }');
+                  report = parser.analyze('const Foo = class { constructor() { new.target.name; } }');
                });
 
                teardown(() =>
@@ -4518,7 +4518,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('export * from "module";');
+                  report = parser.analyze('export * from "module";');
                });
 
                teardown(() =>
@@ -4593,7 +4593,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('export default class Foo {}');
+                  report = parser.analyze('export default class Foo {}');
                });
 
                teardown(() =>
@@ -4668,7 +4668,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('export default function foo () { return "bar"; }');
+                  report = parser.analyze('export default function foo () { return "bar"; }');
                });
 
                teardown(() =>
@@ -4803,7 +4803,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('export { foo, bar } from "module";');
+                  report = parser.analyze('export { foo, bar } from "module";');
                });
 
                teardown(() =>
@@ -4878,7 +4878,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('export function foo () { return "bar"; }');
+                  report = parser.analyze('export function foo () { return "bar"; }');
                });
 
                teardown(() =>
@@ -5013,7 +5013,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const s_FOO = () => { return "bar"; }; export default s_FOO;');
+                  report = parser.analyze('const s_FOO = () => { return "bar"; }; export default s_FOO;');
                });
 
                teardown(() =>
@@ -5148,7 +5148,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const s_FOO = () => { return "bar"; }; export { s_FOO };');
+                  report = parser.analyze('const s_FOO = () => { return "bar"; }; export { s_FOO };');
                });
 
                teardown(() =>
@@ -5283,7 +5283,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('const s_FOO = () => { return "bar"; }; export { s_FOO as s_BAR };');
+                  report = parser.analyze('const s_FOO = () => { return "bar"; }; export { s_FOO as s_BAR };');
                });
 
                teardown(() =>
@@ -5418,7 +5418,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('import foo from "module";');
+                  report = parser.analyze('import foo from "module";');
                });
 
                teardown(() =>
@@ -5508,7 +5508,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse(
+                  report = parser.analyze(
                      'import foo from "./foo.js";\nimport bar from "./bar.js";\nimport baz from "./baz.js";');
                });
 
@@ -5629,7 +5629,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('import {baz} from "module";');
+                  report = parser.analyze('import {baz} from "module";');
                });
 
                teardown(() =>
@@ -5719,7 +5719,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('import {foo as bar} from "module";');
+                  report = parser.analyze('import {foo as bar} from "module";');
                });
 
                teardown(() =>
@@ -5809,7 +5809,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse('import * as foo from "mod.js";');
+                  report = parser.analyze('import * as foo from "mod.js";');
                });
 
                teardown(() =>
@@ -5899,7 +5899,7 @@ if (testconfig.modules['moduleES6'])
 
                setup(() =>
                {
-                  report = parser.analyse(
+                  report = parser.analyze(
                      'import foo from "./foo.js";\nimport {bar} from "./bar.js";\n'
                    + 'import {bar as baz} from "./bar.js";\nimport * as bam from "./bam.js";');
                });
