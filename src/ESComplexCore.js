@@ -5,10 +5,15 @@ import walker  from 'typhonjs-ast-walker';
 import Plugins from './Plugins.js';
 
 /**
- * Provides the core ESComplex functionality.
+ * Provides ESComplex module processing functionality.
  */
 export default class ESComplexCore
 {
+   /**
+    * Initializes ESComplexModule
+    *
+    * @param {object}         options - module options
+    */
    constructor(options = {})
    {
       if (typeof options !== 'object') { throw new TypeError('ctor error: `options` is not an `object`.'); }
@@ -19,8 +24,8 @@ export default class ESComplexCore
    /**
     * Processes the given ast and calculates metrics via plugins.
     *
-    * @param {object}   ast - Javascript AST.
-    * @param {object}   options - module options
+    * @param {object|Array}   ast - Javascript AST.
+    * @param {object}         options - module analyze options
     *
     * @returns {*}
     */
@@ -33,7 +38,7 @@ export default class ESComplexCore
 
       const syntaxes = Plugins.onLoadSyntax(settings);
 
-      Plugins.onModuleStart(ast, syntaxes, settings);
+      const report = Plugins.onModuleStart(ast, syntaxes, settings);
 
       walker.traverse(ast,
       {
@@ -41,18 +46,20 @@ export default class ESComplexCore
          exitNode: (node, parent) => { return Plugins.onExitNode(node, parent); }
       });
 
-      return Plugins.onModuleEnd();
+      Plugins.onModuleEnd();
+
+      return report;
    }
 
    /**
     * Wraps processing the given ast and calculates metrics via plugins in a Promise.
     *
-    * @param {object}   ast - Javascript AST.
-    * @param {object}   options - module options
+    * @param {object|Array}   ast - Javascript AST.
+    * @param {object}         options - module options
     *
-    * @returns {*}
+    * @returns {Promise}
     */
-   analyzeThen(ast, options)
+   analyzeThen(ast, options = {})
    {
       return new Promise((resolve, reject) =>
       {

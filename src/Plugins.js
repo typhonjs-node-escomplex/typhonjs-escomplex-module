@@ -46,7 +46,9 @@ export default class Plugin
 
    static onModuleStart(ast, syntaxes, settings)
    {
-      s_PLUGIN_MANAGER.invoke('onModuleStart', { ast, syntaxes, settings }, false);
+      const report = {};
+      s_PLUGIN_MANAGER.invoke('onModuleStart', { ast, report, syntaxes, settings }, false);
+      return report;
    }
 
    static onModuleEnd()

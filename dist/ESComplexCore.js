@@ -21,10 +21,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Provides the core ESComplex functionality.
+ * Provides ESComplex module processing functionality.
  */
 
 var ESComplexCore = function () {
+   /**
+    * Initializes ESComplexModule
+    *
+    * @param {object}         options - module options
+    */
+
    function ESComplexCore() {
       var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
@@ -40,8 +46,8 @@ var ESComplexCore = function () {
    /**
     * Processes the given ast and calculates metrics via plugins.
     *
-    * @param {object}   ast - Javascript AST.
-    * @param {object}   options - module options
+    * @param {object|Array}   ast - Javascript AST.
+    * @param {object}         options - module analyze options
     *
     * @returns {*}
     */
@@ -63,7 +69,7 @@ var ESComplexCore = function () {
 
          var syntaxes = _Plugins2.default.onLoadSyntax(settings);
 
-         _Plugins2.default.onModuleStart(ast, syntaxes, settings);
+         var report = _Plugins2.default.onModuleStart(ast, syntaxes, settings);
 
          _typhonjsAstWalker2.default.traverse(ast, {
             enterNode: function enterNode(node, parent) {
@@ -74,22 +80,26 @@ var ESComplexCore = function () {
             }
          });
 
-         return _Plugins2.default.onModuleEnd();
+         _Plugins2.default.onModuleEnd();
+
+         return report;
       }
 
       /**
        * Wraps processing the given ast and calculates metrics via plugins in a Promise.
        *
-       * @param {object}   ast - Javascript AST.
-       * @param {object}   options - module options
+       * @param {object|Array}   ast - Javascript AST.
+       * @param {object}         options - module options
        *
-       * @returns {*}
+       * @returns {Promise}
        */
 
    }, {
       key: 'analyzeThen',
-      value: function analyzeThen(ast, options) {
+      value: function analyzeThen(ast) {
          var _this = this;
+
+         var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
          return new Promise(function (resolve, reject) {
             try {

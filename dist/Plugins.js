@@ -67,7 +67,9 @@ var Plugin = function () {
    }, {
       key: 'onModuleStart',
       value: function onModuleStart(ast, syntaxes, settings) {
-         s_PLUGIN_MANAGER.invoke('onModuleStart', { ast: ast, syntaxes: syntaxes, settings: settings }, false);
+         var report = {};
+         s_PLUGIN_MANAGER.invoke('onModuleStart', { ast: ast, report: report, syntaxes: syntaxes, settings: settings }, false);
+         return report;
       }
    }, {
       key: 'onModuleEnd',
