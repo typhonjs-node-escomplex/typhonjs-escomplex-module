@@ -1,7 +1,7 @@
 {
   "name": "typhonjs-escomplex-module",
   "version": "0.0.1",
-  "description": "Software complexity analysis of JavaScript-family abstract syntax trees.",
+  "description": "Provides module / individual file oriented AST processing for typhonjs-escomplex complexity reports.",
   "homepage": "https://github.com/typhonjs-node-escomplex/typhonjs-escomplex-module",
   "bugs": "https://github.com/typhonjs-node-escomplex/typhonjs-escomplex-module/issues",
   "license": "MPL-2.0",
