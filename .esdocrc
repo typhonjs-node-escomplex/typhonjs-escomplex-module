@@ -1,5 +1,5 @@
 {
-   "title": "escomplex-core",
+   "title": "typhonjs-escomplex-module",
    "source": "src",
    "destination": "docs",
    "plugins":
