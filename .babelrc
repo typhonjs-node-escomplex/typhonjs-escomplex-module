@@ -5,7 +5,6 @@
     "add-module-exports",
     ["module-alias",
       [
-        { "src": "npm:escomplex-core-commons/dist", "expose": "escomplex-core-commons/src" },
         { "src": "npm:escomplex-plugin-metrics-module/dist", "expose": "escomplex-plugin-metrics-module/src" },
         { "src": "npm:escomplex-plugin-syntax-babylon/dist", "expose": "escomplex-plugin-syntax-babylon/src" }
       ]
