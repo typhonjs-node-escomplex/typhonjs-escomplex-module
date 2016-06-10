@@ -24,23 +24,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Provides ESComplex module processing functionality.
  */
 
-var ESComplexCore = function () {
+var ESComplexModule = function () {
    /**
     * Initializes ESComplexModule
     *
     * @param {object}         options - module options
     */
 
-   function ESComplexCore() {
+   function ESComplexModule() {
       var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-      _classCallCheck(this, ESComplexCore);
+      _classCallCheck(this, ESComplexModule);
 
       if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) !== 'object') {
          throw new TypeError('ctor error: `options` is not an `object`.');
       }
 
-      _Plugins2.default.initialize(options);
+      this._plugins = new _Plugins2.default(options);
    }
 
    /**
@@ -53,9 +53,11 @@ var ESComplexCore = function () {
     */
 
 
-   _createClass(ESComplexCore, [{
+   _createClass(ESComplexModule, [{
       key: 'analyze',
       value: function analyze(ast) {
+         var _this = this;
+
          var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
          if ((typeof ast === 'undefined' ? 'undefined' : _typeof(ast)) !== 'object' || Array.isArray(ast)) {
@@ -65,22 +67,22 @@ var ESComplexCore = function () {
             throw new TypeError('analyze error: `options` is not an `object`.');
          }
 
-         var settings = _Plugins2.default.onConfigure(options);
+         var settings = this._plugins.onConfigure(options);
 
-         var syntaxes = _Plugins2.default.onLoadSyntax(settings);
+         var syntaxes = this._plugins.onLoadSyntax(settings);
 
-         var report = _Plugins2.default.onModuleStart(ast, syntaxes, settings);
+         var report = this._plugins.onModuleStart(ast, syntaxes, settings);
 
          _typhonjsAstWalker2.default.traverse(ast, {
             enterNode: function enterNode(node, parent) {
-               return _Plugins2.default.onEnterNode(node, parent);
+               return _this._plugins.onEnterNode(node, parent);
             },
             exitNode: function exitNode(node, parent) {
-               return _Plugins2.default.onExitNode(node, parent);
+               return _this._plugins.onExitNode(node, parent);
             }
          });
 
-         _Plugins2.default.onModuleEnd();
+         this._plugins.onModuleEnd();
 
          return report;
       }
@@ -97,13 +99,13 @@ var ESComplexCore = function () {
    }, {
       key: 'analyzeThen',
       value: function analyzeThen(ast) {
-         var _this = this;
+         var _this2 = this;
 
          var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
          return new Promise(function (resolve, reject) {
             try {
-               resolve(_this.analyze(ast, options));
+               resolve(_this2.analyze(ast, options));
             } catch (err) {
                reject(err);
             }
@@ -111,8 +113,8 @@ var ESComplexCore = function () {
       }
    }]);
 
-   return ESComplexCore;
+   return ESComplexModule;
 }();
 
-exports.default = ESComplexCore;
+exports.default = ESComplexModule;
 module.exports = exports['default'];

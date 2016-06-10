@@ -5,55 +5,55 @@ import PluginManager       from 'typhonjs-plugin-manager';
 import PluginMetricsModule from 'escomplex-plugin-metrics-module/src/PluginMetricsModule.js';
 import PluginSyntaxBabylon from 'escomplex-plugin-syntax-babylon/src/PluginSyntaxBabylon.js';
 
-const s_PLUGIN_MANAGER = new PluginManager();
-
-export default class Plugin
+export default class Plugins
 {
-   static initialize(options = {})
+   constructor(options = {})
    {
+      this._pluginManager = new PluginManager();
+
       if (typeof options.loadDefaultPlugins === 'boolean' && !options.loadDefaultPlugins) { /* nop */ }
       else
       {
-         s_PLUGIN_MANAGER.addPlugin(new PluginSyntaxBabylon());
-         s_PLUGIN_MANAGER.addPlugin(new PluginMetricsModule());
+         this._pluginManager.addPlugin(new PluginSyntaxBabylon());
+         this._pluginManager.addPlugin(new PluginMetricsModule());
       }
    }
 
-   static onConfigure(options)
+   onConfigure(options)
    {
       const settings = {};
-      const event = s_PLUGIN_MANAGER.invoke('onConfigure', { options, settings }, true);
+      const event = this._pluginManager.invoke('onConfigure', { options, settings }, true);
       return event !== null ? event.data.settings : settings;
    }
 
-   static onEnterNode(node, parent)
+   onEnterNode(node, parent)
    {
-      const event = s_PLUGIN_MANAGER.invoke('onEnterNode', { node, parent }, false);
+      const event = this._pluginManager.invoke('onEnterNode', { node, parent }, false);
       return event !== null ? event.data.ignoreKeys : [];
    }
 
-   static onExitNode(node, parent)
+   onExitNode(node, parent)
    {
-      s_PLUGIN_MANAGER.invoke('onExitNode', { node, parent }, false);
+      this._pluginManager.invoke('onExitNode', { node, parent }, false);
    }
 
-   static onLoadSyntax(settings)
+   onLoadSyntax(settings)
    {
       const syntaxes = {};
-      const event = s_PLUGIN_MANAGER.invoke('onLoadSyntax', { settings, syntaxes }, true);
+      const event = this._pluginManager.invoke('onLoadSyntax', { settings, syntaxes }, true);
       return event !== null ? event.data.syntaxes : syntaxes;
    }
 
-   static onModuleStart(ast, syntaxes, settings)
+   onModuleStart(ast, syntaxes, settings)
    {
       const report = {};
-      s_PLUGIN_MANAGER.invoke('onModuleStart', { ast, report, syntaxes, settings }, false);
+      this._pluginManager.invoke('onModuleStart', { ast, report, syntaxes, settings }, false);
       return report;
    }
 
-   static onModuleEnd()
+   onModuleEnd()
    {
-      const event = s_PLUGIN_MANAGER.invoke('onModuleEnd');
+      const event = this._pluginManager.invoke('onModuleEnd');
       return event !== null ? event.data.report : {};
    }
 }

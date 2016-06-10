@@ -1,5 +1,5 @@
 'use strict';
 
-import ESComplexCore from './ESComplexCore.js';
+import ESComplexModule from './ESComplexModule.js';
 
-export default new ESComplexCore();
+export default new ESComplexModule();

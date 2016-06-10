@@ -22,65 +22,62 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var s_PLUGIN_MANAGER = new _typhonjsPluginManager2.default();
+var Plugins = function () {
+   function Plugins() {
+      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-var Plugin = function () {
-   function Plugin() {
-      _classCallCheck(this, Plugin);
+      _classCallCheck(this, Plugins);
+
+      this._pluginManager = new _typhonjsPluginManager2.default();
+
+      if (typeof options.loadDefaultPlugins === 'boolean' && !options.loadDefaultPlugins) {/* nop */} else {
+            this._pluginManager.addPlugin(new _PluginSyntaxBabylon2.default());
+            this._pluginManager.addPlugin(new _PluginMetricsModule2.default());
+         }
    }
 
-   _createClass(Plugin, null, [{
-      key: 'initialize',
-      value: function initialize() {
-         var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-         if (typeof options.loadDefaultPlugins === 'boolean' && !options.loadDefaultPlugins) {/* nop */} else {
-               s_PLUGIN_MANAGER.addPlugin(new _PluginSyntaxBabylon2.default());
-               s_PLUGIN_MANAGER.addPlugin(new _PluginMetricsModule2.default());
-            }
-      }
-   }, {
+   _createClass(Plugins, [{
       key: 'onConfigure',
       value: function onConfigure(options) {
          var settings = {};
-         var event = s_PLUGIN_MANAGER.invoke('onConfigure', { options: options, settings: settings }, true);
+         var event = this._pluginManager.invoke('onConfigure', { options: options, settings: settings }, true);
          return event !== null ? event.data.settings : settings;
       }
    }, {
       key: 'onEnterNode',
       value: function onEnterNode(node, parent) {
-         var event = s_PLUGIN_MANAGER.invoke('onEnterNode', { node: node, parent: parent }, false);
+         var event = this._pluginManager.invoke('onEnterNode', { node: node, parent: parent }, false);
          return event !== null ? event.data.ignoreKeys : [];
       }
    }, {
       key: 'onExitNode',
       value: function onExitNode(node, parent) {
-         s_PLUGIN_MANAGER.invoke('onExitNode', { node: node, parent: parent }, false);
+         this._pluginManager.invoke('onExitNode', { node: node, parent: parent }, false);
       }
    }, {
       key: 'onLoadSyntax',
       value: function onLoadSyntax(settings) {
          var syntaxes = {};
-         var event = s_PLUGIN_MANAGER.invoke('onLoadSyntax', { settings: settings, syntaxes: syntaxes }, true);
+         var event = this._pluginManager.invoke('onLoadSyntax', { settings: settings, syntaxes: syntaxes }, true);
          return event !== null ? event.data.syntaxes : syntaxes;
       }
    }, {
       key: 'onModuleStart',
       value: function onModuleStart(ast, syntaxes, settings) {
          var report = {};
-         s_PLUGIN_MANAGER.invoke('onModuleStart', { ast: ast, report: report, syntaxes: syntaxes, settings: settings }, false);
+         this._pluginManager.invoke('onModuleStart', { ast: ast, report: report, syntaxes: syntaxes, settings: settings }, false);
          return report;
       }
    }, {
       key: 'onModuleEnd',
       value: function onModuleEnd() {
-         var event = s_PLUGIN_MANAGER.invoke('onModuleEnd');
+         var event = this._pluginManager.invoke('onModuleEnd');
          return event !== null ? event.data.report : {};
       }
    }]);
 
-   return Plugin;
+   return Plugins;
 }();
 
-exports.default = Plugin;
+exports.default = Plugins;
 module.exports = exports['default'];

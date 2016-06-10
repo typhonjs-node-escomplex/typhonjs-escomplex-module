@@ -7,7 +7,7 @@ import Plugins from './Plugins.js';
 /**
  * Provides ESComplex module processing functionality.
  */
-export default class ESComplexCore
+export default class ESComplexModule
 {
    /**
     * Initializes ESComplexModule
@@ -18,7 +18,7 @@ export default class ESComplexCore
    {
       if (typeof options !== 'object') { throw new TypeError('ctor error: `options` is not an `object`.'); }
 
-      Plugins.initialize(options);
+      this._plugins = new Plugins(options);
    }
 
    /**
@@ -34,19 +34,19 @@ export default class ESComplexCore
       if (typeof ast !== 'object' || Array.isArray(ast)) { throw new TypeError('Invalid syntax tree'); }
       if (typeof options !== 'object') { throw new TypeError('analyze error: `options` is not an `object`.'); }
 
-      const settings = Plugins.onConfigure(options);
+      const settings = this._plugins.onConfigure(options);
 
-      const syntaxes = Plugins.onLoadSyntax(settings);
+      const syntaxes = this._plugins.onLoadSyntax(settings);
 
-      const report = Plugins.onModuleStart(ast, syntaxes, settings);
+      const report = this._plugins.onModuleStart(ast, syntaxes, settings);
 
       walker.traverse(ast,
       {
-         enterNode: (node, parent) => { return Plugins.onEnterNode(node, parent); },
-         exitNode: (node, parent) => { return Plugins.onExitNode(node, parent); }
+         enterNode: (node, parent) => { return this._plugins.onEnterNode(node, parent); },
+         exitNode: (node, parent) => { return this._plugins.onExitNode(node, parent); }
       });
 
-      Plugins.onModuleEnd();
+      this._plugins.onModuleEnd();
 
       return report;
    }
