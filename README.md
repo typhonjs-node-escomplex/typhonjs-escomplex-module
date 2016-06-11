@@ -12,7 +12,7 @@ An ES6 example follows:
 ```
 import escomplexModule from 'typhonjs-escomplex-module';
 
-const ast = <some parser AST>;
+const ast = <some parsed AST>;
 
 const report = escomplexModule.analyze(ast);
 ```
@@ -22,7 +22,7 @@ A CJS example follows:
 ```
 var escomplexModule = require('typhonjs-escomplex-module');
 
-var ast = <some parser AST>;
+var ast = <some parsed AST>;
 
 var report = escomplexModule.analyze(ast);
 ```
