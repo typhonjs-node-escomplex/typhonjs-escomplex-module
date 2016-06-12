@@ -10,325 +10,342 @@ if (testconfig.modules['moduleAPI'])
 {
    suite('module (API): ', () =>
    {
-      suite('require:', () =>
+      test('analyze function is exported', () =>
       {
-         test('analyze function is exported', () =>
-         {
-            assert.isFunction(escomplex.analyze);
-         });
+         assert.isFunction(escomplex.analyze);
+      });
 
-         test('analyze does not throw with valid arguments', () =>
+      test('analyze does not throw with valid arguments', () =>
+      {
+         assert.doesNotThrow(() =>
          {
-            assert.doesNotThrow(() =>
-            {
-               escomplex.analyze({
-                  body: [],
-                  loc: {
-                     start: {
-                        line: 0
-                     },
-                     end: {
-                        line: 0
-                     }
+            escomplex.analyze({
+               body: [],
+               loc: {
+                  start: {
+                     line: 0
+                  },
+                  end: {
+                     line: 0
                   }
-               });
+               }
             });
          });
+      });
 
-         test('analyze throws when ast is string', () =>
-         {
-            assert.throws(() => { escomplex.analyze('console.log("foo");'); });
-         });
+      test('analyze throws when ast is string', () =>
+      {
+         assert.throws(() => { escomplex.analyze('console.log("foo");'); });
+      });
 
-         test('analyze throws when ast is array', () =>
-         {
-            assert.throws(() => { escomplex.analyze([]); });
-         });
+      test('analyze throws when ast is array', () =>
+      {
+         assert.throws(() => { escomplex.analyze([]); });
+      });
 
-         test('analyze returns object', () =>
-         {
-            assert.isObject(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns object', () =>
+      {
+         assert.isObject(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }));
+            }
+         }));
+      });
+
+      test('analyzeThen returns object', () =>
+      {
+         const promise = escomplex.analyzeThen({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
+               }
+            }
          });
 
-         test('analyze returns aggregate object', () =>
+         promise.then((report) =>
          {
-            assert.isObject(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
-               }
-            }).aggregate);
+            assert.isObject();
          });
+      });
 
-         test('analyze returns aggregate lines of code property', () =>
-         {
-            assert.isObject(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate object', () =>
+      {
+         assert.isObject(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.sloc);
-         });
+            }
+         }).aggregate);
+      });
 
-         test('analyze returns aggregate physical lines of code property', () =>
-         {
-            assert.isNumber(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate lines of code property', () =>
+      {
+         assert.isObject(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.sloc.physical);
-         });
+            }
+         }).aggregate.sloc);
+      });
 
-         test('analyze returns aggregate logical lines of code property', () =>
-         {
-            assert.isNumber(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate physical lines of code property', () =>
+      {
+         assert.isNumber(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.sloc.logical);
-         });
+            }
+         }).aggregate.sloc.physical);
+      });
 
-         test('analyze returns aggregate cyclomatic complexity property', () =>
-         {
-            assert.isNumber(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate logical lines of code property', () =>
+      {
+         assert.isNumber(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.cyclomatic);
-         });
+            }
+         }).aggregate.sloc.logical);
+      });
 
-         test('analyze returns aggregate cyclomatic complexity density property', () =>
-         {
-            assert.isNumber(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate cyclomatic complexity property', () =>
+      {
+         assert.isNumber(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.cyclomaticDensity);
-         });
+            }
+         }).aggregate.cyclomatic);
+      });
 
-         test('analyze returns aggregate halstead property', () =>
-         {
-            assert.isObject(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate cyclomatic complexity density property', () =>
+      {
+         assert.isNumber(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.halstead);
-         });
+            }
+         }).aggregate.cyclomaticDensity);
+      });
 
-         test('analyze returns aggregate halstead operators property', () =>
-         {
-            assert.isObject(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate halstead property', () =>
+      {
+         assert.isObject(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.halstead.operators);
-         });
+            }
+         }).aggregate.halstead);
+      });
 
-         test('analyze returns aggregate halstead total operators property', () =>
-         {
-            assert.isNumber(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate halstead operators property', () =>
+      {
+         assert.isObject(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.halstead.operators.total);
-         });
+            }
+         }).aggregate.halstead.operators);
+      });
 
-         test('analyze returns aggregate halstead distinct operators property', () =>
-         {
-            assert.isNumber(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate halstead total operators property', () =>
+      {
+         assert.isNumber(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.halstead.operators.distinct);
-         });
+            }
+         }).aggregate.halstead.operators.total);
+      });
 
-         test('analyze returns aggregate halstead operator identifiers property', () =>
-         {
-            assert.isArray(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate halstead distinct operators property', () =>
+      {
+         assert.isNumber(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.halstead.operators.identifiers);
-         });
+            }
+         }).aggregate.halstead.operators.distinct);
+      });
 
-         test('analyze returns aggregate halstead operands property', () =>
-         {
-            assert.isObject(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate halstead operator identifiers property', () =>
+      {
+         assert.isArray(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.halstead.operands);
-         });
+            }
+         }).aggregate.halstead.operators.identifiers);
+      });
 
-         test('analyze returns aggregate halstead total operands property', () =>
-         {
-            assert.isNumber(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate halstead operands property', () =>
+      {
+         assert.isObject(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.halstead.operands.total);
-         });
+            }
+         }).aggregate.halstead.operands);
+      });
 
-         test('analyze returns aggregate halstead distinct operands property', () =>
-         {
-            assert.isNumber(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate halstead total operands property', () =>
+      {
+         assert.isNumber(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.halstead.operands.distinct);
-         });
+            }
+         }).aggregate.halstead.operands.total);
+      });
 
-         test('analyze returns aggregate halstead operand identifiers property', () =>
-         {
-            assert.isArray(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate halstead distinct operands property', () =>
+      {
+         assert.isNumber(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).aggregate.halstead.operands.identifiers);
-         });
+            }
+         }).aggregate.halstead.operands.distinct);
+      });
 
-         test('analyze returns maintainability property', () =>
-         {
-            assert.isNumber(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns aggregate halstead operand identifiers property', () =>
+      {
+         assert.isArray(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).maintainability);
-         });
+            }
+         }).aggregate.halstead.operands.identifiers);
+      });
 
-         test('analyze returns functions property', () =>
-         {
-            assert.isArray(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns maintainability property', () =>
+      {
+         assert.isNumber(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).functions);
-         });
+            }
+         }).maintainability);
+      });
 
-         test('analyze returns dependencies property', () =>
-         {
-            assert.isArray(escomplex.analyze({
-               body: [],
-               loc: {
-                  start: {
-                     line: 0
-                  },
-                  end: {
-                     line: 0
-                  }
+      test('analyze returns functions property', () =>
+      {
+         assert.isArray(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
                }
-            }).dependencies);
-         });
+            }
+         }).functions);
+      });
+
+      test('analyze returns dependencies property', () =>
+      {
+         assert.isArray(escomplex.analyze({
+            body: [],
+            loc: {
+               start: {
+                  line: 0
+               },
+               end: {
+                  line: 0
+               }
+            }
+         }).dependencies);
       });
    });
 }
