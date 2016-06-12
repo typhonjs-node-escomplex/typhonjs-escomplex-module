@@ -110,6 +110,8 @@ export default class Plugins
 
    /**
     * Invokes the `onModuleEnd` plugin callback for all loaded plugins such they might finish calculating results.
+    *
+    * @returns {object} - The report object hash.
     */
    onModuleEnd()
    {
