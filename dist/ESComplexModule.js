@@ -53,7 +53,7 @@ var ESComplexModule = function () {
     * @param {object|Array}   ast - Javascript AST.
     * @param {object}         options - (Optional) module analyze options.
     *
-    * @returns {*}
+    * @returns {object} - A single module report.
     */
 
 
@@ -101,7 +101,7 @@ var ESComplexModule = function () {
        * @param {object|Array}   ast - Javascript AST.
        * @param {object}         options - (Optional) module analyze options.
        *
-       * @returns {Promise}
+       * @returns {Promise<object>} - A single module report.
        */
 
    }, {
