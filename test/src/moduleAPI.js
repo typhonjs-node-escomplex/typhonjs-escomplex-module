@@ -4,30 +4,14 @@ import { assert }       from 'chai';
 
 import * as testconfig  from './testconfig';
 
-const modulePath = '../../dist';
+import escomplex        from '../../src';
 
 if (testconfig.modules['moduleAPI'])
 {
    suite('module (API): ', () =>
    {
-      test('require does not throw', () =>
-      {
-         assert.doesNotThrow(() => { require(modulePath); });
-      });
-
-      test('require returns object', () =>
-      {
-         assert.isObject(require(modulePath));
-      });
-
       suite('require:', () =>
       {
-         let escomplex;
-
-         setup(() => { escomplex = require(modulePath); });
-
-         teardown(() => { escomplex = undefined; });
-
          test('analyze function is exported', () =>
          {
             assert.isFunction(escomplex.analyze);
