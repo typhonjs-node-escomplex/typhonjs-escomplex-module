@@ -6,7 +6,7 @@ import PluginMetricsModule from 'escomplex-plugin-metrics-module/src/PluginMetri
 import PluginSyntaxBabylon from 'escomplex-plugin-syntax-babylon/src/PluginSyntaxBabylon.js';
 
 /**
- * Provides a wrapper around PluginManager for ESComplexProject. Several convenience methods for the plugin callbacks
+ * Provides a wrapper around PluginManager for ESComplexModule. Several convenience methods for the plugin callbacks
  * properly manage and or create initial data that are processed by the plugins.
  *
  * The default plugins loaded include:
@@ -20,8 +20,8 @@ export default class Plugins
     *
     * @param {object}   options - module options including user plugins to load including:
     * ```
-    * (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.
-    * (Array<Object>)   plugins - A list of ESComplexProject plugins that have already been instantiated.
+    * (boolean)         loadDefaultPlugins - When false ESComplexModule will not load any default plugins.
+    * (Array<Object>)   plugins - A list of ESComplexModule plugins that have already been instantiated.
     * ```
     */
    constructor(options = {})

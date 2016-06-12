@@ -23,7 +23,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Provides a wrapper around PluginManager for ESComplexProject. Several convenience methods for the plugin callbacks
+ * Provides a wrapper around PluginManager for ESComplexModule. Several convenience methods for the plugin callbacks
  * properly manage and or create initial data that are processed by the plugins.
  *
  * The default plugins loaded include:
@@ -37,8 +37,8 @@ var Plugins = function () {
     *
     * @param {object}   options - module options including user plugins to load including:
     * ```
-    * (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.
-    * (Array<Object>)   plugins - A list of ESComplexProject plugins that have already been instantiated.
+    * (boolean)         loadDefaultPlugins - When false ESComplexModule will not load any default plugins.
+    * (Array<Object>)   plugins - A list of ESComplexModule plugins that have already been instantiated.
     * ```
     */
 

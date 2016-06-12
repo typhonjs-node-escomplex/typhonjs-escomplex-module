@@ -30,7 +30,7 @@ var ESComplexModule = function () {
     *
     * @param {object}   options - module options including user plugins to load including:
     * ```
-    * (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.
+    * (boolean)         loadDefaultPlugins - When false ESComplexModule will not load any default plugins.
     * (Array<Object>)   plugins - A list of ESComplexModule plugins that have already been instantiated.
     * ```
     */
