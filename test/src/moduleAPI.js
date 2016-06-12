@@ -74,7 +74,7 @@ if (testconfig.modules['moduleAPI'])
 
          promise.then((report) =>
          {
-            assert.isObject();
+            assert.isObject(report);
          });
       });
 
