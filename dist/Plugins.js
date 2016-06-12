@@ -22,7 +22,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/**
+ * Provides a wrapper around PluginManager for ESComplexProject. Several convenience methods for the plugin callbacks
+ * properly manage and or create initial data that are processed by the plugins.
+ *
+ * The default plugins loaded include:
+ * @see https://www.npmjs.com/package/escomplex-plugin-metrics-module
+ * @see https://www.npmjs.com/package/escomplex-plugin-syntax-babylon
+ */
+
 var Plugins = function () {
+   /**
+    * Initializes Plugins.
+    *
+    * @param {object}   options - module options including user plugins to load including:
+    * ```
+    * (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.
+    * (Array<Object>)   plugins - A list of ESComplexProject plugins that have already been instantiated.
+    * ```
+    */
+
    function Plugins() {
       var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
@@ -36,6 +55,16 @@ var Plugins = function () {
          }
    }
 
+   /**
+    * Initializes the default `settings` object hash and then invokes the `onConfigure` plugin callback for all loaded
+    * plugins.
+    *
+    * @param {object}   options - (Optional) module processing options.
+    *
+    * @returns {object}
+    */
+
+
    _createClass(Plugins, [{
       key: 'onConfigure',
       value: function onConfigure(options) {
@@ -43,17 +72,45 @@ var Plugins = function () {
          var event = this._pluginManager.invoke('onConfigure', { options: options, settings: settings }, true);
          return event !== null ? event.data.settings : settings;
       }
+
+      /**
+       * Invokes the `onEnterNode` plugin callback during AST traversal when a node is entered.
+       *
+       * @param {object}   node - The node being entered.
+       * @param {object}   parent - The parent node of the node being entered.
+       *
+       * @returns {Array<string>|null} - A directive indicating children keys to be skipped or if null all keys entirely.
+       */
+
    }, {
       key: 'onEnterNode',
       value: function onEnterNode(node, parent) {
          var event = this._pluginManager.invoke('onEnterNode', { node: node, parent: parent }, false);
          return event !== null ? event.data.ignoreKeys : [];
       }
+
+      /**
+       * Invokes the `onExitNode` plugin callback during AST traversal when a node is exited.
+       *
+       * @param {object}   node - The node being entered.
+       * @param {object}   parent - The parent node of the node being entered.
+       */
+
    }, {
       key: 'onExitNode',
       value: function onExitNode(node, parent) {
          this._pluginManager.invoke('onExitNode', { node: node, parent: parent }, false);
       }
+
+      /**
+       * Initializes the trait `syntaxes` object hash and then invokes the `onLoadSyntax` plugin callback for all loaded
+       * plugins.
+       *
+       * @param {object}   settings - Settings for module processing.
+       *
+       * @returns {object} - Loaded trait `syntaxes` for AST nodes.
+       */
+
    }, {
       key: 'onLoadSyntax',
       value: function onLoadSyntax(settings) {
@@ -61,6 +118,18 @@ var Plugins = function () {
          var event = this._pluginManager.invoke('onLoadSyntax', { settings: settings, syntaxes: syntaxes }, true);
          return event !== null ? event.data.syntaxes : syntaxes;
       }
+
+      /**
+       * Initializes the default `report` object hash and then invokes the `onModuleStart` plugin callback for all loaded
+       * plugins.
+       *
+       * @param {object}   ast - Settings for module processing.
+       * @param {object}   syntaxes - All loaded trait syntaxes for AST nodes.
+       * @param {object}   settings - Settings for module processing.
+       *
+       * @returns {object} - The report object hash.
+       */
+
    }, {
       key: 'onModuleStart',
       value: function onModuleStart(ast, syntaxes, settings) {
@@ -68,6 +137,11 @@ var Plugins = function () {
          this._pluginManager.invoke('onModuleStart', { ast: ast, report: report, syntaxes: syntaxes, settings: settings }, false);
          return report;
       }
+
+      /**
+       * Invokes the `onModuleEnd` plugin callback for all loaded plugins such they might finish calculating results.
+       */
+
    }, {
       key: 'onModuleEnd',
       value: function onModuleEnd() {

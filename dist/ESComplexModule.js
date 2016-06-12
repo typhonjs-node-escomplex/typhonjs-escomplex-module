@@ -21,14 +21,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Provides ESComplex module processing functionality.
+ * Provides a runtime to invoke ESComplexModule plugins for processing / metrics calculations of independent modules.
  */
 
 var ESComplexModule = function () {
    /**
-    * Initializes ESComplexModule
+    * Initializes ESComplexModule.
     *
-    * @param {object}         options - module options
+    * @param {object}   options - module options including user plugins to load including:
+    * ```
+    * (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.
+    * (Array<Object>)   plugins - A list of ESComplexProject plugins that have already been instantiated.
+    * ```
     */
 
    function ESComplexModule() {
@@ -47,7 +51,7 @@ var ESComplexModule = function () {
     * Processes the given ast and calculates metrics via plugins.
     *
     * @param {object|Array}   ast - Javascript AST.
-    * @param {object}         options - module analyze options
+    * @param {object}         options - (Optional) module analyze options.
     *
     * @returns {*}
     */
@@ -61,8 +65,9 @@ var ESComplexModule = function () {
          var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
          if ((typeof ast === 'undefined' ? 'undefined' : _typeof(ast)) !== 'object' || Array.isArray(ast)) {
-            throw new TypeError('Invalid syntax tree');
+            throw new TypeError('analyze error: `ast` is not an `object` or `array`.');
          }
+
          if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) !== 'object') {
             throw new TypeError('analyze error: `options` is not an `object`.');
          }
@@ -73,6 +78,7 @@ var ESComplexModule = function () {
 
          var report = this._plugins.onModuleStart(ast, syntaxes, settings);
 
+         // Completely traverse the provided AST and defer to plugins to process node traversal.
          _typhonjsAstWalker2.default.traverse(ast, {
             enterNode: function enterNode(node, parent) {
                return _this._plugins.onEnterNode(node, parent);
@@ -87,11 +93,13 @@ var ESComplexModule = function () {
          return report;
       }
 
+      // Asynchronous Promise based methods ----------------------------------------------------------------------------
+
       /**
-       * Wraps processing the given ast and calculates metrics via plugins in a Promise.
+       * Wraps in a Promise processing the given ast and calculates metrics via plugins.
        *
        * @param {object|Array}   ast - Javascript AST.
-       * @param {object}         options - module options
+       * @param {object}         options - (Optional) module analyze options.
        *
        * @returns {Promise}
        */
