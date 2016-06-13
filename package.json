@@ -21,10 +21,10 @@
     }
   ],
   "dependencies": {
-    "escomplex-plugin-metrics-module": "git+https://git@github.com/typhonjs-node-escomplex/escomplex-plugin-metrics-module.git",
-    "escomplex-plugin-syntax-babylon": "git+https://git@github.com/typhonjs-node-escomplex/escomplex-plugin-syntax-babylon.git",
+    "escomplex-plugin-metrics-module": "^0.0.1",
+    "escomplex-plugin-syntax-babylon": "^0.0.1",
     "typhonjs-ast-walker": "^0.1.0",
-    "typhonjs-plugin-manager": "git+https://git@github.com/typhonjs-node-plugin/typhonjs-plugin-manager.git"
+    "typhonjs-plugin-manager": "^0.0.1"
   },
   "devDependencies": {
     "acorn": "^3.0.0",
