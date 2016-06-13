@@ -15,7 +15,7 @@ Provides module / individual file oriented AST processing for typhonjs-escomplex
 More information forthcoming. This NPM module can be installed as a dependency in `package.json` as follows:
 ```
 "dependencies": {
-  "typhonjs-escomplex-module": "^0.0.1",
+  "typhonjs-escomplex-module": "^0.0.1"
 }
 ```
 
