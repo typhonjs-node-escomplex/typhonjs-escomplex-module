@@ -39,7 +39,7 @@ export default class ESComplexModule
     * @param {object|Array}   ast - Javascript AST.
     * @param {object}         options - (Optional) module analyze options.
     *
-    * @returns {object} - A single module report.
+    * @returns {ModuleReport} - A single module report.
     */
    analyze(ast, options = {})
    {
@@ -77,7 +77,7 @@ export default class ESComplexModule
     * @param {object|Array}   ast - Javascript AST.
     * @param {object}         options - (Optional) module analyze options.
     *
-    * @returns {Promise<object>} - A single module report.
+    * @returns {Promise<ModuleReport>} - A single module report.
     */
    analyzeThen(ast, options = {})
    {

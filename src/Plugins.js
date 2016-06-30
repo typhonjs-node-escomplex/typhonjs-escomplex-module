@@ -108,7 +108,7 @@ export default class Plugins
     * @param {object}   syntaxes - All loaded trait syntaxes for AST nodes.
     * @param {object}   settings - Settings for module processing.
     *
-    * @returns {object} - The report object hash.
+    * @returns {ModuleReport} - The ModuleReport being processed.
     */
    onModuleStart(ast, syntaxes, settings)
    {
@@ -122,11 +122,11 @@ export default class Plugins
     *
     * @param {ModuleReport}   report - The ModuleReport being processed.
     *
-    * @returns {object} - The report object hash.
+    * @returns {ModuleReport} - The ModuleReport being processed.
     */
    onModuleEnd(report)
    {
-      const event = this._pluginManager.invoke('onModuleEnd', { report }, false);
-      return event !== null ? event.data.report : {};
+      this._pluginManager.invoke('onModuleEnd', { report }, false);
+      return report;
    }
 }
