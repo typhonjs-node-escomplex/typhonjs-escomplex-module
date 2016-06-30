@@ -1,9 +1,11 @@
 'use strict';
 
-import PluginManager       from 'typhonjs-plugin-manager';
+import PluginMetricsModule from 'escomplex-plugin-metrics-module/src/PluginMetricsModule';
+import PluginSyntaxBabylon from 'escomplex-plugin-syntax-babylon/src/PluginSyntaxBabylon';
 
-import PluginMetricsModule from 'escomplex-plugin-metrics-module/src/PluginMetricsModule.js';
-import PluginSyntaxBabylon from 'escomplex-plugin-syntax-babylon/src/PluginSyntaxBabylon.js';
+import ModuleReport        from 'typhonjs-escomplex-commons/src/module/report/ModuleReport';
+
+import PluginManager       from 'typhonjs-plugin-manager/src/PluginManager';
 
 /**
  * Provides a wrapper around PluginManager for ESComplexModule. Several convenience methods for the plugin callbacks
@@ -26,6 +28,11 @@ export default class Plugins
     */
    constructor(options = {})
    {
+      /**
+       * Provides a generic plugin manager for dispatching events to module plugins.
+       * @type {PluginManager}
+       * @private
+       */
       this._pluginManager = new PluginManager();
 
       if (typeof options.loadDefaultPlugins === 'boolean' && !options.loadDefaultPlugins) { /* nop */ }
@@ -54,26 +61,28 @@ export default class Plugins
    /**
     * Invokes the `onEnterNode` plugin callback during AST traversal when a node is entered.
     *
-    * @param {object}   node - The node being entered.
-    * @param {object}   parent - The parent node of the node being entered.
+    * @param {ModuleReport}   report - The ModuleReport being processed.
+    * @param {object}         node - The node being entered.
+    * @param {object}         parent - The parent node of the node being entered.
     *
     * @returns {Array<string>|null} - A directive indicating children keys to be skipped or if null all keys entirely.
     */
-   onEnterNode(node, parent)
+   onEnterNode(report, node, parent)
    {
-      const event = this._pluginManager.invoke('onEnterNode', { node, parent }, false);
+      const event = this._pluginManager.invoke('onEnterNode', { report, node, parent }, false);
       return event !== null ? event.data.ignoreKeys : [];
    }
 
    /**
     * Invokes the `onExitNode` plugin callback during AST traversal when a node is exited.
     *
-    * @param {object}   node - The node being entered.
-    * @param {object}   parent - The parent node of the node being entered.
+    * @param {ModuleReport}   report - The ModuleReport being processed.
+    * @param {object}         node - The node being entered.
+    * @param {object}         parent - The parent node of the node being entered.
     */
-   onExitNode(node, parent)
+   onExitNode(report, node, parent)
    {
-      this._pluginManager.invoke('onExitNode', { node, parent }, false);
+      this._pluginManager.invoke('onExitNode', { report, node, parent }, false);
    }
 
    /**
@@ -103,7 +112,7 @@ export default class Plugins
     */
    onModuleStart(ast, syntaxes, settings)
    {
-      const report = {};
+      const report = new ModuleReport(ast.loc.start.line, ast.loc.end.line);
       this._pluginManager.invoke('onModuleStart', { ast, report, syntaxes, settings }, false);
       return report;
    }
@@ -111,11 +120,13 @@ export default class Plugins
    /**
     * Invokes the `onModuleEnd` plugin callback for all loaded plugins such they might finish calculating results.
     *
+    * @param {ModuleReport}   report - The ModuleReport being processed.
+    *
     * @returns {object} - The report object hash.
     */
-   onModuleEnd()
+   onModuleEnd(report)
    {
-      const event = this._pluginManager.invoke('onModuleEnd');
+      const event = this._pluginManager.invoke('onModuleEnd', { report }, false);
       return event !== null ? event.data.report : {};
    }
 }

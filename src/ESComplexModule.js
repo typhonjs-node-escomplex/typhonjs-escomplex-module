@@ -1,8 +1,10 @@
 'use strict';
 
-import walker  from 'typhonjs-ast-walker';
+import 'babel-polyfill';
 
-import Plugins from './Plugins.js';
+import ASTWalker  from 'typhonjs-ast-walker/src/ASTWalker';
+
+import Plugins    from './Plugins';
 
 /**
  * Provides a runtime to invoke ESComplexModule plugins for processing / metrics calculations of independent modules.
@@ -20,8 +22,14 @@ export default class ESComplexModule
     */
    constructor(options = {})
    {
+      /* istanbul ignore if */
       if (typeof options !== 'object') { throw new TypeError('ctor error: `options` is not an `object`.'); }
 
+      /**
+       * Provides dispatch methods to all module plugins.
+       * @type {Plugins}
+       * @private
+       */
       this._plugins = new Plugins(options);
    }
 
@@ -40,6 +48,7 @@ export default class ESComplexModule
          throw new TypeError('analyze error: `ast` is not an `object` or `array`.');
       }
 
+      /* istanbul ignore if */
       if (typeof options !== 'object') { throw new TypeError('analyze error: `options` is not an `object`.'); }
 
       const settings = this._plugins.onConfigure(options);
@@ -49,15 +58,15 @@ export default class ESComplexModule
       const report = this._plugins.onModuleStart(ast, syntaxes, settings);
 
       // Completely traverse the provided AST and defer to plugins to process node traversal.
-      walker.traverse(ast,
+      new ASTWalker().traverse(ast,
       {
-         enterNode: (node, parent) => { return this._plugins.onEnterNode(node, parent); },
-         exitNode: (node, parent) => { return this._plugins.onExitNode(node, parent); }
+         enterNode: (node, parent) => { return this._plugins.onEnterNode(report, node, parent); },
+         exitNode: (node, parent) => { return this._plugins.onExitNode(report, node, parent); }
       });
 
-      this._plugins.onModuleEnd();
+      this._plugins.onModuleEnd(report);
 
-      return report;
+      return report.finalize();
    }
 
    // Asynchronous Promise based methods ----------------------------------------------------------------------------
@@ -75,7 +84,7 @@ export default class ESComplexModule
       return new Promise((resolve, reject) =>
       {
          try { resolve(this.analyze(ast, options)); }
-         catch (err) { reject(err); }
+         catch (err) { /* istanbul ignore next */ reject(err); }
       });
    }
 }

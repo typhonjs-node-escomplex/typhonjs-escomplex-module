@@ -318,7 +318,7 @@ if (testconfig.modules['moduleAPI'])
          }).maintainability);
       });
 
-      test('analyze returns functions property', () =>
+      test('analyze returns methods property', () =>
       {
          assert.isArray(escomplex.analyze({
             body: [],
@@ -330,7 +330,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).functions);
+         }).methods);
       });
 
       test('analyze returns dependencies property', () =>

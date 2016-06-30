@@ -6,7 +6,10 @@
     ["module-alias",
       [
         { "src": "npm:escomplex-plugin-metrics-module/dist", "expose": "escomplex-plugin-metrics-module/src" },
-        { "src": "npm:escomplex-plugin-syntax-babylon/dist", "expose": "escomplex-plugin-syntax-babylon/src" }
+        { "src": "npm:escomplex-plugin-syntax-babylon/dist", "expose": "escomplex-plugin-syntax-babylon/src" },
+        { "src": "npm:typhonjs-ast-walker/dist", "expose": "typhonjs-ast-walker/src" },
+        { "src": "npm:typhonjs-escomplex-commons/dist", "expose": "typhonjs-escomplex-commons/src" },
+        { "src": "npm:typhonjs-plugin-manager/dist", "expose": "typhonjs-plugin-manager/src" }
       ]
     ]
   ]
