@@ -21,6 +21,7 @@
     }
   ],
   "dependencies": {
+    "babel-polyfill": "^6.0.0",
     "escomplex-plugin-metrics-module": "^0.0.3",
     "escomplex-plugin-syntax-babylon": "^0.0.3",
     "typhonjs-ast-walker": "^0.1.0",
