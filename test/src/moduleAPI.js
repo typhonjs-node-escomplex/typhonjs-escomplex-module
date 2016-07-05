@@ -58,9 +58,9 @@ if (testconfig.modules['moduleAPI'])
          }));
       });
 
-      test('analyzeThen returns object', () =>
+      test('analyzeAsync returns object', () =>
       {
-         const promise = escomplex.analyzeThen({
+         const promise = escomplex.analyzeAsync({
             body: [],
             loc: {
                start: {

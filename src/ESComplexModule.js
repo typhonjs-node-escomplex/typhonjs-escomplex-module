@@ -79,7 +79,7 @@ export default class ESComplexModule
     *
     * @returns {Promise<ModuleReport>} - A single module report.
     */
-   analyzeThen(ast, options = {})
+   analyzeAsync(ast, options = {})
    {
       return new Promise((resolve, reject) =>
       {
