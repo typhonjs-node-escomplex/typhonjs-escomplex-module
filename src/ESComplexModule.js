@@ -1,7 +1,3 @@
-'use strict';
-
-import 'babel-polyfill';
-
 import ASTWalker  from 'typhonjs-ast-walker/src/ASTWalker';
 
 import Plugins    from './Plugins';

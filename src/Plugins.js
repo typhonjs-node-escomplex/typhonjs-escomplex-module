@@ -1,5 +1,3 @@
-'use strict';
-
 import PluginMetricsModule from 'escomplex-plugin-metrics-module/src/PluginMetricsModule';
 import PluginSyntaxBabylon from 'escomplex-plugin-syntax-babylon/src/PluginSyntaxBabylon';
 
@@ -112,7 +110,7 @@ export default class Plugins
     */
    onModuleStart(ast, syntaxes, settings)
    {
-      const report = new ModuleReport(ast.loc.start.line, ast.loc.end.line);
+      const report = new ModuleReport(ast.loc.start.line, ast.loc.end.line, settings);
       this._pluginManager.invoke('onModuleStart', { ast, report, syntaxes, settings }, false);
       return report;
    }

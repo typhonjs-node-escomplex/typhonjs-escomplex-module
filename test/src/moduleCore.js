@@ -3038,7 +3038,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyze('require("./foo");');
+               report = parser.analyze('require("./foo");', { commonjs: true });
             });
 
             teardown(() =>
@@ -3066,7 +3066,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyze('require("./bar");');
+               report = parser.analyze('require("./bar");', { commonjs: true });
             });
 
             teardown(() =>
@@ -3086,7 +3086,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyze('require("./foo");\nrequire("./bar");\n\nrequire("./baz");');
+               report = parser.analyze('require("./foo");\nrequire("./bar");\n\nrequire("./baz");', { commonjs: true });
             });
 
             teardown(() =>
@@ -3116,7 +3116,7 @@ if (testconfig.modules['moduleCore'])
 
             setup(() =>
             {
-               report = parser.analyze('var foo = "./foo";require(foo);');
+               report = parser.analyze('var foo = "./foo";require(foo);', { commonjs: true });
             });
 
             teardown(() =>
@@ -3135,200 +3135,6 @@ if (testconfig.modules['moduleCore'])
                assert.strictEqual(report.dependencies[0].line, 1);
                assert.strictEqual(report.dependencies[0].path, '* dynamic dependency *');
                assert.strictEqual(report.dependencies[0].type, 'cjs');
-            });
-         });
-
-         suite('AMD require literal:', () =>
-         {
-            let report;
-
-            setup(() =>
-            {
-               report = parser.analyze('require([ "foo" ], function (foo) {});');
-            });
-
-            teardown(() =>
-            {
-               report = undefined;
-            });
-
-            test('dependencies has correct length', () =>
-            {
-               assert.lengthOf(report.dependencies, 1);
-            });
-
-            test('dependencies are correct', () =>
-            {
-               assert.isObject(report.dependencies[0]);
-               assert.strictEqual(report.dependencies[0].line, 1);
-               assert.strictEqual(report.dependencies[0].path, 'foo');
-               assert.strictEqual(report.dependencies[0].type, 'amd');
-            });
-         });
-
-         suite('alternative AMD require literal:', () =>
-         {
-            let report;
-
-            setup(() =>
-            {
-               report = parser.analyze('require([ "bar" ], function (barModule) {});');
-            });
-
-            teardown(() =>
-            {
-               report = undefined;
-            });
-
-            test('dependencies are correct', () =>
-            {
-               assert.strictEqual(report.dependencies[0].path, 'bar');
-            });
-         });
-
-         suite('AMD require multiple:', () =>
-         {
-            let report;
-
-            setup(() =>
-            {
-               report = parser.analyze('require([ "foo", "bar", "baz" ], function (foo, bar, baz) {});');
-            });
-
-            teardown(() =>
-            {
-               report = undefined;
-            });
-
-            test('dependencies has correct length', () =>
-            {
-               assert.lengthOf(report.dependencies, 3);
-            });
-
-            test('dependencies are correct', () =>
-            {
-               assert.strictEqual(report.dependencies[0].line, 1);
-               assert.strictEqual(report.dependencies[0].path, 'foo');
-               assert.strictEqual(report.dependencies[1].line, 1);
-               assert.strictEqual(report.dependencies[1].path, 'bar');
-               assert.strictEqual(report.dependencies[2].line, 1);
-               assert.strictEqual(report.dependencies[2].path, 'baz');
-               assert.strictEqual(report.dependencies[2].type, 'amd');
-            });
-         });
-
-         suite('AMD require variable:', () =>
-         {
-            let report;
-
-            setup(() =>
-            {
-               report = parser.analyze('var foo = "foo";\nrequire([ foo ], function (foo) {});');
-            });
-
-            teardown(() =>
-            {
-               report = undefined;
-            });
-
-            test('dependencies has correct length', () =>
-            {
-               assert.lengthOf(report.dependencies, 1);
-            });
-
-            test('dependencies are correct', () =>
-            {
-               assert.strictEqual(report.dependencies[0].line, 2);
-               assert.strictEqual(report.dependencies[0].path, '* dynamic dependency *');
-               assert.strictEqual(report.dependencies[0].type, 'amd');
-            });
-         });
-
-         suite('AMD require variable array:', () =>
-         {
-            let report;
-
-            setup(() =>
-            {
-               report = parser.analyze('var foo = [ "foo" ];\nrequire(foo, function (foo) {});');
-            });
-
-            teardown(() =>
-            {
-               report = undefined;
-            });
-
-            test('dependencies has correct length', () =>
-            {
-               assert.lengthOf(report.dependencies, 1);
-            });
-
-            test('dependencies are correct', () =>
-            {
-               assert.strictEqual(report.dependencies[0].line, 2);
-               assert.strictEqual(report.dependencies[0].path, '* dynamic dependencies *');
-            });
-         });
-
-         suite('AMD require.config:', () =>
-         {
-            let report;
-
-            setup(() =>
-            {
-               report = parser.analyze(
-                  'require.config({\n\tpaths: {\n\t\tfoo: "path/to/foo",\n\t\tbaz: "../wibble"\n\t}\n});\n'
-                + 'require([ "foo", "bar", "baz" ], function (foo, bar, baz) {});');
-            });
-
-            teardown(() =>
-            {
-               report = undefined;
-            });
-
-            test('dependencies has correct length', () =>
-            {
-               assert.lengthOf(report.dependencies, 3);
-            });
-
-            test('dependencies are correct', () =>
-            {
-               assert.strictEqual(report.dependencies[0].line, 7);
-               assert.strictEqual(report.dependencies[0].path, 'path/to/foo');
-               assert.strictEqual(report.dependencies[0].type, 'amd');
-               assert.strictEqual(report.dependencies[1].line, 7);
-               assert.strictEqual(report.dependencies[1].path, 'bar');
-               assert.strictEqual(report.dependencies[0].type, 'amd');
-               assert.strictEqual(report.dependencies[2].line, 7);
-               assert.strictEqual(report.dependencies[2].path, '../wibble');
-               assert.strictEqual(report.dependencies[0].type, 'amd');
-            });
-         });
-
-         suite('AMD require literal string:', () =>
-         {
-            let report;
-
-            setup(() =>
-            {
-               report = parser.analyze('require("foo", function (foo) {});');
-            });
-
-            teardown(() =>
-            {
-               report = undefined;
-            });
-
-            test('dependencies has correct length', () =>
-            {
-               assert.lengthOf(report.dependencies, 1);
-            });
-
-            test('dependencies are correct', () =>
-            {
-               assert.strictEqual(report.dependencies[0].line, 1);
-               assert.strictEqual(report.dependencies[0].path, 'foo');
-               assert.strictEqual(report.dependencies[0].type, 'amd');
             });
          });
       });
