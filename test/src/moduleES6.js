@@ -129,12 +129,12 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 0);
+                  assert.strictEqual(report.methods[0].halstead.time, 0);
                });
 
                test('maintainability index is correct', () =>
@@ -222,7 +222,7 @@ if (testconfig.modules['moduleES6'])
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 148);
+                  assert.strictEqual(report.maintainability, 148.199);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -306,7 +306,7 @@ if (testconfig.modules['moduleES6'])
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 148);
+                  assert.strictEqual(report.maintainability, 147.742);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -409,12 +409,12 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[1].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[1].methods[0].halstead.bugs, 0.001);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[1].methods[0].halstead.time), 0);
+                  assert.strictEqual(report.classes[1].methods[0].halstead.time, 0.056);
                });
 
                test('aggregate has super Halstead operand identifier', () =>
@@ -454,12 +454,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 1.875);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -575,22 +575,22 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 12);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 11.61);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 12);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 11.61);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.004);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 0.645);
                });
 
                test('class method has correct Halstead length', () =>
@@ -610,22 +610,22 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[1].methods[0].halstead.volume), 16);
+                  assert.strictEqual(report.classes[1].methods[0].halstead.volume, 15.51);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[1].methods[0].halstead.effort), 23);
+                  assert.strictEqual(report.classes[1].methods[0].halstead.effort, 23.265);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[1].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[1].methods[0].halstead.bugs, 0.005);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[1].methods[0].halstead.time), 1);
+                  assert.strictEqual(report.classes[1].methods[0].halstead.time, 1.292);
                });
 
                test('aggregate has super Halstead operand identifier', () =>
@@ -665,12 +665,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 3.438);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 161);
+                  assert.strictEqual(report.maintainability, 161.224);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -745,12 +745,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2.286);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 143);
+                  assert.strictEqual(report.maintainability, 143.438);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -850,7 +850,7 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 4);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 3.75);
                });
 
                test('method has correct Halstead length', () =>
@@ -870,7 +870,7 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.volume), 5);
+                  assert.strictEqual(report.methods[0].halstead.volume, 4.755);
                });
 
                test('method has correct Halstead effort', () =>
@@ -880,17 +880,17 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.002);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 0);
+                  assert.strictEqual(report.methods[0].halstead.time, 0);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -985,7 +985,7 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 3);
                });
 
                test('method has correct Halstead length', () =>
@@ -1015,17 +1015,17 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.004);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 1);
+                  assert.strictEqual(report.methods[0].halstead.time, 1.333);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 160);
+                  assert.strictEqual(report.maintainability, 160.131);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -1120,7 +1120,7 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2);
                });
 
                test('method has correct Halstead length', () =>
@@ -1140,27 +1140,27 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.volume), 8);
+                  assert.strictEqual(report.methods[0].halstead.volume, 7.925);
                });
 
                test('method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.effort), 8);
+                  assert.strictEqual(report.methods[0].halstead.effort, 7.925);
                });
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.003);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 0);
+                  assert.strictEqual(report.methods[0].halstead.time, 0.44);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -1255,7 +1255,7 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 3.333);
                });
 
                test('method has correct Halstead length', () =>
@@ -1275,27 +1275,27 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.volume), 18);
+                  assert.strictEqual(report.methods[0].halstead.volume, 18.095);
                });
 
                test('method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.effort), 54);
+                  assert.strictEqual(report.methods[0].halstead.effort, 54.284);
                });
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.006);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 3);
+                  assert.strictEqual(report.methods[0].halstead.time, 3.016);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 140);
+                  assert.strictEqual(report.maintainability, 139.542);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -1395,7 +1395,7 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 1.5);
                });
 
                test('method has correct Halstead length', () =>
@@ -1415,27 +1415,27 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.volume), 12);
+                  assert.strictEqual(report.methods[0].halstead.volume, 11.61);
                });
 
                test('method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.effort), 12);
+                  assert.strictEqual(report.methods[0].halstead.effort, 11.61);
                });
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.004);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 1);
+                  assert.strictEqual(report.methods[0].halstead.time, 0.645);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 151);
+                  assert.strictEqual(report.maintainability, 151.386);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -1508,12 +1508,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 1);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 1);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 164);
+                  assert.strictEqual(report.maintainability, 163.888);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -1583,12 +1583,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 1);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 1.25);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 148);
+                  assert.strictEqual(report.maintainability, 148.245);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -1658,12 +1658,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2.333);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 144);
+                  assert.strictEqual(report.maintainability, 143.995);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -1733,12 +1733,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 1);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 1);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 163);
+                  assert.strictEqual(report.maintainability, 162.615);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -1811,12 +1811,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 4);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 4);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 118);
+                  assert.strictEqual(report.maintainability, 117.604);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -1886,12 +1886,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 4);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 4);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 121);
+                  assert.strictEqual(report.maintainability, 120.559);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -1961,12 +1961,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2.4);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 133);
+                  assert.strictEqual(report.maintainability, 132.577);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -2036,12 +2036,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 5);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 5);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 121);
+                  assert.strictEqual(report.maintainability, 120.732);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -2116,12 +2116,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2.4);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 144);
+                  assert.strictEqual(report.maintainability, 144.333);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -2191,12 +2191,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 1.5);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 159);
+                  assert.strictEqual(report.maintainability, 158.971);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -2271,12 +2271,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 155);
+                  assert.strictEqual(report.maintainability, 155.491);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -2376,7 +2376,7 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 1);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 1);
                });
 
                test('method has correct Halstead length', () =>
@@ -2396,27 +2396,27 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.volume), 12);
+                  assert.strictEqual(report.methods[0].halstead.volume, 11.61);
                });
 
                test('method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.effort), 6);
+                  assert.strictEqual(report.methods[0].halstead.effort, 5.805);
                });
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.004);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 0);
+                  assert.strictEqual(report.methods[0].halstead.time, 0.322);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -2489,12 +2489,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 1);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 0.5);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -2564,12 +2564,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 1);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 0.75);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 154);
+                  assert.strictEqual(report.maintainability, 153.675);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -2649,22 +2649,22 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 12);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 11.61);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 12);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 11.61);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.004);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 0.645);
                });
 
                test('class method has correct parameter count', () =>
@@ -2704,12 +2704,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 163);
+                  assert.strictEqual(report.maintainability, 162.615);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -2794,22 +2794,22 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 12);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 11.61);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 12);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 11.61);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.004);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 0.645);
                });
 
                test('aggregate has correct Halstead total operators', () =>
@@ -2844,12 +2844,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 163);
+                  assert.strictEqual(report.maintainability, 162.615);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -2934,22 +2934,22 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 2);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 2);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 1);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.001);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 0.056);
                });
 
                test('aggregate has `get` Halstead operator identifier', () =>
@@ -2989,12 +2989,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -3074,27 +3074,27 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.difficulty), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.difficulty, 1.333);
                });
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 14);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 13.932);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 19);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 18.575);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.005);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 1.032);
                });
 
                test('aggregate has `set` Halstead operator identifier', () =>
@@ -3134,12 +3134,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 3);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 161);
+                  assert.strictEqual(report.maintainability, 161.007);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -3224,22 +3224,22 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 2);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 2);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 1);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.001);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 0.056);
                });
 
                test('aggregate has `static` Halstead operator identifier', () =>
@@ -3279,12 +3279,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -3369,22 +3369,22 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 10);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 10);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 5);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 5);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.003);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 0.278);
                });
 
                test('aggregate has correct Halstead total operators', () =>
@@ -3419,12 +3419,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 1.5);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 165);
+                  assert.strictEqual(report.maintainability, 165.496);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -3494,12 +3494,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 1.5);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 151);
+                  assert.strictEqual(report.maintainability, 151.273);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -3569,12 +3569,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 3);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 148);
+                  assert.strictEqual(report.maintainability, 148.139);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -3644,12 +3644,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2.25);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 135);
+                  assert.strictEqual(report.maintainability, 135.373);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -3719,12 +3719,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 4);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 3.75);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 133);
+                  assert.strictEqual(report.maintainability, 132.94);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -3809,22 +3809,22 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 12);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 11.61);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 12);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 11.61);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.004);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 0.645);
                });
 
                test('aggregate has correct Halstead total operators', () =>
@@ -3859,12 +3859,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2.5);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 163);
+                  assert.strictEqual(report.maintainability, 162.615);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -3949,22 +3949,22 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 12);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 11.61);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 12);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 11.61);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.004);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 0.645);
                });
 
                test('aggregate has correct Halstead total operators', () =>
@@ -3999,12 +3999,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2.5);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 163);
+                  assert.strictEqual(report.maintainability, 162.615);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -4089,22 +4089,22 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 2);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 2);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 1);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.001);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 0.056);
                });
 
                test('aggregate has `get` Halstead operator identifier', () =>
@@ -4144,12 +4144,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 3);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -4229,27 +4229,27 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.difficulty), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.difficulty, 1.333);
                });
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 14);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 13.932);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 19);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 18.575);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.005);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 1.032);
                });
 
                test('aggregate has `set` Halstead operator identifier', () =>
@@ -4289,12 +4289,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 4);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 3.6);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 161);
+                  assert.strictEqual(report.maintainability, 161.007);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -4379,22 +4379,22 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 2);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 2);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 1);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 1);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.001);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 0.056);
                });
 
                test('aggregate has `static` Halstead operator identifier', () =>
@@ -4434,12 +4434,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 3);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -4524,22 +4524,22 @@ if (testconfig.modules['moduleES6'])
 
                test('class method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.volume), 10);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 10);
                });
 
                test('class method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.effort), 5);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 5);
                });
 
                test('class method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.003);
                });
 
                test('class method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.classes[0].methods[0].halstead.time), 0);
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 0.278);
                });
 
                test('aggregate has correct Halstead total operators', () =>
@@ -4574,12 +4574,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2.5);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 165);
+                  assert.strictEqual(report.maintainability, 165.496);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -4657,7 +4657,7 @@ if (testconfig.modules['moduleES6'])
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -4732,7 +4732,7 @@ if (testconfig.modules['moduleES6'])
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 163);
+                  assert.strictEqual(report.maintainability, 162.502);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -4857,12 +4857,12 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.001);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 0);
+                  assert.strictEqual(report.methods[0].halstead.time, 0.056);
                });
 
                test('maintainability index is correct', () =>
@@ -4937,12 +4937,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 1.667);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -5067,12 +5067,12 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.001);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 0);
+                  assert.strictEqual(report.methods[0].halstead.time, 0.056);
                });
 
                test('maintainability index is correct', () =>
@@ -5172,7 +5172,7 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 5);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 4.5);
                });
 
                test('method has correct Halstead length', () =>
@@ -5202,12 +5202,12 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.001);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 0);
+                  assert.strictEqual(report.methods[0].halstead.time, 0.056);
                });
 
                test('maintainability index is correct', () =>
@@ -5337,12 +5337,12 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.001);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 0);
+                  assert.strictEqual(report.methods[0].halstead.time, 0.056);
                });
 
                test('maintainability index is correct', () =>
@@ -5442,7 +5442,7 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 5);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 4.667);
                });
 
                test('method has correct Halstead length', () =>
@@ -5472,12 +5472,12 @@ if (testconfig.modules['moduleES6'])
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.001);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 0);
+                  assert.strictEqual(report.methods[0].halstead.time, 0.056);
                });
 
                test('maintainability index is correct', () =>
@@ -5557,7 +5557,7 @@ if (testconfig.modules['moduleES6'])
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct dependency length', () =>
@@ -5648,7 +5648,7 @@ if (testconfig.modules['moduleES6'])
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct dependency length', () =>
@@ -5763,12 +5763,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 2);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2.25);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct dependency length', () =>
@@ -5858,7 +5858,7 @@ if (testconfig.modules['moduleES6'])
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct dependency length', () =>
@@ -5948,7 +5948,7 @@ if (testconfig.modules['moduleES6'])
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct dependency length', () =>
@@ -6035,12 +6035,12 @@ if (testconfig.modules['moduleES6'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 4);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 3.571);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 171);
+                  assert.strictEqual(report.maintainability, 171);
                });
 
                test('aggregate has correct dependency length', () =>

@@ -71,12 +71,12 @@ if (testconfig.modules['moduleBabylon'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 2.889);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 121);
+                  assert.strictEqual(report.maintainability, 120.961);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -184,7 +184,7 @@ if (testconfig.modules['moduleBabylon'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 13);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 12.5);
                });
 
                test('method has correct Halstead length', () =>
@@ -199,32 +199,32 @@ if (testconfig.modules['moduleBabylon'])
 
                test('method has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.difficulty), 11);
+                  assert.strictEqual(report.methods[0].halstead.difficulty, 11.077);
                });
 
                test('method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.volume), 204);
+                  assert.strictEqual(report.methods[0].halstead.volume, 204.33);
                });
 
                test('method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.effort), 2263);
+                  assert.strictEqual(report.methods[0].halstead.effort, 2263.344);
                });
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.068);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 126);
+                  assert.strictEqual(report.methods[0].halstead.time, 125.741);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 113);
+                  assert.strictEqual(report.maintainability, 112.805);
                });
 
                test('aggregate has correct parameter count', () =>
@@ -322,7 +322,7 @@ if (testconfig.modules['moduleBabylon'])
 
                test('aggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.aggregate.halstead.difficulty), 3);
+                  assert.strictEqual(report.aggregate.halstead.difficulty, 3);
                });
 
                test('method has correct Halstead length', () =>
@@ -337,32 +337,32 @@ if (testconfig.modules['moduleBabylon'])
 
                test('method has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.difficulty), 3);
+                  assert.strictEqual(report.methods[0].halstead.difficulty, 2.5);
                });
 
                test('method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.volume), 21);
+                  assert.strictEqual(report.methods[0].halstead.volume, 20.68);
                });
 
                test('method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.effort), 52);
+                  assert.strictEqual(report.methods[0].halstead.effort, 51.699);
                });
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.bugs), 0);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.007);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(Math.round(report.methods[0].halstead.time), 3);
+                  assert.strictEqual(report.methods[0].halstead.time, 2.872);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(Math.round(report.maintainability), 158);
+                  assert.strictEqual(report.maintainability, 157.507);
                });
 
                test('aggregate has correct parameter count', () =>

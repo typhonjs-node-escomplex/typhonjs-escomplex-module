@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Defines which modules to run tests.
  *
