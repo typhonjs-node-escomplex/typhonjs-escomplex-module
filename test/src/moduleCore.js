@@ -133,22 +133,22 @@ if (testconfig.modules['moduleCore'])
 
             test('mean logical LOC is correct', () =>
             {
-               assert.strictEqual(report.loc, 1);
+               assert.strictEqual(report.methodAverage.sloc.logical, 1);
             });
 
             test('mean cyclomatic complexity is correct', () =>
             {
-               assert.strictEqual(report.cyclomatic, 1);
+               assert.strictEqual(report.methodAverage.cyclomatic, 1);
             });
 
             test('mean Halstead effort is correct', () =>
             {
-               assert.strictEqual(report.effort, 4);
+               assert.strictEqual(report.methodAverage.halstead.effort, 4);
             });
 
             test('mean parameter count is correct', () =>
             {
-               assert.strictEqual(report.params, 0);
+               assert.strictEqual(report.methodAverage.params, 0);
             });
 
             test('dependencies is correct', () =>
@@ -274,22 +274,22 @@ if (testconfig.modules['moduleCore'])
 
             test('mean logical LOC is correct', () =>
             {
-               assert.strictEqual(report.loc, 2);
+               assert.strictEqual(report.methodAverage.sloc.logical, 2);
             });
 
             test('mean cyclomatic complexity is correct', () =>
             {
-               assert.strictEqual(report.cyclomatic, 2);
+               assert.strictEqual(report.methodAverage.cyclomatic, 2);
             });
 
             test('mean Halstead effort is correct', () =>
             {
-               assert.strictEqual(report.effort, 2.377);
+               assert.strictEqual(report.methodAverage.halstead.effort, 2.377);
             });
 
             test('mean parameter count is correct', () =>
             {
-               assert.strictEqual(report.params, 0);
+               assert.strictEqual(report.methodAverage.params, 0);
             });
 
             test('dependencies is correct', () =>
@@ -2120,7 +2120,7 @@ if (testconfig.modules['moduleCore'])
             test('aggregate has correct cyclomatic complexity', () =>
             {
                const report = parser.analyze('var foo = true && false;', {});
-               assert.strictEqual(report.cyclomatic, 2);
+               assert.strictEqual(report.methodAverage.cyclomatic, 2);
             });
          });
 
@@ -2846,22 +2846,22 @@ if (testconfig.modules['moduleCore'])
 
             test('mean logical LOC is correct', () =>
             {
-               assert.strictEqual(report.loc, 4);
+               assert.strictEqual(report.methodAverage.sloc.logical, 4);
             });
 
             test('mean cyclomatic complexity is correct', () =>
             {
-               assert.strictEqual(report.cyclomatic, 2);
+               assert.strictEqual(report.methodAverage.cyclomatic, 2);
             });
 
             test('mean Halstead effort is correct', () =>
             {
-               assert.strictEqual(report.effort, 374.713);
+               assert.strictEqual(report.methodAverage.halstead.effort, 374.713);
             });
 
             test('mean parameter count is correct', () =>
             {
-               assert.strictEqual(report.params, 2);
+               assert.strictEqual(report.methodAverage.params, 2);
             });
          });
 
@@ -3002,7 +3002,7 @@ if (testconfig.modules['moduleCore'])
 
             test('mean parameter count is correct', () =>
             {
-               assert.strictEqual(report.params, 1);
+               assert.strictEqual(report.methodAverage.params, 1);
             });
          });
 
@@ -3028,7 +3028,7 @@ if (testconfig.modules['moduleCore'])
 
             test('mean parameter count is correct', () =>
             {
-               assert.strictEqual(report.params, 3.667);
+               assert.strictEqual(report.methodAverage.params, 3.667);
             });
          });
 
