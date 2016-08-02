@@ -775,7 +775,6 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct logical lines of code', () =>
                {
-console.log('!! report: ' + JSON.stringify(report));
                   assert.strictEqual(report.methodAggregate.sloc.logical, 3);
                });
 
