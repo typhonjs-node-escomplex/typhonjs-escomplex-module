@@ -77,6 +77,11 @@ if (testconfig.modules['moduleES6'])
                   assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 1);
                });
 
+               test('methodAggregate has generator function Halstead operator', () =>
+               {
+                  assert.isAtLeast(report.methodAggregate.halstead.operators.identifiers.indexOf('function*'), 0);
+               });
+
                test('methodAggregate has correct Halstead total operands', () =>
                {
                   assert.strictEqual(report.methodAggregate.halstead.operands.total, 1);
@@ -1358,9 +1363,14 @@ if (testconfig.modules['moduleES6'])
                   assert.strictEqual(report.methods[0].params, 0);
                });
 
-               test('methodAggregate has generatorfunction Halstead operator identifier', () =>
+               test('methodAggregate has generator function Halstead operator identifier', () =>
                {
-                  assert.isAtLeast(report.methodAggregate.halstead.operators.identifiers.indexOf('generatorfunction'), 0);
+                  assert.isAtLeast(report.methodAggregate.halstead.operators.identifiers.indexOf('function*'), 0);
+               });
+
+               test('methodAggregate has delegate yield function Halstead operator identifier', () =>
+               {
+                  assert.isAtLeast(report.methodAggregate.halstead.operators.identifiers.indexOf('yield*'), 0);
                });
 
                test('methodAggregate has correct Halstead total operators', () =>
@@ -2855,6 +2865,415 @@ if (testconfig.modules['moduleES6'])
                test('methodAggregate has correct parameter count', () =>
                {
                   assert.strictEqual(report.methodAggregate.params, 0);
+               });
+            });
+
+            suite('class declaration w/ computed generator function method and computed delegated yield:', () =>
+            {
+               let report;
+
+               setup(() =>
+               {
+                  report = parser.analyze(`class Foo { *[foo + baz]() { yield 'x'; yield* [bar.biz](); yield 'y'; } }`);
+               });
+
+               teardown(() =>
+               {
+                  report = undefined;
+               });
+
+               test('methodAggregate has correct logical lines of code', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.sloc.logical, 7);
+               });
+
+               test('methodAggregate has correct cyclomatic complexity', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+               });
+
+               test('functions has correct length', () =>
+               {
+                  assert.lengthOf(report.methods, 0);
+               });
+
+               test('class methods has correct length', () =>
+               {
+                  assert.lengthOf(report.classes[0].methods, 1);
+               });
+
+               test('class method has correct name', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].name, '<computed~foo + baz>');
+               });
+
+               test('class method has correct physical lines of code', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].sloc.physical, 1);
+               });
+
+               test('class method has correct logical lines of code', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].sloc.logical, 6);
+               });
+
+               test('class method has correct cyclomatic complexity', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].cyclomatic, 1);
+               });
+
+               test('class method has correct parameter count', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].params, 0);
+               });
+
+               test('class method has correct Halstead length', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.length, 10);
+               });
+
+               test('class method has correct Halstead vocabulary', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.vocabulary, 9);
+               });
+
+               test('class method has correct Halstead difficulty', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.difficulty, 2.5);
+               });
+
+               test('class method has correct Halstead volume', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 31.699);
+               });
+
+               test('class method has correct Halstead effort', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 79.248);
+               });
+
+               test('class method has correct Halstead bugs', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.011);
+               });
+
+               test('class method has correct Halstead time', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 4.403);
+               });
+
+               test('methodAggregate has correct Halstead total operators', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 9);
+               });
+
+               test('methodAggregate has correct Halstead distinct operators', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 8);
+               });
+
+               test('methodAggregate has correct Halstead total operands', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.operands.total, 7);
+               });
+
+               test('methodAggregate has correct Halstead distinct operands', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 7);
+               });
+
+               test('methodAggregate has correct Halstead operand identifiers', () =>
+               {
+                  assert.strictEqual(JSON.stringify(report.methodAggregate.halstead.operands.identifiers),
+                   '["Foo","foo","baz","\\"x\\"","bar","biz","\\"y\\""]');
+               });
+
+               test('methodAggregate has correct Halstead operator identifiers', () =>
+               {
+                  assert.strictEqual(JSON.stringify(report.methodAggregate.halstead.operators.identifiers),
+                   '["class","+","function*","yield","yield*","()","[]","."]');
+               });
+
+               test('methodAggregate has correct Halstead length', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.length, 16);
+               });
+
+               test('methodAggregate has correct Halstead vocabulary', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 15);
+               });
+
+               test('methodAggregate has correct Halstead difficulty', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 4);
+               });
+
+               test('maintainability index is correct', () =>
+               {
+                  assert.strictEqual(report.maintainability, 127.019);
+               });
+
+               test('methodAggregate has correct parameter count', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.params, 0);
+               });
+            });
+
+            suite('class declaration w/ computed (string) method:', () =>
+            {
+               let report;
+
+               setup(() =>
+               {
+                  report = parser.analyze(`class Foo { ['bar']() { this.baz = 1; } }`);
+               });
+
+               teardown(() =>
+               {
+                  report = undefined;
+               });
+
+               test('methodAggregate has correct logical lines of code', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.sloc.logical, 2);
+               });
+
+               test('methodAggregate has correct cyclomatic complexity', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+               });
+
+               test('functions has correct length', () =>
+               {
+                  assert.lengthOf(report.methods, 0);
+               });
+
+               test('class methods has correct length', () =>
+               {
+                  assert.lengthOf(report.classes[0].methods, 1);
+               });
+
+               test('class method has correct name', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].name, 'bar');
+               });
+
+               test('class method has correct physical lines of code', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].sloc.physical, 1);
+               });
+
+               test('class method has correct logical lines of code', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].sloc.logical, 1);
+               });
+
+               test('class method has correct cyclomatic complexity', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].cyclomatic, 1);
+               });
+
+               test('class method has correct parameter count', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].params, 0);
+               });
+
+               test('class method has correct Halstead length', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.length, 5);
+               });
+
+               test('class method has correct Halstead vocabulary', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.vocabulary, 5);
+               });
+
+               test('class method has correct Halstead difficulty', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.difficulty, 1);
+               });
+
+               test('class method has correct Halstead volume', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.volume, 11.61);
+               });
+
+               test('class method has correct Halstead effort', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.effort, 11.61);
+               });
+
+               test('class method has correct Halstead bugs', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.bugs, 0.004);
+               });
+
+               test('class method has correct Halstead time', () =>
+               {
+                  assert.strictEqual(report.classes[0].methods[0].halstead.time, 0.645);
+               });
+
+               test('methodAggregate has correct Halstead total operators', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 4);
+               });
+
+               test('methodAggregate has correct Halstead distinct operators', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 4);
+               });
+
+               test('methodAggregate has correct Halstead total operands', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.operands.total, 5);
+               });
+
+               test('methodAggregate has correct Halstead distinct operands', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 5);
+               });
+
+               test('methodAggregate has correct Halstead length', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.length, 9);
+               });
+
+               test('methodAggregate has correct Halstead vocabulary', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 9);
+               });
+
+               test('methodAggregate has correct Halstead difficulty', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 2);
+               });
+
+               test('maintainability index is correct', () =>
+               {
+                  assert.strictEqual(report.maintainability, 162.615);
+               });
+
+               test('methodAggregate has correct parameter count', () =>
+               {
+                  assert.strictEqual(report.methodAggregate.params, 0);
+               });
+            });
+
+            suite('class declaration w/ computed (variable) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze(`class Foo { [bar]() { this.baz = 1; } }`);
+                  assert.strictEqual(report.classes[0].methods[0].name, '<computed~bar>');
+               });
+            });
+
+            suite('class declaration w/ computed (2 variable concatenation) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze(`class Foo { [foo+bar]() { this.baz = 1; } }`);
+                  assert.strictEqual(report.classes[0].methods[0].name, '<computed~foo + bar>');
+               });
+            });
+
+            suite('class declaration w/ computed (3 variable concatenation) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze(`class Foo { [foo+bar+biz]() { this.baz = 1; } }`);
+                  assert.strictEqual(report.classes[0].methods[0].name, '<computed~foo + bar + biz>');
+               });
+            });
+
+            suite('class declaration w/ computed (2 variable + literal concatenation) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze(`class Foo { [foo+bar+'biz']() { this.baz = 1; } }`);
+                  assert.strictEqual(report.classes[0].methods[0].name, `<computed~foo + bar + 'biz'>`);
+               });
+            });
+
+            suite('class declaration w/ computed (2 variable + numerical concatenation) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze(`class Foo { [foo+bar+2]() { this.baz = 1; } }`);
+                  assert.strictEqual(report.classes[0].methods[0].name, `<computed~foo + bar + 2>`);
+               });
+            });
+
+            suite('class declaration w/ computed (2 variable + numerical concatenation) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze(`class Foo { [foo+bar+true]() { this.baz = 1; } }`);
+                  assert.strictEqual(report.classes[0].methods[0].name, `<computed~foo + bar + true>`);
+               });
+            });
+
+            suite('class declaration w/ computed (2 variable + null concatenation) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze(`class Foo { [foo+bar+null]() { this.baz = 1; } }`);
+                  assert.strictEqual(report.classes[0].methods[0].name, `<computed~foo + bar + null>`);
+               });
+            });
+
+            suite('class declaration w/ computed (Symbol / 2 member expression) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze(`class Foo { [Symbol.iterator]() { this.baz = 1; } }`);
+                  assert.strictEqual(report.classes[0].methods[0].name, '<computed~Symbol.iterator>');
+               });
+            });
+
+            suite('class declaration w/ computed (3 member expression) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze(`class Foo { [foo.bar.biz]() { this.baz = 1; } }`);
+                  assert.strictEqual(report.classes[0].methods[0].name, '<computed~foo.bar.biz>');
+               });
+            });
+
+            suite('class declaration w/ computed (2 member expression + concatenation) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze(`class Foo { [foo.bar+biz]() { this.baz = 1; } }`);
+                  assert.strictEqual(report.classes[0].methods[0].name, '<computed~foo.bar + biz>');
+               });
+            });
+
+            suite('class declaration w/ computed (2 member expression + concatenation with method called) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze(`class Foo { [foo.bar+biz.toLowerCase()]() { this.baz = 1; } }`);
+                  assert.strictEqual(report.classes[0].methods[0].name, '<computed~foo.bar + biz.toLowerCase()>');
+               });
+            });
+
+            suite('class declaration w/ computed (template literal) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze('class Foo { [`${foo}`]() { this.baz = 1; } }');
+                  assert.strictEqual(report.classes[0].methods[0].name, '<computed~`${foo}`>');
+               });
+            });
+
+            suite('class declaration w/ computed (template literal + concatenation) method:', () =>
+            {
+               test('class method has correct name', () =>
+               {
+                  const report = parser.analyze('class Foo { [`${foo}`+bar]() { this.baz = 1; } }');
+                  assert.strictEqual(report.classes[0].methods[0].name, '<computed~`${foo}` + bar>');
                });
             });
 
