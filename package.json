@@ -1,6 +1,6 @@
 {
   "name": "typhonjs-escomplex-module",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "Provides module / individual file oriented AST processing for typhonjs-escomplex complexity reports.",
   "homepage": "https://github.com/typhonjs-node-escomplex/typhonjs-escomplex-module",
   "license": "MPL-2.0",
@@ -20,10 +20,10 @@
     }
   ],
   "dependencies": {
-    "escomplex-plugin-metrics-module": "^0.0.9",
-    "escomplex-plugin-syntax-babylon": "^0.0.9",
+    "escomplex-plugin-metrics-module": "^0.0.10",
+    "escomplex-plugin-syntax-babylon": "^0.0.10",
     "typhonjs-ast-walker": "^0.1.0",
-    "typhonjs-escomplex-commons": "^0.0.13",
+    "typhonjs-escomplex-commons": "^0.0.14",
     "typhonjs-plugin-manager": "^0.0.3"
   },
   "devDependencies": {
@@ -36,7 +36,7 @@
   },
   "scripts": {
     "build": "babel-node ./node_modules/typhonjs-npm-scripts-build-babel/scripts/build.js",
-    "build-syntax": "babel ./node_modules/typhonjs-escomplex-commons/src -d ./node_modules/typhonjs-escomplex-commons/dist && babel ./node_modules/escomplex-plugin-metrics-module/src -d ./node_modules/escomplex-plugin-metrics-module/dist && babel ./node_modules/escomplex-plugin-syntax-estree/src -d ./node_modules/escomplex-plugin-syntax-estree/dist && babel ./node_modules/typhonjs-plugin-manager/src -d ./node_modules/typhonjs-plugin-manager/dist",
+    "build-syntax": "babel ./node_modules/typhonjs-escomplex-commons/src -d ./node_modules/typhonjs-escomplex-commons/dist && babel ./node_modules/escomplex-plugin-metrics-module/src -d ./node_modules/escomplex-plugin-metrics-module/dist && babel ./node_modules/escomplex-plugin-syntax-estree/src -d ./node_modules/escomplex-plugin-syntax-estree/dist && babel ./node_modules/escomplex-plugin-syntax-babylon/src -d ./node_modules/escomplex-plugin-syntax-babylon/dist && babel ./node_modules/typhonjs-plugin-manager/src -d ./node_modules/typhonjs-plugin-manager/dist",
     "esdoc": "esdoc -c .esdocrc",
     "eslint": "eslint .",
     "prepublish": "babel-node ./node_modules/typhonjs-npm-scripts-publish/scripts/prepublish.js",
