@@ -10,12 +10,12 @@
 [![Coverage](https://img.shields.io/codecov/c/github/typhonjs-node-escomplex/typhonjs-escomplex-module.svg)](https://codecov.io/github/typhonjs-node-escomplex/typhonjs-escomplex-module)
 [![Dependency Status](https://www.versioneye.com/user/projects/575ddc4a7757a00034dc5438/badge.svg?style=flat)](https://www.versioneye.com/user/projects/575ddc4a7757a00034dc5438)
 
-Provides module / individual file oriented AST processing for typhonjs-escomplex complexity reports. The following JS AST generators are supported / tested: [acorn](https://www.npmjs.com/package/acorn), [babylon](https://www.npmjs.com/package/babylon), [espree](https://www.npmjs.com/package/espree), [esprima](https://www.npmjs.com/package/esprima). Any compliant JS parser that supports Babylon or ESTree AST should work as well. 
+Provides module / individual file oriented AST processing for typhonjs-escomplex complexity reports. The following JS AST generators are supported / tested: [acorn](https://www.npmjs.com/package/acorn), [babylon](https://www.npmjs.com/package/babylon), [espree](https://www.npmjs.com/package/espree), [esprima](https://www.npmjs.com/package/esprima). Any compliant JS parser that supports Babylon or ESTree AST should work as well.
 
 More information forthcoming. This NPM module can be installed as a dependency in `package.json` as follows:
 ```
 "dependencies": {
-  "typhonjs-escomplex-module": "^0.0.4"
+  "typhonjs-escomplex-module": "^0.0.9"
 }
 ```
 
