@@ -1590,6 +1590,124 @@ if (testconfig.modules['moduleCore'])
             });
          });
 
+         suite('member expression computed (literal)', () =>
+         {
+            let report;
+
+            setup(() =>
+            {
+               report = parser.analyze('var foo = this["bar"];');
+            });
+
+            teardown(() =>
+            {
+               report = undefined;
+            });
+
+            test('methodAggregate has correct logical lines of code', () =>
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 1);
+            });
+
+            test('methodAggregate has correct cyclomatic complexity', () =>
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+
+            test('methodAggregate has correct Halstead total operators', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 4);
+            });
+
+            test('methodAggregate has correct Halstead distinct operators', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 4);
+            });
+
+            test('methodAggregate has correct Halstead total operands', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 2);
+            });
+
+            test('methodAggregate has correct Halstead distinct operands', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 2);
+            });
+
+            test('methodAggregate has correct Halstead operator identifier `[]`', () =>
+            {
+               assert.isAtLeast(report.methodAggregate.halstead.operators.identifiers.indexOf('[]'), 0);
+            });
+
+            test('methodAggregate does not have Halstead operator identifier `.`', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.identifiers.indexOf('.'), -1);
+            });
+         });
+
+         suite('member expression computed (binary expression)', () =>
+         {
+            let report;
+
+            setup(() =>
+            {
+               report = parser.analyze('var foo = this[bar + biz + baz];');
+            });
+
+            teardown(() =>
+            {
+               report = undefined;
+            });
+
+            test('methodAggregate has correct logical lines of code', () =>
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 1);
+            });
+
+            test('methodAggregate has correct cyclomatic complexity', () =>
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+
+            test('methodAggregate has correct Halstead total operators', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 6);
+            });
+
+            test('methodAggregate has correct Halstead distinct operators', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 5);
+            });
+
+            test('methodAggregate has correct Halstead total operands', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test('methodAggregate has correct Halstead distinct operands', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 4);
+            });
+
+            test('methodAggregate has correct Halstead operator identifier `[]`', () =>
+            {
+               assert.isAtLeast(report.methodAggregate.halstead.operators.identifiers.indexOf('[]'), 0);
+               assert.isAtLeast(report.methodAggregate.halstead.operators.identifiers.indexOf('+'), 0);
+            });
+
+            test('methodAggregate does not have Halstead operator identifier `.`', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.identifiers.indexOf('.'), -1);
+            });
+
+            test('methodAggregate has correct Halstead operand identifier `bar, biz, baz`', () =>
+            {
+               assert.isAtLeast(report.methodAggregate.halstead.operands.identifiers.indexOf('bar'), 0);
+               assert.isAtLeast(report.methodAggregate.halstead.operands.identifiers.indexOf('biz'), 0);
+               assert.isAtLeast(report.methodAggregate.halstead.operands.identifiers.indexOf('baz'), 0);
+            });
+         });
+
          suite('ternary condtional expression assigned to variable:', () =>
          {
             let report;
