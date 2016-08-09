@@ -2715,12 +2715,12 @@ if (testconfig.modules['moduleCore'])
 
             test('methodAggregate has correct Halstead total operators', () =>
             {
-               assert.strictEqual(report.methodAggregate.halstead.operators.total, 1);
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 2);
             });
 
             test('methodAggregate has correct Halstead distinct operators', () =>
             {
-               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 1);
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
             });
 
             test('methodAggregate has correct Halstead total operands', () =>
@@ -2804,7 +2804,7 @@ if (testconfig.modules['moduleCore'])
 
             test('maintainability index is correct', () =>
             {
-               assert.strictEqual(report.maintainability, 146.532);
+               assert.strictEqual(report.maintainability, 145.177);
             });
          });
 

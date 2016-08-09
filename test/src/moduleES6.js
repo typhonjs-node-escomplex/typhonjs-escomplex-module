@@ -192,12 +192,12 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead total operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 5);
                });
 
                test('methodAggregate has correct Halstead distinct operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 4);
                });
 
                test('methodAggregate has correct Halstead total operands', () =>
@@ -212,22 +212,22 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead length', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.length, 7);
+                  assert.strictEqual(report.methodAggregate.halstead.length, 9);
                });
 
                test('methodAggregate has correct Halstead vocabulary', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 7);
+                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 8);
                });
 
                test('methodAggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 1.5);
+                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 2);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(report.maintainability, 148.199);
+                  assert.strictEqual(report.maintainability, 146.129);
                });
 
                test('methodAggregate has correct parameter count', () =>
@@ -720,12 +720,12 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead total operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 7);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 11);
                });
 
                test('methodAggregate has correct Halstead distinct operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 4);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 5);
                });
 
                test('methodAggregate has correct Halstead total operands', () =>
@@ -740,22 +740,22 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead length', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.length, 15);
+                  assert.strictEqual(report.methodAggregate.halstead.length, 19);
                });
 
                test('methodAggregate has correct Halstead vocabulary', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 11);
+                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 12);
                });
 
                test('methodAggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 2.286);
+                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 2.857);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(report.maintainability, 143.438);
+                  assert.strictEqual(report.maintainability, 141.744);
                });
 
                test('methodAggregate has correct parameter count', () =>
@@ -825,12 +825,12 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead total operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 8);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 10);
                });
 
                test('methodAggregate has correct Halstead distinct operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 6);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 7);
                });
 
                test('methodAggregate has correct Halstead total operands', () =>
@@ -845,17 +845,17 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead length', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.length, 18);
+                  assert.strictEqual(report.methodAggregate.halstead.length, 20);
                });
 
                test('methodAggregate has correct Halstead vocabulary', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 14);
+                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 15);
                });
 
                test('methodAggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 3.75);
+                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 4.375);
                });
 
                test('method has correct Halstead length', () =>
@@ -1375,12 +1375,12 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead total operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 5);
                });
 
                test('methodAggregate has correct Halstead distinct operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 4);
                });
 
                test('methodAggregate has correct Halstead total operands', () =>
@@ -1395,57 +1395,57 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead length', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.length, 7);
+                  assert.strictEqual(report.methodAggregate.halstead.length, 9);
                });
 
                test('methodAggregate has correct Halstead vocabulary', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 7);
+                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 8);
                });
 
                test('methodAggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 1.5);
+                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 2);
                });
 
                test('method has correct Halstead length', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.length, 5);
+                  assert.strictEqual(report.methods[0].halstead.length, 7);
                });
 
                test('method has correct Halstead vocabulary', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.vocabulary, 5);
+                  assert.strictEqual(report.methods[0].halstead.vocabulary, 6);
                });
 
                test('method has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.difficulty, 1);
+                  assert.strictEqual(report.methods[0].halstead.difficulty, 1.5);
                });
 
                test('method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.volume, 11.61);
+                  assert.strictEqual(report.methods[0].halstead.volume, 18.095);
                });
 
                test('method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.effort, 11.61);
+                  assert.strictEqual(report.methods[0].halstead.effort, 27.142);
                });
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.bugs, 0.004);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.006);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.time, 0.645);
+                  assert.strictEqual(report.methods[0].halstead.time, 1.508);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(report.maintainability, 151.386);
+                  assert.strictEqual(report.maintainability, 148.481);
                });
 
                test('methodAggregate has correct parameter count', () =>
@@ -2096,12 +2096,12 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead total operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 6);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 7);
                });
 
                test('methodAggregate has correct Halstead distinct operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 4);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 5);
                });
 
                test('methodAggregate has correct Halstead total operands', () =>
@@ -2116,22 +2116,22 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead length', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.length, 12);
+                  assert.strictEqual(report.methodAggregate.halstead.length, 13);
                });
 
                test('methodAggregate has correct Halstead vocabulary', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 9);
+                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 10);
                });
 
                test('methodAggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 2.4);
+                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 3);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(report.maintainability, 144.333);
+                  assert.strictEqual(report.maintainability, 143.136);
                });
 
                test('methodAggregate has correct parameter count', () =>
@@ -2171,12 +2171,12 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead total operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 4);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 5);
                });
 
                test('methodAggregate has correct Halstead distinct operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 4);
                });
 
                test('methodAggregate has correct Halstead total operands', () =>
@@ -2191,22 +2191,22 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead length', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.length, 8);
+                  assert.strictEqual(report.methodAggregate.halstead.length, 9);
                });
 
                test('methodAggregate has correct Halstead vocabulary', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 7);
+                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 8);
                });
 
                test('methodAggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 1.5);
+                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 2);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(report.maintainability, 158.971);
+                  assert.strictEqual(report.maintainability, 157.358);
                });
 
                test('methodAggregate has correct parameter count', () =>
@@ -2251,12 +2251,12 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead total operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 5);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.total, 9);
                });
 
                test('methodAggregate has correct Halstead distinct operators', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 4);
+                  assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 5);
                });
 
                test('methodAggregate has correct Halstead total operands', () =>
@@ -2271,22 +2271,22 @@ if (testconfig.modules['moduleES6'])
 
                test('methodAggregate has correct Halstead length', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.length, 13);
+                  assert.strictEqual(report.methodAggregate.halstead.length, 17);
                });
 
                test('methodAggregate has correct Halstead vocabulary', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 12);
+                  assert.strictEqual(report.methodAggregate.halstead.vocabulary, 13);
                });
 
                test('methodAggregate has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 2);
+                  assert.strictEqual(report.methodAggregate.halstead.difficulty, 2.5);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(report.maintainability, 155.491);
+                  assert.strictEqual(report.maintainability, 153.702);
                });
 
                test('methodAggregate has correct parameter count', () =>
