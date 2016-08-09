@@ -2344,22 +2344,22 @@ if (testconfig.modules['moduleCore'])
 
             test('methodAggregate has correct Halstead total operators', () =>
             {
-               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 4);
             });
 
             test('methodAggregate has correct Halstead distinct operators', () =>
             {
-               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 4);
             });
 
             test('methodAggregate has correct Halstead total operands', () =>
             {
-               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
             });
 
             test('methodAggregate has correct Halstead distinct operands', () =>
             {
-               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 4);
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
             });
          });
 
