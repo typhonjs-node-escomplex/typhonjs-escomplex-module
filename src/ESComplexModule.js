@@ -52,9 +52,9 @@ export default class ESComplexModule
 
       const syntaxes = this._plugins.onLoadSyntax(settings);
 
-      const report = this._plugins.onModuleStart(ast, syntaxes, settings);
+      const moduleReport = this._plugins.onModuleStart(ast, syntaxes, settings);
 
-      const scopeControl = new ModuleScopeControl(report);
+      const scopeControl = new ModuleScopeControl(moduleReport);
 
       // Completely traverse the provided AST and defer to plugins to process node traversal.
       new ASTWalker().traverse(ast,
@@ -74,7 +74,8 @@ export default class ESComplexModule
                }
             }
 
-            ignoreKeys = this._plugins.onEnterNode(report, scopeControl, ignoreKeys, syntaxes, settings, node, parent);
+            ignoreKeys = this._plugins.onEnterNode(moduleReport, scopeControl, ignoreKeys, syntaxes, settings, node,
+             parent);
 
             // Process node syntax / create scope.
             if (typeof syntax === 'object')
@@ -91,7 +92,7 @@ export default class ESComplexModule
                   if (newScope)
                   {
                      scopeControl.createScope(newScope);
-                     this._plugins.onScopeCreated(report, scopeControl, newScope);
+                     this._plugins.onScopeCreated(moduleReport, scopeControl, newScope);
                   }
                }
             }
@@ -111,17 +112,17 @@ export default class ESComplexModule
                if (newScope)
                {
                   scopeControl.popScope(newScope);
-                  this._plugins.onScopePopped(report, scopeControl, newScope);
+                  this._plugins.onScopePopped(moduleReport, scopeControl, newScope);
                }
             }
 
-            return this._plugins.onExitNode(report, scopeControl, syntaxes, settings, node, parent);
+            return this._plugins.onExitNode(moduleReport, scopeControl, syntaxes, settings, node, parent);
          }
       });
 
-      this._plugins.onModuleEnd(report, syntaxes, settings);
+      this._plugins.onModuleEnd(moduleReport, syntaxes, settings);
 
-      return report.finalize();
+      return moduleReport.finalize();
    }
 
    // Asynchronous Promise based methods ----------------------------------------------------------------------------
