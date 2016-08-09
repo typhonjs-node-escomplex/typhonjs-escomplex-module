@@ -59,28 +59,37 @@ export default class Plugins
    /**
     * Invokes the `onEnterNode` plugin callback during AST traversal when a node is entered.
     *
-    * @param {ModuleReport}   report - The ModuleReport being processed.
-    * @param {object}         node - The node being entered.
-    * @param {object}         parent - The parent node of the node being entered.
+    * @param {ModuleReport}         report - The ModuleReport being processed.
+    * @param {ModuleScopeControl}   scopeControl - The associated module report scope control.
+    * @param {Array<string>}        ignoreKeys - Any syntax assigned ignore keys for AST traversal.
+    * @param {object}               syntaxes - All loaded trait syntaxes for AST nodes.
+    * @param {object}               settings - Settings for module processing.
+    * @param {object}               node - The node being entered.
+    * @param {object}               parent - The parent node of the node being entered.
     *
     * @returns {Array<string>|null} - A directive indicating children keys to be skipped or if null all keys entirely.
     */
-   onEnterNode(report, node, parent)
+   onEnterNode(report, scopeControl, ignoreKeys, syntaxes, settings, node, parent)
    {
-      const event = this._pluginManager.invoke('onEnterNode', { report, node, parent }, false);
+      const event = this._pluginManager.invoke('onEnterNode',
+       { report, scopeControl, ignoreKeys, syntaxes, settings, node, parent }, false);
+
       return event !== null ? event.data.ignoreKeys : [];
    }
 
    /**
     * Invokes the `onExitNode` plugin callback during AST traversal when a node is exited.
     *
-    * @param {ModuleReport}   report - The ModuleReport being processed.
-    * @param {object}         node - The node being entered.
-    * @param {object}         parent - The parent node of the node being entered.
+    * @param {ModuleReport}         report - The ModuleReport being processed.
+    * @param {ModuleScopeControl}   scopeControl - The associated module report scope control.
+    * @param {object}               syntaxes - All loaded trait syntaxes for AST nodes.
+    * @param {object}               settings - Settings for module processing.
+    * @param {object}               node - The node being entered.
+    * @param {object}               parent - The parent node of the node being entered.
     */
-   onExitNode(report, node, parent)
+   onExitNode(report, scopeControl, syntaxes, settings, node, parent)
    {
-      this._pluginManager.invoke('onExitNode', { report, node, parent }, false);
+      this._pluginManager.invoke('onExitNode', { report, scopeControl, syntaxes, settings, node, parent }, false);
    }
 
    /**
@@ -119,12 +128,48 @@ export default class Plugins
     * Invokes the `onModuleEnd` plugin callback for all loaded plugins such they might finish calculating results.
     *
     * @param {ModuleReport}   report - The ModuleReport being processed.
+    * @param {object}         syntaxes - All loaded trait syntaxes for AST nodes.
+    * @param {object}         settings - Settings for module processing.
     *
     * @returns {ModuleReport} - The ModuleReport being processed.
     */
-   onModuleEnd(report)
+   onModuleEnd(report, syntaxes, settings)
    {
-      this._pluginManager.invoke('onModuleEnd', { report }, false);
+      this._pluginManager.invoke('onModuleEnd', { report, syntaxes, settings }, false);
       return report;
+   }
+
+   /**
+    * Invokes the `onScopeCreated` plugin callback during AST traversal when a new module report scope is created.
+    *
+    * @param {ModuleReport}         report - The ModuleReport being processed.
+    * @param {ModuleScopeControl}   scopeControl - The associated module report scope control.
+    * @param {object}               newScope - An object hash defining the new scope including:
+    * ```
+    * (string) type - Type of report to create.
+    * (string) name - Name of the class or method.
+    * (number) lineStart - Start line of method.
+    * (number) lineEnd - End line of method.
+    * (number) paramCount - (For method scopes) Number of parameters for method.
+    * ```
+    */
+   onScopeCreated(report, scopeControl, newScope)
+   {
+      this._pluginManager.invoke('onScopeCreated', { report, scopeControl, newScope }, false);
+   }
+
+   /**
+    * Invokes the `onScopePopped` plugin callback during AST traversal when a module report scope is popped / exited.
+    *
+    * @param {ModuleReport}         report - The ModuleReport being processed.
+    * @param {ModuleScopeControl}   scopeControl - The associated module report scope control.
+    * @param {object}               scope - An object hash defining the new scope including:
+    * ```
+    * (string) type - Type of report to create.
+    * ```
+    */
+   onScopePopped(report, scopeControl, scope)
+   {
+      this._pluginManager.invoke('onScopePopped', { report, scopeControl, scope }, false);
    }
 }

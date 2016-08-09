@@ -1,6 +1,7 @@
-import ASTWalker  from 'typhonjs-ast-walker/src/ASTWalker';
+import ASTWalker           from 'typhonjs-ast-walker/src/ASTWalker';
+import ModuleScopeControl  from 'typhonjs-escomplex-commons/src/module/report/control/ModuleScopeControl';
 
-import Plugins    from './Plugins';
+import Plugins             from './Plugins';
 
 /**
  * Provides a runtime to invoke ESComplexModule plugins for processing / metrics calculations of independent modules.
@@ -53,14 +54,72 @@ export default class ESComplexModule
 
       const report = this._plugins.onModuleStart(ast, syntaxes, settings);
 
+      const scopeControl = new ModuleScopeControl(report);
+
       // Completely traverse the provided AST and defer to plugins to process node traversal.
       new ASTWalker().traverse(ast,
       {
-         enterNode: (node, parent) => { return this._plugins.onEnterNode(report, node, parent); },
-         exitNode: (node, parent) => { return this._plugins.onExitNode(report, node, parent); }
+         enterNode: (node, parent) =>
+         {
+            const syntax = syntaxes[node.type];
+
+            let ignoreKeys = [];
+
+            // Process node syntax / ignore keys.
+            if (typeof syntax === 'object')
+            {
+               if (syntax.ignoreKeys)
+               {
+                  ignoreKeys = syntax.ignoreKeys.valueOf(node, parent);
+               }
+            }
+
+            ignoreKeys = this._plugins.onEnterNode(report, scopeControl, ignoreKeys, syntaxes, settings, node, parent);
+
+            // Process node syntax / create scope.
+            if (typeof syntax === 'object')
+            {
+               if (syntax.ignoreKeys)
+               {
+                  ignoreKeys = syntax.ignoreKeys.valueOf(node, parent);
+               }
+
+               if (syntax.newScope)
+               {
+                  const newScope = syntax.newScope.valueOf(node, parent);
+
+                  if (newScope)
+                  {
+                     scopeControl.createScope(newScope);
+                     this._plugins.onScopeCreated(report, scopeControl, newScope);
+                  }
+               }
+            }
+
+            return ignoreKeys;
+         },
+
+         exitNode: (node, parent) =>
+         {
+            const syntax = syntaxes[node.type];
+
+            // Process node syntax / pop scope.
+            if (typeof syntax === 'object' && syntax.newScope)
+            {
+               const newScope = syntax.newScope.valueOf(node, parent);
+
+               if (newScope)
+               {
+                  scopeControl.popScope(newScope);
+                  this._plugins.onScopePopped(report, scopeControl, newScope);
+               }
+            }
+
+            return this._plugins.onExitNode(report, scopeControl, syntaxes, settings, node, parent);
+         }
       });
 
-      this._plugins.onModuleEnd(report);
+      this._plugins.onModuleEnd(report, syntaxes, settings);
 
       return report.finalize();
    }
