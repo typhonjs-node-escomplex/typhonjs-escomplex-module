@@ -92,7 +92,7 @@ export default class ESComplexModule
                   if (newScope)
                   {
                      scopeControl.createScope(newScope);
-                     this._plugins.onScopeCreated(moduleReport, scopeControl, newScope);
+                     this._plugins.onModuleScopeCreated(moduleReport, scopeControl, newScope);
                   }
                }
             }
@@ -112,7 +112,7 @@ export default class ESComplexModule
                if (newScope)
                {
                   scopeControl.popScope(newScope);
-                  this._plugins.onScopePopped(moduleReport, scopeControl, newScope);
+                  this._plugins.onModuleScopePopped(moduleReport, scopeControl, newScope);
                }
             }
 
@@ -120,6 +120,16 @@ export default class ESComplexModule
          }
       });
 
+      // Allow all plugins to have a calculation pass at the module report.
+      this._plugins.onModuleCalculate(moduleReport, syntaxes, settings);
+
+      // Allow all plugins to have a pass at the module report to calculate any averaged data.
+      this._plugins.onModuleAverage(moduleReport, syntaxes, settings);
+
+      // Allow all plugins to have a pass at the module report to calculate any metrics that depend on averaged data.
+      this._plugins.onModulePostAverage(moduleReport, syntaxes, settings);
+
+      // Allow all plugins to clean up any resources as necessary.
       this._plugins.onModuleEnd(moduleReport, syntaxes, settings);
 
       return moduleReport.finalize();

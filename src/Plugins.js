@@ -126,7 +126,38 @@ export default class Plugins
    }
 
    /**
-    * Invokes the `onModuleEnd` plugin callback for all loaded plugins such they might finish calculating results.
+    * Invokes the `onModuleAverage` plugin callback for all loaded plugins such they might average any calculated
+    * results.
+    *
+    * @param {ModuleReport}   moduleReport - The ModuleReport being processed.
+    * @param {object}         syntaxes - All loaded trait syntaxes for AST nodes.
+    * @param {object}         settings - Settings for module processing.
+    *
+    * @returns {ModuleReport} - The ModuleReport being processed.
+    */
+   onModuleAverage(moduleReport, syntaxes, settings)
+   {
+      this._pluginManager.invoke('onModuleAverage', { moduleReport, syntaxes, settings }, false);
+      return moduleReport;
+   }
+
+   /**
+    * Invokes the `onModuleCalculate` plugin callback for all loaded plugins such they might finish calculating results.
+    *
+    * @param {ModuleReport}   moduleReport - The ModuleReport being processed.
+    * @param {object}         syntaxes - All loaded trait syntaxes for AST nodes.
+    * @param {object}         settings - Settings for module processing.
+    *
+    * @returns {ModuleReport} - The ModuleReport being processed.
+    */
+   onModuleCalculate(moduleReport, syntaxes, settings)
+   {
+      this._pluginManager.invoke('onModuleCalculate', { moduleReport, syntaxes, settings }, false);
+      return moduleReport;
+   }
+
+   /**
+    * Invokes the `onModuleEnd` plugin callback for all loaded plugins at the end of module processing.
     *
     * @param {ModuleReport}   moduleReport - The ModuleReport being processed.
     * @param {object}         syntaxes - All loaded trait syntaxes for AST nodes.
@@ -141,7 +172,23 @@ export default class Plugins
    }
 
    /**
-    * Invokes the `onScopeCreated` plugin callback during AST traversal when a new module report scope is created.
+    * Invokes the `onModulePostAverage` plugin callback for all loaded plugins such they might finish any calculations
+    * that involve averaged results.
+    *
+    * @param {ModuleReport}   moduleReport - The ModuleReport being processed.
+    * @param {object}         syntaxes - All loaded trait syntaxes for AST nodes.
+    * @param {object}         settings - Settings for module processing.
+    *
+    * @returns {ModuleReport} - The ModuleReport being processed.
+    */
+   onModulePostAverage(moduleReport, syntaxes, settings)
+   {
+      this._pluginManager.invoke('onModulePostAverage', { moduleReport, syntaxes, settings }, false);
+      return moduleReport;
+   }
+
+   /**
+    * Invokes the `onModuleScopeCreated` plugin callback during AST traversal when a new module report scope is created.
     *
     * @param {ModuleReport}         moduleReport - The ModuleReport being processed.
     * @param {ModuleScopeControl}   scopeControl - The associated module report scope control.
@@ -154,13 +201,14 @@ export default class Plugins
     * (number) paramCount - (For method scopes) Number of parameters for method.
     * ```
     */
-   onScopeCreated(moduleReport, scopeControl, newScope)
+   onModuleScopeCreated(moduleReport, scopeControl, newScope)
    {
-      this._pluginManager.invoke('onScopeCreated', { moduleReport, scopeControl, newScope }, false);
+      this._pluginManager.invoke('onModuleScopeCreated', { moduleReport, scopeControl, newScope }, false);
    }
 
    /**
-    * Invokes the `onScopePopped` plugin callback during AST traversal when a module report scope is popped / exited.
+    * Invokes the `onModuleScopePopped` plugin callback during AST traversal when a module report scope is
+    * popped / exited.
     *
     * @param {ModuleReport}         moduleReport - The ModuleReport being processed.
     * @param {ModuleScopeControl}   scopeControl - The associated module report scope control.
@@ -169,8 +217,8 @@ export default class Plugins
     * (string) type - Type of report to pop.
     * ```
     */
-   onScopePopped(moduleReport, scopeControl, scope)
+   onModuleScopePopped(moduleReport, scopeControl, scope)
    {
-      this._pluginManager.invoke('onScopePopped', { moduleReport, scopeControl, scope }, false);
+      this._pluginManager.invoke('onModuleScopePopped', { moduleReport, scopeControl, scope }, false);
    }
 }
