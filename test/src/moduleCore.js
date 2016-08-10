@@ -1708,6 +1708,86 @@ if (testconfig.modules['moduleCore'])
             });
          });
 
+         suite('regexp expression', () =>
+         {
+            let report;
+
+            setup(() =>
+            {
+               report = parser.analyze('var foo = /bar/g;');
+            });
+
+            teardown(() =>
+            {
+               report = undefined;
+            });
+
+            test('methodAggregate has correct logical lines of code', () =>
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 1);
+            });
+
+            test('methodAggregate has correct cyclomatic complexity', () =>
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+
+            test('functions has correct length', () =>
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test('methodAggregate has correct Halstead total operators', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 2);
+            });
+
+            test('methodAggregate has correct Halstead distinct operators', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test('methodAggregate has correct Halstead total operands', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 2);
+            });
+
+            test('methodAggregate has correct Halstead distinct operands', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 2);
+            });
+
+            test('methodAggregate has regex operand identifier', () =>
+            {
+               assert.isAtLeast(report.methodAggregate.halstead.operands.identifiers.indexOf('/bar/g'), 0);
+            });
+
+            test('methodAggregate has correct Halstead length', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.length, 4);
+            });
+
+            test('methodAggregate has correct Halstead vocabulary', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.vocabulary, 4);
+            });
+
+            test('methodAggregate has correct Halstead difficulty', () =>
+            {
+               assert.strictEqual(report.methodAggregate.halstead.difficulty, 1);
+            });
+
+            test('maintainability index is correct', () =>
+            {
+               assert.strictEqual(report.maintainability, 163.888);
+            });
+
+            test('methodAggregate has correct parameter count', () =>
+            {
+               assert.strictEqual(report.methodAggregate.params, 0);
+            });
+         });
+
          suite('ternary condtional expression assigned to variable:', () =>
          {
             let report;
