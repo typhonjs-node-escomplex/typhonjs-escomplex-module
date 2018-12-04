@@ -63,16 +63,9 @@ export default class ESComplexModule
          {
             const syntax = syntaxes[node.type];
 
-            let ignoreKeys = [];
-
             // Process node syntax / ignore keys.
-            if (typeof syntax === 'object')
-            {
-               if (syntax.ignoreKeys)
-               {
-                  ignoreKeys = syntax.ignoreKeys.valueOf(node, parent);
-               }
-            }
+            let ignoreKeys = typeof syntax === 'object' && syntax.ignoreKeys ?
+             syntax.ignoreKeys.valueOf(node, parent) : [];
 
             ignoreKeys = this._plugins.onEnterNode(moduleReport, scopeControl, ignoreKeys, syntaxes, settings, node,
              parent);
@@ -80,19 +73,19 @@ export default class ESComplexModule
             // Process node syntax / create scope.
             if (typeof syntax === 'object')
             {
-               if (syntax.ignoreKeys)
-               {
-                  ignoreKeys = syntax.ignoreKeys.valueOf(node, parent);
-               }
-
                if (syntax.newScope)
                {
                   const newScope = syntax.newScope.valueOf(node, parent);
 
                   if (newScope)
                   {
+                     this._plugins.onModulePreScopeCreated(moduleReport, scopeControl, newScope, settings, node,
+                      parent);
+
                      scopeControl.createScope(newScope);
-                     this._plugins.onModuleScopeCreated(moduleReport, scopeControl, newScope);
+
+                     this._plugins.onModulePostScopeCreated(moduleReport, scopeControl, newScope, settings, node,
+                      parent);
                   }
                }
             }
@@ -111,8 +104,11 @@ export default class ESComplexModule
 
                if (newScope)
                {
+                  this._plugins.onModulePreScopePopped(moduleReport, scopeControl, newScope, settings, node, parent);
+
                   scopeControl.popScope(newScope);
-                  this._plugins.onModuleScopePopped(moduleReport, scopeControl, newScope);
+
+                  this._plugins.onModulePostScopePopped(moduleReport, scopeControl, newScope, settings, node, parent);
                }
             }
 

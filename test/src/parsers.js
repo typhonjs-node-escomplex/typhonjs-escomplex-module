@@ -1,6 +1,5 @@
-'use strict';
-
 import * as acorn       from 'acorn';
+import * as babelParser from '@babel/parser';
 import * as babylon     from 'babylon';
 import * as espree      from 'espree';
 import * as esprima     from 'esprima';
@@ -12,6 +11,26 @@ import escomplex        from '../../src';
 const esmRegex = /(^\s*|[}\);\n]\s*)(import\s*(['"]|(\*\s+as\s+)?[^"'\(\)\n;]+\s*from\s*['"]|\{)|export\s+\*\s+from\s+["']|export\s* (\{|default|function|class|var|const|let|async\s+function))/;
 
 const acornOptions = { locations: true };
+
+/**
+ * Default babel parser options applying most available plugins.
+ *
+ * Caveats include:
+ * - that both decorators and decorators-legacy can not be used simultaneously.
+ * - that both 'flow' and 'typescript' can not be used simultaneously
+ *
+ * @type {{plugins: string[]}}
+ * @ignore
+ */
+const s_BABELPARSER_OPTIONS =
+{
+   plugins: ['asyncGenerators', 'bigInt', 'classProperties', 'classPrivateProperties', 'classPrivateMethods',
+    ['decorators', { decoratorsBeforeExport: false }], 'doExpressions', 'dynamicImport',
+     'exportDefaultFrom', 'exportNamespaceFrom',  'functionBind', 'functionSent', 'importMeta',
+      'jsx', 'logicalAssignment', 'nullishCoalescingOperator', 'numericSeparator', 'objectRestSpread',
+       'optionalCatchBinding', 'optionalChaining', ['pipelineOperator', { proposal: 'minimal' }], 'throwExpressions',
+        'typescript']
+};
 
 const babylonOptions =
 {
@@ -52,6 +71,28 @@ if (testconfig.parsers.acorn)
          options.sourceType = esmRegex.test(code) ? 'module' : 'script';
          const ast = acorn.parse(code, options);
          log(`!! (acorn): parse - ast: ${JSON.stringify(ast)}`);
+         return ast;
+      }
+   });
+}
+
+if (testconfig.parsers.babelParser)
+{
+   parsers.push(
+   {
+      analyze: function(code, options, parserOptions)
+      {
+         const report = escomplex.analyze(this.parse(code, parserOptions), options);
+         log(`!! (babelParser): analyze - report: ${JSON.stringify(report)}`);
+         return report;
+      },
+      name: 'babelParser',
+      parse: function(code, options)
+      {
+         options = typeof options === 'object' ? options : s_BABELPARSER_OPTIONS;
+         options.sourceType = typeof options.sourceType === 'string' ? options.sourceType : 'unambiguous';
+         const ast = babelParser.parse(code, options);
+         log(`!! (babelParser): parse - ast: ${JSON.stringify(ast)}`);
          return ast;
       }
    });

@@ -1,18 +1,46 @@
 {
-  "presets": ["es2015"],
-  "plugins":
-  [
-    "add-module-exports",
-    ["module-alias",
-      [
-        { "src": "npm:escomplex-plugin-metrics-module/dist", "expose": "escomplex-plugin-metrics-module/src" },
-        { "src": "npm:escomplex-plugin-syntax-babylon/dist", "expose": "escomplex-plugin-syntax-babylon/src" },
-        { "src": "npm:escomplex-plugin-syntax-estree/dist", "expose": "escomplex-plugin-syntax-estree/src" },
+   "presets": ["env", "stage-2"],
 
-        { "src": "npm:typhonjs-ast-walker/dist", "expose": "typhonjs-ast-walker/src" },
-        { "src": "npm:typhonjs-escomplex-commons/dist", "expose": "typhonjs-escomplex-commons/src" },
-        { "src": "npm:typhonjs-plugin-manager/dist", "expose": "typhonjs-plugin-manager/src" }
-      ]
-    ]
-  ]
+   "plugins":
+   [
+      "add-module-exports",
+      ["module-resolver", {
+         "root": ["."],
+         "alias":
+         {
+            "escomplex-plugin-metrics-module/src": "escomplex-plugin-metrics-module/dist",
+            "escomplex-plugin-syntax-babylon/src": "escomplex-plugin-syntax-babylon/dist",
+            "escomplex-plugin-syntax-estree/src": "escomplex-plugin-syntax-estree/dist",
+
+            "typhonjs-ast-walker/src": "typhonjs-ast-walker/dist",
+            "typhonjs-escomplex-commons/src": "typhonjs-escomplex-commons/dist",
+            "typhonjs-plugin-manager/src": "typhonjs-plugin-manager/dist"
+         }
+      }],
+      "transform-runtime"
+   ],
+
+   "env":
+   {
+      "escomplex-dev":
+      {
+         "plugins":
+         [
+            "add-module-exports",
+            ["module-resolver", {
+               "root": ["."],
+               "cwd": "babelrc",
+               "alias":
+               {
+                  "escomplex-plugin-metrics-module/src": "../escomplex-plugin-metrics-module/src",
+                  "escomplex-plugin-syntax-babylon/src": "../escomplex-plugin-syntax-babylon/src",
+                  "escomplex-plugin-syntax-estree/src": "../escomplex-plugin-syntax-estree/src",
+
+                  "typhonjs-escomplex-commons/src": "../typhonjs-escomplex-commons/src"
+               }
+            }],
+            "transform-runtime"
+         ]
+      }
+   }
 }

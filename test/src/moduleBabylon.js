@@ -1,5 +1,3 @@
-'use strict';
-
 import { assert }       from 'chai';
 
 import parsers          from './parsers';
@@ -9,7 +7,7 @@ if (testconfig.modules['moduleBabylon'])
 {
    parsers.forEach((parser) =>
    {
-      if (parser.name !== 'babylon') { return; }
+      if (parser.name !== 'babylon' || parser.name !== 'babelParser') { return; }
 
       suite(`(${parser.name}): module (ES7):`, () =>
       {
@@ -81,7 +79,7 @@ if (testconfig.modules['moduleBabylon'])
 
                test('methodAggregate has correct parameter count', () =>
                {
-                  assert.strictEqual(report.methodAggregate.params, 0);
+                  assert.strictEqual(report.methodAggregate.paramCount, 0);
                });
             });
 
@@ -114,12 +112,12 @@ if (testconfig.modules['moduleBabylon'])
 
                test('methodAggregate has correct logical lines of code', () =>
                {
-                  assert.strictEqual(report.methodAggregate.sloc.logical, 8);
+                  assert.strictEqual(report.methodAggregate.sloc.logical, 7);
                });
 
                test('methodAggregate has correct cyclomatic complexity', () =>
                {
-                  assert.strictEqual(report.methodAggregate.cyclomatic, 3);
+                  assert.strictEqual(report.methodAggregate.cyclomatic, 4);
                });
 
                test('functions has correct length', () =>
@@ -139,7 +137,7 @@ if (testconfig.modules['moduleBabylon'])
 
                test('method has correct logical lines of code', () =>
                {
-                  assert.strictEqual(report.methods[0].sloc.logical, 7);
+                  assert.strictEqual(report.methods[0].sloc.logical, 6);
                });
 
                test('method has correct cyclomatic complexity', () =>
@@ -149,7 +147,7 @@ if (testconfig.modules['moduleBabylon'])
 
                test('method has correct parameter count', () =>
                {
-                  assert.strictEqual(report.methods[0].params, 3);
+                  assert.strictEqual(report.methods[0].paramCount, 3);
                });
 
                test('methodAggregate has correct Halstead total operators', () =>
@@ -189,47 +187,47 @@ if (testconfig.modules['moduleBabylon'])
 
                test('method has correct Halstead length', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.length, 45);
+                  assert.strictEqual(report.methods[0].halstead.length, 42);
                });
 
                test('method has correct Halstead vocabulary', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.vocabulary, 26);
+                  assert.strictEqual(report.methods[0].halstead.vocabulary, 25);
                });
 
                test('method has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.difficulty, 12);
+                  assert.strictEqual(report.methods[0].halstead.difficulty, 11.375);
                });
 
                test('method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.volume, 211.52);
+                  assert.strictEqual(report.methods[0].halstead.volume, 195.042);
                });
 
                test('method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.effort, 2538.237);
+                  assert.strictEqual(report.methods[0].halstead.effort, 2218.602);
                });
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.bugs, 0.071);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.065);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.time, 141.013);
+                  assert.strictEqual(report.methods[0].halstead.time, 123.256);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(report.maintainability, 112.413);
+                  assert.strictEqual(report.maintainability, 124.991);
                });
 
                test('methodAggregate has correct parameter count', () =>
                {
-                  assert.strictEqual(report.methodAggregate.params, 3);
+                  assert.strictEqual(report.methodAggregate.paramCount, 3);
                });
             });
          });
@@ -257,7 +255,7 @@ if (testconfig.modules['moduleBabylon'])
 
                test('methodAggregate has correct cyclomatic complexity', () =>
                {
-                  assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+                  assert.strictEqual(report.methodAggregate.cyclomatic, 2);
                });
 
                test('functions has correct length', () =>
@@ -287,7 +285,7 @@ if (testconfig.modules['moduleBabylon'])
 
                test('method has correct parameter count', () =>
                {
-                  assert.strictEqual(report.methods[0].params, 2);
+                  assert.strictEqual(report.methods[0].paramCount, 2);
                });
 
                test('methodAggregate has correct Halstead total operators', () =>
@@ -327,7 +325,7 @@ if (testconfig.modules['moduleBabylon'])
 
                test('method has correct Halstead length', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.length, 8);
+                  assert.strictEqual(report.methods[0].halstead.length, 6);
                });
 
                test('method has correct Halstead vocabulary', () =>
@@ -337,37 +335,37 @@ if (testconfig.modules['moduleBabylon'])
 
                test('method has correct Halstead difficulty', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.difficulty, 2.5);
+                  assert.strictEqual(report.methods[0].halstead.difficulty, 1.5);
                });
 
                test('method has correct Halstead volume', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.volume, 20.68);
+                  assert.strictEqual(report.methods[0].halstead.volume, 15.51);
                });
 
                test('method has correct Halstead effort', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.effort, 51.699);
+                  assert.strictEqual(report.methods[0].halstead.effort, 23.265);
                });
 
                test('method has correct Halstead bugs', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.bugs, 0.007);
+                  assert.strictEqual(report.methods[0].halstead.bugs, 0.005);
                });
 
                test('method has correct Halstead time', () =>
                {
-                  assert.strictEqual(report.methods[0].halstead.time, 2.872);
+                  assert.strictEqual(report.methods[0].halstead.time, 1.292);
                });
 
                test('maintainability index is correct', () =>
                {
-                  assert.strictEqual(report.maintainability, 157.507);
+                  assert.strictEqual(report.maintainability, 157.981);
                });
 
                test('methodAggregate has correct parameter count', () =>
                {
-                  assert.strictEqual(report.methodAggregate.params, 2);
+                  assert.strictEqual(report.methodAggregate.paramCount, 2);
                });
             });
          });

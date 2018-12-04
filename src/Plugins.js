@@ -188,7 +188,8 @@ export default class Plugins
    }
 
    /**
-    * Invokes the `onModuleScopeCreated` plugin callback during AST traversal when a new module report scope is created.
+    * Invokes the `onModulePostScopeCreated` plugin callback during AST traversal after a new module report scope is
+    * created.
     *
     * @param {ModuleReport}         moduleReport - The ModuleReport being processed.
     * @param {ModuleScopeControl}   scopeControl - The associated module report scope control.
@@ -200,14 +201,18 @@ export default class Plugins
     * (number) lineEnd - End line of method.
     * (number) paramCount - (For method scopes) Number of parameters for method.
     * ```
+    * @param {object}               settings - Settings for module processing.
+    * @param {object}               node - The node being entered.
+    * @param {object}               parent - The parent node of the node being entered.
     */
-   onModuleScopeCreated(moduleReport, scopeControl, newScope)
+   onModulePostScopeCreated(moduleReport, scopeControl, newScope, settings, node, parent)
    {
-      this._pluginManager.invoke('onModuleScopeCreated', { moduleReport, scopeControl, newScope }, false);
+      this._pluginManager.invoke('onModulePostScopeCreated',
+       { moduleReport, scopeControl, newScope, settings, node, parent }, false);
    }
 
    /**
-    * Invokes the `onModuleScopePopped` plugin callback during AST traversal when a module report scope is
+    * Invokes the `onModulePostScopePopped` plugin callback during AST traversal after a module report scope is
     * popped / exited.
     *
     * @param {ModuleReport}         moduleReport - The ModuleReport being processed.
@@ -216,9 +221,57 @@ export default class Plugins
     * ```
     * (string) type - Type of report to pop.
     * ```
+    * @param {object}               settings - Settings for module processing.
+    * @param {object}               node - The node being entered.
+    * @param {object}               parent - The parent node of the node being entered.
     */
-   onModuleScopePopped(moduleReport, scopeControl, scope)
+   onModulePostScopePopped(moduleReport, scopeControl, scope, settings, node, parent)
    {
-      this._pluginManager.invoke('onModuleScopePopped', { moduleReport, scopeControl, scope }, false);
+      this._pluginManager.invoke('onModulePostScopePopped',
+       { moduleReport, scopeControl, scope, settings, node, parent }, false);
+   }
+
+   /**
+    * Invokes the `onModulePreScopeCreated` plugin callback during AST traversal before a new module report scope is
+    * created.
+    *
+    * @param {ModuleReport}         moduleReport - The ModuleReport being processed.
+    * @param {ModuleScopeControl}   scopeControl - The associated module report scope control.
+    * @param {object}               newScope - An object hash defining the new scope including:
+    * ```
+    * (string) type - Type of report to create.
+    * (string) name - Name of the class or method.
+    * (number) lineStart - Start line of method.
+    * (number) lineEnd - End line of method.
+    * (number) paramCount - (For method scopes) Number of parameters for method.
+    * ```
+    * @param {object}               settings - Settings for module processing.
+    * @param {object}               node - The node being entered.
+    * @param {object}               parent - The parent node of the node being entered.
+    */
+   onModulePreScopeCreated(moduleReport, scopeControl, newScope, settings, node, parent)
+   {
+      this._pluginManager.invoke('onModulePreScopeCreated',
+       { moduleReport, scopeControl, newScope, settings, node, parent }, false);
+   }
+
+   /**
+    * Invokes the `onModulePreScopePopped` plugin callback during AST traversal before a module report scope is
+    * popped / exited.
+    *
+    * @param {ModuleReport}         moduleReport - The ModuleReport being processed.
+    * @param {ModuleScopeControl}   scopeControl - The associated module report scope control.
+    * @param {object}               scope - An object hash defining the new scope including:
+    * ```
+    * (string) type - Type of report to pop.
+    * ```
+    * @param {object}               settings - Settings for module processing.
+    * @param {object}               node - The node being entered.
+    * @param {object}               parent - The parent node of the node being entered.
+    */
+   onModulePreScopePopped(moduleReport, scopeControl, scope, settings, node, parent)
+   {
+      this._pluginManager.invoke('onModulePreScopePopped',
+       { moduleReport, scopeControl, scope, settings, node, parent }, false);
    }
 }
