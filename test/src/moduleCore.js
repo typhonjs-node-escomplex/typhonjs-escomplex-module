@@ -2997,9 +2997,10 @@ if (testconfig.modules['moduleCore'])
             {
                switch (parser.name)
                {
-                  // acorn & babylon sets the start location at line 1 (first comment) instead of line 4 (first
-                  // line of code).
+                  // acorn, babelParser & babylon sets the start location at line 1 (first comment) instead of
+                  // line 4 (first line of code).
                   case 'acorn':
+                  case 'babelParser':
                   case 'babylon':
                      assert.strictEqual(report.lineStart, 1);
                      assert.strictEqual(report.lineEnd, 14);
@@ -3014,9 +3015,10 @@ if (testconfig.modules['moduleCore'])
             {
                switch (parser.name)
                {
-                  // acorn & babylon sets the start location at line 1 (first comment) instead of line 4 (first
-                  // line of code).
+                  // acorn, babelParser & babylon sets the start location at line 1 (first comment) instead of
+                  // line 4 (first line of code).
                   case 'acorn':
+                  case 'babelParser':
                   case 'babylon':
                      assert.strictEqual(report.methodAggregate.sloc.physical, 14);
                      break;
