@@ -1,4 +1,4 @@
-import { assert }       from 'chai';
+                                     import { assert }       from 'chai';
 
 import parsers          from './parsers';
 import * as testconfig  from './testconfig';
