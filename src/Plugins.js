@@ -36,8 +36,8 @@ export default class Plugins
       if (typeof options.loadDefaultPlugins === 'boolean' && !options.loadDefaultPlugins) { /* nop */ }
       else
       {
-         this._pluginManager.addPlugin(new PluginSyntaxBabylon());
-         this._pluginManager.addPlugin(new PluginMetricsModule());
+         this._pluginManager.add({ name: 'escomplex-plugin-syntax-babylon', instance: new PluginSyntaxBabylon() });
+         this._pluginManager.add({ name: 'escomplex-plugin-metrics-module', instance: new PluginMetricsModule() });
       }
    }
 
@@ -52,10 +52,11 @@ export default class Plugins
    onConfigure(options)
    {
       let settings = {};
-      const event = this._pluginManager.invoke('onConfigure', { options, settings }, true);
-      settings = event !== null ? event.data.settings : settings;
+      const event = this._pluginManager.invokeSyncEvent('onConfigure', void 0, { options, settings });
+
+      settings = event !== null ? event.settings : settings;
       Object.freeze(settings);
-      return event !== null ? event.data.settings : settings;
+      return event !== null ? event.settings : settings;
    }
 
    /**
@@ -73,10 +74,10 @@ export default class Plugins
     */
    onEnterNode(moduleReport, scopeControl, ignoreKeys, syntaxes, settings, node, parent)
    {
-      const event = this._pluginManager.invoke('onEnterNode',
-       { moduleReport, scopeControl, ignoreKeys, syntaxes, settings, node, parent }, false);
+      const event = this._pluginManager.invokeSyncEvent('onEnterNode', void 0,
+       { moduleReport, scopeControl, ignoreKeys, syntaxes, settings, node, parent });
 
-      return event !== null ? event.data.ignoreKeys : [];
+      return event !== null ? event.ignoreKeys : [];
    }
 
    /**
@@ -91,7 +92,8 @@ export default class Plugins
     */
    onExitNode(moduleReport, scopeControl, syntaxes, settings, node, parent)
    {
-      this._pluginManager.invoke('onExitNode', { moduleReport, scopeControl, syntaxes, settings, node, parent }, false);
+      this._pluginManager.invokeSyncEvent('onExitNode', void 0,
+       { moduleReport, scopeControl, syntaxes, settings, node, parent });
    }
 
    /**
@@ -105,8 +107,8 @@ export default class Plugins
    onLoadSyntax(settings)
    {
       const syntaxes = {};
-      const event = this._pluginManager.invoke('onLoadSyntax', { settings, syntaxes }, true);
-      return event !== null ? event.data.syntaxes : syntaxes;
+      const event = this._pluginManager.invokeSyncEvent('onLoadSyntax', void 0, { settings, syntaxes });
+      return event !== null ? event.syntaxes : syntaxes;
    }
 
    /**
@@ -121,7 +123,7 @@ export default class Plugins
    onModuleStart(ast, syntaxes, settings)
    {
       const moduleReport = new ModuleReport(ast.loc.start.line, ast.loc.end.line, settings);
-      this._pluginManager.invoke('onModuleStart', { ast, moduleReport, syntaxes, settings }, false);
+      this._pluginManager.invokeSyncEvent('onModuleStart', void 0, { ast, moduleReport, syntaxes, settings });
       return moduleReport;
    }
 
@@ -137,7 +139,7 @@ export default class Plugins
     */
    onModuleAverage(moduleReport, syntaxes, settings)
    {
-      this._pluginManager.invoke('onModuleAverage', { moduleReport, syntaxes, settings }, false);
+      this._pluginManager.invokeSyncEvent('onModuleAverage', void 0, { moduleReport, syntaxes, settings });
       return moduleReport;
    }
 
@@ -152,7 +154,7 @@ export default class Plugins
     */
    onModuleCalculate(moduleReport, syntaxes, settings)
    {
-      this._pluginManager.invoke('onModuleCalculate', { moduleReport, syntaxes, settings }, false);
+      this._pluginManager.invokeSyncEvent('onModuleCalculate', void 0, { moduleReport, syntaxes, settings });
       return moduleReport;
    }
 
@@ -167,7 +169,7 @@ export default class Plugins
     */
    onModuleEnd(moduleReport, syntaxes, settings)
    {
-      this._pluginManager.invoke('onModuleEnd', { moduleReport, syntaxes, settings }, false);
+      this._pluginManager.invokeSyncEvent('onModuleEnd', void 0, { moduleReport, syntaxes, settings });
       return moduleReport;
    }
 
@@ -183,7 +185,7 @@ export default class Plugins
     */
    onModulePostAverage(moduleReport, syntaxes, settings)
    {
-      this._pluginManager.invoke('onModulePostAverage', { moduleReport, syntaxes, settings }, false);
+      this._pluginManager.invokeSyncEvent('onModulePostAverage', void 0, { moduleReport, syntaxes, settings });
       return moduleReport;
    }
 
@@ -207,8 +209,8 @@ export default class Plugins
     */
    onModulePostScopeCreated(moduleReport, scopeControl, newScope, settings, node, parent)
    {
-      this._pluginManager.invoke('onModulePostScopeCreated',
-       { moduleReport, scopeControl, newScope, settings, node, parent }, false);
+      this._pluginManager.invokeSyncEvent('onModulePostScopeCreated', void 0,
+       { moduleReport, scopeControl, newScope, settings, node, parent });
    }
 
    /**
@@ -227,8 +229,8 @@ export default class Plugins
     */
    onModulePostScopePopped(moduleReport, scopeControl, scope, settings, node, parent)
    {
-      this._pluginManager.invoke('onModulePostScopePopped',
-       { moduleReport, scopeControl, scope, settings, node, parent }, false);
+      this._pluginManager.invokeSyncEvent('onModulePostScopePopped', void 0,
+       { moduleReport, scopeControl, scope, settings, node, parent });
    }
 
    /**
@@ -251,8 +253,8 @@ export default class Plugins
     */
    onModulePreScopeCreated(moduleReport, scopeControl, newScope, settings, node, parent)
    {
-      this._pluginManager.invoke('onModulePreScopeCreated',
-       { moduleReport, scopeControl, newScope, settings, node, parent }, false);
+      this._pluginManager.invokeSyncEvent('onModulePreScopeCreated', void 0,
+       { moduleReport, scopeControl, newScope, settings, node, parent });
    }
 
    /**
@@ -271,7 +273,7 @@ export default class Plugins
     */
    onModulePreScopePopped(moduleReport, scopeControl, scope, settings, node, parent)
    {
-      this._pluginManager.invoke('onModulePreScopePopped',
-       { moduleReport, scopeControl, scope, settings, node, parent }, false);
+      this._pluginManager.invokeSyncEvent('onModulePreScopePopped', void 0,
+       { moduleReport, scopeControl, scope, settings, node, parent });
    }
 }
