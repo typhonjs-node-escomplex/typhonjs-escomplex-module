@@ -24,7 +24,7 @@
     "escomplex-plugin-syntax-babylon": "^0.0.13",
     "typhonjs-ast-walker": "^0.1.0",
     "typhonjs-escomplex-commons": "^0.0.16",
-    "typhonjs-plugin-manager": "^0.0.3"
+    "typhonjs-plugin-manager": "^0.2.0"
   },
   "devDependencies": {
     "acorn": "^3.0.0",
