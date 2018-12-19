@@ -27,8 +27,8 @@
     "typhonjs-plugin-manager": "^0.2.0"
   },
   "devDependencies": {
+    "@typhonjs/babel-parser": "^0.1.0",
     "acorn": "^6.0.0",
-    "@babel/parser": "^7.0.0",
     "babylon": "^6.0.0",
     "espree": "^5.0.0",
     "esprima": "^4.0.0",
@@ -43,7 +43,6 @@
     "prepublish": "babel-node ./node_modules/typhonjs-npm-scripts-publish/scripts/prepublish.js",
     "test": "babel-node ./node_modules/typhonjs-npm-scripts-test-mocha/scripts/mocha.js",
     "test-coverage": "babel-node ./node_modules/typhonjs-npm-scripts-test-mocha/scripts/mocha-istanbul.js",
-
     "dev-test": "BABEL_ENV=escomplex-dev babel-node ./node_modules/typhonjs-npm-scripts-test-mocha/scripts/mocha.js dev_test",
     "dev-test-coverage": "BABEL_ENV=escomplex-dev babel-node ./node_modules/typhonjs-npm-scripts-test-mocha/scripts/mocha-istanbul.js dev_test"
   },

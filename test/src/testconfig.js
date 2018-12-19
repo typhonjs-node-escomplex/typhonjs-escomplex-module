@@ -6,9 +6,11 @@
 export const modules =
 {
    moduleAPI: true,
-   moduleBabylon: true,
    moduleCore: true,
-   moduleES6: true
+   moduleES6: true,
+   moduleES7: true,
+   moduleFlow: true,
+   moduleTypescript: true
 };
 
 /**

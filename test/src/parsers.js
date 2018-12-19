@@ -1,5 +1,6 @@
+import BabelParser      from '@typhonjs/babel-parser';
+
 import * as acorn       from 'acorn';
-import * as babelParser from '@babel/parser';
 import * as babylon     from 'babylon';
 import * as espree      from 'espree';
 import * as esprima     from 'esprima';
@@ -8,40 +9,20 @@ import * as testconfig  from './testconfig';
 
 import escomplex        from '../../src';
 
-const esmRegex = /(^\s*|[}\);\n]\s*)(import\s*(['"]|(\*\s+as\s+)?[^"'\(\)\n;]+\s*from\s*['"]|\{)|export\s+\*\s+from\s+["']|export\s* (\{|default|function|class|var|const|let|async\s+function))/;
+const s_ESM_REGEX = /(^\s*|[}\);\n]\s*)(import\s*(['"]|(\*\s+as\s+)?[^"'\(\)\n;]+\s*from\s*['"]|\{)|export\s+\*\s+from\s+["']|export\s* (\{|default|function|class|var|const|let|async\s+function))/;
 
-const acornOptions = { locations: true };
+const s_ACORN_OPTIONS = { locations: true };
 
-/**
- * Default babel parser options applying most available plugins.
- *
- * Caveats include:
- * - that both decorators and decorators-legacy can not be used simultaneously.
- * - that both 'flow' and 'typescript' can not be used simultaneously
- *
- * @type {{plugins: string[]}}
- * @ignore
- */
-const s_BABELPARSER_OPTIONS =
-{
-   plugins: ['asyncGenerators', 'bigInt', 'classProperties', 'classPrivateProperties', 'classPrivateMethods',
-    ['decorators', { decoratorsBeforeExport: false }], 'doExpressions', 'dynamicImport',
-     'exportDefaultFrom', 'exportNamespaceFrom',  'functionBind', 'functionSent', 'importMeta',
-      'jsx', 'logicalAssignment', 'nullishCoalescingOperator', 'numericSeparator', 'objectRestSpread',
-       'optionalCatchBinding', 'optionalChaining', ['pipelineOperator', { proposal: 'minimal' }], 'throwExpressions',
-        'typescript']
-};
-
-const babylonOptions =
+const s_BABYLON_OPTIONS =
 {
    plugins: ['asyncFunctions', 'asyncGenerators', 'classConstructorCall', 'classProperties', 'decorators',
     'doExpressions', 'exportExtensions', 'exponentiationOperator', 'flow', 'functionBind', 'functionSent',
      'jsx', 'objectRestSpread', 'trailingFunctionCommas']
 };
 
-const esprimaOptions = { loc: true };
+const s_ESPRIMA_OPTIONS = { loc: true };
 
-const espreeOptions = { loc: true, ecmaVersion: 6, ecmaFeatures: { jsx: true } };
+const s_ESPREE_OPTIONS = { loc: true, ecmaVersion: 6, ecmaFeatures: { jsx: true } };
 
 /**
  * Provides a debug logger.
@@ -67,8 +48,8 @@ if (testconfig.parsers.acorn)
       name: 'acorn',
       parse: function(code, options)
       {
-         options = typeof options === 'object' ? options : acornOptions;
-         options.sourceType = esmRegex.test(code) ? 'module' : 'script';
+         options = typeof options === 'object' ? options : s_ACORN_OPTIONS;
+         options.sourceType = s_ESM_REGEX.test(code) ? 'module' : 'script';
          const ast = acorn.parse(code, options);
          log(`!! (acorn): parse - ast: ${JSON.stringify(ast)}`);
          return ast;
@@ -80,18 +61,16 @@ if (testconfig.parsers.babelParser)
 {
    parsers.push(
    {
-      analyze: function(code, options, parserOptions)
+      analyze: function(code, options, parserOptions = void 0, parserOverrides = void 0)
       {
-         const report = escomplex.analyze(this.parse(code, parserOptions), options);
+         const report = escomplex.analyze(this.parse(code, parserOptions, parserOverrides), options);
          log(`!! (babelParser): analyze - report: ${JSON.stringify(report)}`);
          return report;
       },
       name: 'babelParser',
-      parse: function(code, options)
+      parse: function(code, options = void 0, overrides = void 0)
       {
-         options = typeof options === 'object' ? options : s_BABELPARSER_OPTIONS;
-         options.sourceType = typeof options.sourceType === 'string' ? options.sourceType : 'unambiguous';
-         const ast = babelParser.parse(code, options);
+         const ast = BabelParser.parseSource(code, options, overrides);
          log(`!! (babelParser): parse - ast: ${JSON.stringify(ast)}`);
          return ast;
       }
@@ -111,8 +90,8 @@ if (testconfig.parsers.babylon)
       name: 'babylon',
       parse: function(code, options)
       {
-         options = typeof options === 'object' ? options : babylonOptions;
-         options.sourceType = esmRegex.test(code) ? 'module' : 'script';
+         options = typeof options === 'object' ? options : s_BABYLON_OPTIONS;
+         options.sourceType = s_ESM_REGEX.test(code) ? 'module' : 'script';
          const ast = babylon.parse(code, options);
          log(`!! (babylon): parse - ast: ${JSON.stringify(ast)}`);
          return ast;
@@ -133,8 +112,8 @@ if (testconfig.parsers.espree)
       name: 'espree',
       parse: function(code, options)
       {
-         options = typeof options === 'object' ? options : espreeOptions;
-         options.sourceType = esmRegex.test(code) ? 'module' : 'script';
+         options = typeof options === 'object' ? options : s_ESPREE_OPTIONS;
+         options.sourceType = s_ESM_REGEX.test(code) ? 'module' : 'script';
          const ast = espree.parse(code, options);
          log(`!! (espree): parse - ast: ${JSON.stringify(ast)}`);
          return ast;
@@ -155,9 +134,9 @@ if (testconfig.parsers.esprima)
       name: 'esprima',
       parse: function(code, options)
       {
-         options = typeof options === 'object' ? options : esprimaOptions;
-         options.sourceType = esmRegex.test(code) ? 'module' : 'script';
-         const ast = esprima.parse(code, esprimaOptions);
+         options = typeof options === 'object' ? options : s_ESPRIMA_OPTIONS;
+         options.sourceType = s_ESM_REGEX.test(code) ? 'module' : 'script';
+         const ast = esprima.parse(code, s_ESPRIMA_OPTIONS);
          log(`!! (esprima): parse - ast: ${JSON.stringify(ast)}`);
          return ast;
       }
