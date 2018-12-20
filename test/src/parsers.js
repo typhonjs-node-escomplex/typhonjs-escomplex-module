@@ -22,7 +22,7 @@ const s_BABYLON_OPTIONS =
 
 const s_ESPRIMA_OPTIONS = { loc: true };
 
-const s_ESPREE_OPTIONS = { loc: true, ecmaVersion: 6, ecmaFeatures: { jsx: true } };
+const s_ESPREE_OPTIONS = { loc: true, ecmaVersion: 7, ecmaFeatures: { jsx: true } };
 
 /**
  * Provides a debug logger.
@@ -70,7 +70,7 @@ if (testconfig.parsers.babelParser)
       name: 'babelParser',
       parse: function(code, options = void 0, overrides = void 0)
       {
-         const ast = BabelParser.parseSource(code, options, overrides);
+         const ast = BabelParser.parse(code, options, overrides);
          log(`!! (babelParser): parse - ast: ${JSON.stringify(ast)}`);
          return ast;
       }

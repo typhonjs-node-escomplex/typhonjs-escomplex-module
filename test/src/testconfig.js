@@ -9,7 +9,12 @@ export const modules =
    moduleCore: true,
    moduleES6: true,
    moduleES7: true,
+   moduleES8: true,
+   moduleES9: true,
+   moduleES10: true,
    moduleFlow: true,
+   moduleStage3: true,
+   moduleStage4: true,
    moduleTypescript: true
 };
 

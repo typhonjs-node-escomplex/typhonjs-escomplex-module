@@ -27,7 +27,7 @@
     "typhonjs-plugin-manager": "^0.2.0"
   },
   "devDependencies": {
-    "@typhonjs/babel-parser": "^0.1.0",
+    "@typhonjs/babel-parser": "^0.2.0",
     "acorn": "^6.0.0",
     "babylon": "^6.0.0",
     "espree": "^5.0.0",

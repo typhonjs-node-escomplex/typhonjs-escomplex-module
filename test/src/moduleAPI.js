@@ -88,7 +88,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate);
+         }).aggregate);
       });
 
       test('analyze returns aggregate lines of code property', () =>
@@ -103,7 +103,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.sloc);
+         }).aggregate.sloc);
       });
 
       test('analyze returns aggregate physical lines of code property', () =>
@@ -118,7 +118,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.sloc.physical);
+         }).aggregate.sloc.physical);
       });
 
       test('analyze returns aggregate logical lines of code property', () =>
@@ -133,7 +133,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.sloc.logical);
+         }).aggregate.sloc.logical);
       });
 
       test('analyze returns aggregate cyclomatic complexity property', () =>
@@ -148,7 +148,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.cyclomatic);
+         }).aggregate.cyclomatic);
       });
 
       test('analyze returns aggregate cyclomatic complexity density property', () =>
@@ -163,7 +163,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.cyclomaticDensity);
+         }).aggregate.cyclomaticDensity);
       });
 
       test('analyze returns aggregate halstead property', () =>
@@ -178,7 +178,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.halstead);
+         }).aggregate.halstead);
       });
 
       test('analyze returns aggregate halstead operators property', () =>
@@ -193,7 +193,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.halstead.operators);
+         }).aggregate.halstead.operators);
       });
 
       test('analyze returns aggregate halstead total operators property', () =>
@@ -208,7 +208,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.halstead.operators.total);
+         }).aggregate.halstead.operators.total);
       });
 
       test('analyze returns aggregate halstead distinct operators property', () =>
@@ -223,7 +223,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.halstead.operators.distinct);
+         }).aggregate.halstead.operators.distinct);
       });
 
       test('analyze returns aggregate halstead operator identifiers property', () =>
@@ -238,7 +238,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.halstead.operators.identifiers);
+         }).aggregate.halstead.operators.identifiers);
       });
 
       test('analyze returns aggregate halstead operands property', () =>
@@ -253,7 +253,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.halstead.operands);
+         }).aggregate.halstead.operands);
       });
 
       test('analyze returns aggregate halstead total operands property', () =>
@@ -268,7 +268,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.halstead.operands.total);
+         }).aggregate.halstead.operands.total);
       });
 
       test('analyze returns aggregate halstead distinct operands property', () =>
@@ -283,7 +283,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.halstead.operands.distinct);
+         }).aggregate.halstead.operands.distinct);
       });
 
       test('analyze returns aggregate halstead operand identifiers property', () =>
@@ -298,7 +298,7 @@ if (testconfig.modules['moduleAPI'])
                   line: 0
                }
             }
-         }).methodAggregate.halstead.operands.identifiers);
+         }).aggregate.halstead.operands.identifiers);
       });
 
       test('analyze returns maintainability property', () =>
