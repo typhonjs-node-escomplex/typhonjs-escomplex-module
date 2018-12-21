@@ -22,7 +22,7 @@ const s_BABYLON_OPTIONS =
 
 const s_ESPRIMA_OPTIONS = { loc: true };
 
-const s_ESPREE_OPTIONS = { loc: true, ecmaVersion: 7, ecmaFeatures: { jsx: true } };
+const s_ESPREE_OPTIONS = { loc: true, ecmaVersion: 9, ecmaFeatures: { jsx: true } };
 
 /**
  * Provides a debug logger.

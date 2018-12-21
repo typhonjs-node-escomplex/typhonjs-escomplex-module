@@ -13,8 +13,8 @@ export const modules =
    moduleES9: true,
    moduleES10: true,
    moduleFlow: true,
+   moduleStage2: true,
    moduleStage3: true,
-   moduleStage4: true,
    moduleTypescript: true
 };
 
