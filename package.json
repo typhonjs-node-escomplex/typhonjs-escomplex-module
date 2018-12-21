@@ -1,11 +1,11 @@
 {
   "name": "typhonjs-escomplex-module",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "description": "Provides module / individual file oriented AST processing for typhonjs-escomplex complexity reports.",
   "homepage": "https://github.com/typhonjs-node-escomplex/typhonjs-escomplex-module",
   "license": "MPL-2.0",
   "author": {
-    "name": "Mike Leahy"
+    "name": "Michael Leahy"
   },
   "main": "./dist",
   "repository": {
@@ -14,16 +14,16 @@
   },
   "maintainers": [
     {
-      "name": "Mike Leahy",
+      "name": "Michael Leahy",
       "email": "support@typhonjs.io",
       "url": "https://github.com/typhonrt"
     }
   ],
   "dependencies": {
-    "escomplex-plugin-metrics-module": "^0.0.13",
-    "escomplex-plugin-syntax-babylon": "^0.0.13",
-    "typhonjs-ast-walker": "^0.1.0",
-    "typhonjs-escomplex-commons": "^0.0.16",
+    "escomplex-plugin-metrics-module": "^0.1.0",
+    "escomplex-plugin-syntax-babylon": "^0.1.0",
+    "typhonjs-ast-walker": "^0.2.0",
+    "typhonjs-escomplex-commons": "^0.1.0",
     "typhonjs-plugin-manager": "^0.2.0"
   },
   "devDependencies": {
@@ -60,7 +60,10 @@
     "analysis",
     "metrics",
     "es6",
-    "es7"
+    "es7",
+    "es8",
+    "es9",
+    "es10"
   ],
   "files": [
     "dist",
