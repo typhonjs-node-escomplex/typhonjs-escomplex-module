@@ -120,6 +120,16 @@ if (testconfig.modules['moduleES9'])
          //    test('parses!', () => {});
          // });
 
+         suite('Rest/Spread - object pattern function', () =>
+         {
+            setup(() =>
+            {
+               parser.analyze('function foo({ name, ...others }) { }');
+            });
+
+            test('parses!', () => {});
+         });
+
          // https://github.com/tc39/proposal-object-rest-spread
          suite('Rest/Spread Properties', () =>
          {
